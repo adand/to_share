@@ -16,5 +16,7 @@ namespace TestPushByVisual
         {
             InitializeComponent();
         }
+
+        string dan="daniel";
     }
 }
