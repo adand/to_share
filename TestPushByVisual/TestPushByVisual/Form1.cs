@@ -18,6 +18,6 @@ namespace TestPushByVisual
         }
 
         string dan="daniel";
-        int da = 12;
+        int da = 10;
     }
 }
