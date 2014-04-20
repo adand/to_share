@@ -1,0 +1,13 @@
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe.config
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csprojResolveAssemblyReference.cache
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.pdb
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.exe
+c:\users\adand\documents\visual studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.pdb
+C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form2.resources
+C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\kinoxrista.mdf
+C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\kinoxrista_log.ldf
+C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
