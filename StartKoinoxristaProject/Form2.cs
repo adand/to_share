@@ -71,7 +71,7 @@ namespace StartKoinoxristaProject
                     }
                     else
                     {
-                        MessageBox.Show("Insertion Failed");
+                        MessageBox.Show("Insertion Failed: "+ex.Message +MessageBoxButtons.OK+MessageBoxIcon.Error); // show exeption error, ok button and error icon 
                     }
                 }
             }
