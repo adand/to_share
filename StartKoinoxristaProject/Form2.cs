@@ -54,25 +54,32 @@ namespace StartKoinoxristaProject
             DataTable myDataTable = new DataTable();
             myDataSet.Tables.Add(myDataTable);
 
-            try
+            if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
             {
-                myDataAdapter.Fill(myDataTable);
-                MessageBox.Show("Insertion was successful");
-                Form3 frm3 = new Form3();
-                frm3.Show();
+                try
+                {
+                    myDataAdapter.Fill(myDataTable);
+                    MessageBox.Show("Insertion was successful");
+                    Form3 frm3 = new Form3();
+                    frm3.Show();
+                }
+                catch (SqlException ex)
+                {
+                    if (ex.Number == 2627)
+                    {
+                        MessageBox.Show("Duplicate ID");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Insertion Failed");
+                    }
+                }
             }
-            catch (SqlException ex)
+            else 
             {
-                if (ex.Number == 2627)
-                {
-                    MessageBox.Show("Duplicate ID");
-                }
-                else
-                {
-                    MessageBox.Show("Insertion Failed");
-                }
+                MessageBox.Show("Please Fill All Fields ");
+            
             }
-
         }
 
             //Console.ReadLine();
