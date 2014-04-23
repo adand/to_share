@@ -127,5 +127,7 @@ namespace StartKoinoxristaProject
             hm.Show();
             this.Hide();
         }
+
+       // insert values on apartments table does not work yes 
     }
 }

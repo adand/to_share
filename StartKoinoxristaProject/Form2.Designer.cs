@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.BuildingIDTextBox = new System.Windows.Forms.TextBox();
             this.AddressTextBox = new System.Windows.Forms.TextBox();
             this.AreaTextBox = new System.Windows.Forms.TextBox();
@@ -40,9 +41,18 @@
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.kinoxristaDataSet = new StartKoinoxristaProject.kinoxristaDataSet();
+            this.kinoxristaDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Manager = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ElevatorMM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GeneralMM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Full_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ApartmentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -132,14 +142,14 @@
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.homeToolStripMenuItem.Text = "Home";
             this.homeToolStripMenuItem.Click += new System.EventHandler(this.homeToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveButton_Click);
             // 
@@ -159,12 +169,53 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Building";
             // 
+            // kinoxristaDataSet
+            // 
+            this.kinoxristaDataSet.DataSetName = "kinoxristaDataSet";
+            this.kinoxristaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // kinoxristaDataSetBindingSource
+            // 
+            this.kinoxristaDataSetBindingSource.DataSource = this.kinoxristaDataSet;
+            this.kinoxristaDataSetBindingSource.Position = 0;
+            // 
+            // Manager
+            // 
+            this.Manager.HeaderText = "Manager";
+            this.Manager.Name = "Manager";
+            // 
+            // ElevatorMM
+            // 
+            this.ElevatorMM.HeaderText = "ElevatorMM";
+            this.ElevatorMM.Name = "ElevatorMM";
+            // 
+            // GeneralMM
+            // 
+            this.GeneralMM.HeaderText = "GeneralMM";
+            this.GeneralMM.Name = "GeneralMM";
+            // 
+            // Full_Name
+            // 
+            this.Full_Name.HeaderText = "Full_Name";
+            this.Full_Name.Name = "Full_Name";
+            // 
+            // ApartmentID
+            // 
+            this.ApartmentID.HeaderText = "ApartmentID";
+            this.ApartmentID.Name = "ApartmentID";
+            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(44, 116);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ApartmentID,
+            this.Full_Name,
+            this.GeneralMM,
+            this.ElevatorMM,
+            this.Manager});
+            this.dataGridView1.Location = new System.Drawing.Point(44, 121);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(561, 184);
+            this.dataGridView1.Size = new System.Drawing.Size(561, 203);
             this.dataGridView1.TabIndex = 9;
             // 
             // Form2
@@ -183,6 +234,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -203,6 +256,13 @@
         private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.BindingSource kinoxristaDataSetBindingSource;
+        private kinoxristaDataSet kinoxristaDataSet;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Manager;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ElevatorMM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GeneralMM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Full_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ApartmentID;
         private System.Windows.Forms.DataGridView dataGridView1;
 
     }
