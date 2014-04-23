@@ -30,7 +30,7 @@ namespace StartKoinoxristaProject
         private void SaveButton_Click(object sender, EventArgs e)
         {
 
-            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True");
+            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True");
             try
             {
                 myConnection.Open();
@@ -111,6 +111,14 @@ namespace StartKoinoxristaProject
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // on click event handler for navigating back home 
+        private void homeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1 hm = new Form1();
+            hm.Show();
+            this.Hide();
         }
     }
 }

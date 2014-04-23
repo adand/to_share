@@ -11,3 +11,16 @@ C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\Sta
 C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\kinoxrista.mdf
 C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\bin\Debug\kinoxrista_log.ldf
 C:\Users\adand\Documents\Visual Studio 2013\Projects\StartKoinoxristaProject\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe.config
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.exe
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.pdb
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\bin\Debug\kinoxrista.mdf
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\bin\Debug\kinoxrista_log.ldf
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.pdb
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csprojResolveAssemblyReference.cache
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form2.resources
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
+C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
