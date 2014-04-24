@@ -34,9 +34,7 @@ namespace StartKoinoxristaProject
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            
            
-
             SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename="+wanted_path+"\\kinoxrista.mdf;Integrated Security=True");
             
             try

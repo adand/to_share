@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace StartKoinoxristaProject
 {
@@ -16,6 +17,8 @@ namespace StartKoinoxristaProject
         public Form3()
         {
             InitializeComponent();
+            
+            
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -32,9 +35,8 @@ namespace StartKoinoxristaProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            string dbpath = AppDomain.CurrentDomain.BaseDirectory;
-            SqlConnection myConnection = new SqlConnection(@"Data Source="+dbpath+"\\kinoxrista.mdf;Integrated Security=True");
+            string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=" + wanted_path + "\\kinoxrista.mdf;Integrated Security=True");
             SqlCommand myCommand = new SqlCommand("select * from Buildings");
             myCommand.Connection = myConnection;
             SqlDataAdapter myDataAdapter = new SqlDataAdapter();
