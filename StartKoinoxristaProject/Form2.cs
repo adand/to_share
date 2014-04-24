@@ -45,6 +45,32 @@ namespace StartKoinoxristaProject
             myCommand.Parameters.AddWithValue("@Address", AddressTextBox.Text);
             myCommand.Parameters.AddWithValue("@Area", AreaTextBox.Text);
 
+            //insert apartments
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+               
+                try
+                {
+                    
+                    SqlCommand instcomd = new SqlCommand("insert into Apartments values (@BuildingID,@ApartmentID,@FullName,@GeneralMM,@ElevatorMM)");
+                    instcomd.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
+                    instcomd.Parameters.AddWithValue("@ApartmentID", row.Cells[1].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@FullName", row.Cells[2].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@GeneralMM", row.Cells[3].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@ElevatorMM", row.Cells[4].Value.ToString());
+                    
+                    
+                    instcomd.Connection = myConnection;
+                   
+                    instcomd.ExecuteNonQuery();
+                }
+                catch(SqlException ext) {
+
+                    MessageBox.Show("Error :"+ext.Message);
+                
+                }
+            }
+
             myCommand.Connection = myConnection;
 
             SqlDataAdapter myDataAdapter = new SqlDataAdapter();
