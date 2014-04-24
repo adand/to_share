@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace StartKoinoxristaProject
 {
@@ -17,9 +18,13 @@ namespace StartKoinoxristaProject
         private string Address;
         private string Area;
 
+        string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+       
+
         public Form2()
         {
             InitializeComponent();
+            
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -29,11 +34,16 @@ namespace StartKoinoxristaProject
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            
+           
 
-            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True");
+            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename="+wanted_path+"\\kinoxrista.mdf;Integrated Security=True");
+            
             try
             {
                 myConnection.Open();
+                
+        
             }
             catch (Exception eOpen)
             {
@@ -52,12 +62,13 @@ namespace StartKoinoxristaProject
                 try
                 {
                     
-                    SqlCommand instcomd = new SqlCommand("insert into Apartments values (@BuildingID,@ApartmentID,@FullName,@GeneralMM,@ElevatorMM)");
+                    SqlCommand instcomd = new SqlCommand("insert into Apartments values (@BuildingID,@ApartmentID,@FullName,@GeneralMM,@ElevatorMM,@Manager)");
                     instcomd.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
-                    instcomd.Parameters.AddWithValue("@ApartmentID", row.Cells[1].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@FullName", row.Cells[2].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@GeneralMM", row.Cells[3].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@ElevatorMM", row.Cells[4].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@ApartmentID", row.Cells[0].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@FullName", row.Cells[1].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@GeneralMM", row.Cells[2].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@ElevatorMM", row.Cells[3].Value.ToString());
+                    instcomd.Parameters.AddWithValue("@Manager", row.Cells[4].Value.ToString());
                     
                     
                     instcomd.Connection = myConnection;
@@ -128,7 +139,7 @@ namespace StartKoinoxristaProject
 
         private void BuildingIDTextBox_TextChanged(object sender, EventArgs e)
         {
-            
+               
         }
 
         private void AddressTextBox_TextChanged(object sender, EventArgs e)

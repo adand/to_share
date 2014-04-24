@@ -28,9 +28,13 @@ namespace StartKoinoxristaProject
             
         }
 
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True");
+            
+            string dbpath = AppDomain.CurrentDomain.BaseDirectory;
+            SqlConnection myConnection = new SqlConnection(@"Data Source="+dbpath+"\\kinoxrista.mdf;Integrated Security=True");
             SqlCommand myCommand = new SqlCommand("select * from Buildings");
             myCommand.Connection = myConnection;
             SqlDataAdapter myDataAdapter = new SqlDataAdapter();
