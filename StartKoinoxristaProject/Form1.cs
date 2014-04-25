@@ -34,5 +34,23 @@ namespace StartKoinoxristaProject
         {
 
         }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            Dapanes dap1 = new Dapanes();
+            dap1.Show();
+        }
     }
+
+    public class test
+    {
+        private int t = 4;
+
+        public int gett()
+        {
+            return t;
+        }
+    }
+
 }
