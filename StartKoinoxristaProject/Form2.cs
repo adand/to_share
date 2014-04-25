@@ -34,19 +34,11 @@ namespace StartKoinoxristaProject
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-           
-            SqlConnection myConnection = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename="+wanted_path+"\\kinoxrista.mdf;Integrated Security=True");
-            
-            try
-            {
-                myConnection.Open();
-                
-        
-            }
-            catch (Exception eOpen)
-            {
-                Console.WriteLine(eOpen.ToString());
-            }
+            // Create an object of the class. This class is inside the program.cs file
+            AccessTheDatabase writeKinoxrista = new AccessTheDatabase();
+
+            // Call a method of the database by using the object that has been declared above
+            writeKinoxrista.ReadingTheDatabase();
 
             SqlCommand myCommand = new SqlCommand("insert into Buildings values(@BuildingID, @Address, @Area)");
             myCommand.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
@@ -67,9 +59,9 @@ namespace StartKoinoxristaProject
                     instcomd.Parameters.AddWithValue("@GeneralMM", row.Cells[2].Value.ToString());
                     instcomd.Parameters.AddWithValue("@ElevatorMM", row.Cells[3].Value.ToString());
                     instcomd.Parameters.AddWithValue("@Manager", row.Cells[4].Value.ToString());
-                    
-                    
-                    instcomd.Connection = myConnection;
+
+
+                    instcomd.Connection = writeKinoxrista.get_connection();
                    
                     instcomd.ExecuteNonQuery();
                 }
@@ -80,7 +72,7 @@ namespace StartKoinoxristaProject
                 }
             }
 
-            myCommand.Connection = myConnection;
+            myCommand.Connection = writeKinoxrista.get_connection();
 
             SqlDataAdapter myDataAdapter = new SqlDataAdapter();
             myDataAdapter.SelectCommand = myCommand;
@@ -161,6 +153,11 @@ namespace StartKoinoxristaProject
             Form1 hm = new Form1();
             hm.Show();
             this.Hide();
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
         }
 
        // insert values on apartments table does not work yes 

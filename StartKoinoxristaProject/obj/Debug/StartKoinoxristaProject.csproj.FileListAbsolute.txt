@@ -27,3 +27,14 @@ C:\Users\daniel\Source\Repos\to_share2\StartKoinoxristaProject\obj\Debug\StartKo
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe.config
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.exe
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.pdb
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\kinoxrista.mdf
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\kinoxrista_log.ldf
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.exe
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\StartKoinoxristaProject.pdb
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csprojResolveAssemblyReference.cache
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Dapanes.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form2.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
