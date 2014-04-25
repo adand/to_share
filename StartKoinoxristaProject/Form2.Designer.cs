@@ -66,17 +66,17 @@
             // 
             // AddressTextBox
             // 
-            this.AddressTextBox.Location = new System.Drawing.Point(417, 38);
+            this.AddressTextBox.Location = new System.Drawing.Point(219, 38);
             this.AddressTextBox.Name = "AddressTextBox";
-            this.AddressTextBox.Size = new System.Drawing.Size(100, 20);
+            this.AddressTextBox.Size = new System.Drawing.Size(128, 20);
             this.AddressTextBox.TabIndex = 1;
             this.AddressTextBox.TextChanged += new System.EventHandler(this.AddressTextBox_TextChanged);
             // 
             // AreaTextBox
             // 
-            this.AreaTextBox.Location = new System.Drawing.Point(219, 38);
+            this.AreaTextBox.Location = new System.Drawing.Point(417, 38);
             this.AreaTextBox.Name = "AreaTextBox";
-            this.AreaTextBox.Size = new System.Drawing.Size(100, 20);
+            this.AreaTextBox.Size = new System.Drawing.Size(112, 20);
             this.AreaTextBox.TabIndex = 2;
             this.AreaTextBox.TextChanged += new System.EventHandler(this.AreaTextBox_TextChanged);
             // 
@@ -85,9 +85,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 13);
+            this.label1.Size = new System.Drawing.Size(138, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Building ID: (max. 3 characters)";
+            this.label1.Text = "Building ID: (1-3 characters)";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
@@ -95,9 +95,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(216, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(147, 13);
+            this.label2.Size = new System.Drawing.Size(131, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Address: (max. 20 characters)";
+            this.label2.Text = "Address: (1-20 characters)";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
@@ -105,9 +105,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(414, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 13);
+            this.label3.Size = new System.Drawing.Size(115, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Area: (max. 15 characters)";
+            this.label3.Text = "Area: (1-15 characters)";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // SaveButton
