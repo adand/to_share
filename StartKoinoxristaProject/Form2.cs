@@ -34,21 +34,16 @@ namespace StartKoinoxristaProject
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            SqlDataAdapter myDataAdapter;
-            DataTable[] myDataTables;   // define a table that will store the DataTables of the DataSet
-            int DataTablesIndex = 0;    // an index that will be used to access myDataTables array
+            string query = "insert into Buildings values(@BuildingID, @Address, @Area)";
 
             // Create an object of the database accessor class. This class is inside the program.cs file
-            AccessTheDatabase writeKinoxrista = new AccessTheDatabase();
+            AccessTheDatabase AddBuildings = new AccessTheDatabase();
 
-            // Call the communication method of the database by using the object that has been declared above
-            writeKinoxrista.CommunicateWithDatabase();
+            // Call the method that will begin the process of database access
+            AddBuildings.AccessingProcess(BuildingIDTextBox.Text, AddressTextBox.Text, AreaTextBox.Text, query);
 
-            SqlCommand myCommand = new SqlCommand("insert into Buildings values(@BuildingID, @Address, @Area)");
-            myCommand.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
-            myCommand.Parameters.AddWithValue("@Address", AddressTextBox.Text);
-            myCommand.Parameters.AddWithValue("@Area", AreaTextBox.Text);
-
+            /* need to be fixed
+             * 
             //insert apartments
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
@@ -65,7 +60,7 @@ namespace StartKoinoxristaProject
                     instcomd.Parameters.AddWithValue("@Manager", row.Cells[4].Value.ToString());
 
 
-                    instcomd.Connection = writeKinoxrista.get_connection();
+                    instcomd.Connection = AddBuildings.get_connection();
                    
                     instcomd.ExecuteNonQuery();
                 }
@@ -75,26 +70,15 @@ namespace StartKoinoxristaProject
 
                 }
             }
-
-            // set the communication between Command and Connection
-            myCommand.Connection = writeKinoxrista.get_connection();
-
-            // Initialize DataAdapter and set it's communication with Command
-            myDataAdapter = writeKinoxrista.DataAdapterInitialization(myCommand);
-
-            // a variable that will store the number of data tables that will be inside the data set
-            int dataTables;
-            dataTables = 1;
-
-            // call the method that will create the DataSet and the DataTables inside it
-            myDataTables = writeKinoxrista.DataSetInitialization(dataTables);
+             * 
+            */
 
             if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
             {
                 try
                 {
                     // Access the DataTable that DataTablesIndex pointing to, and fill it. Set DataTablesIndex pointing to the next DataTable.
-                    myDataAdapter.Fill(myDataTables[DataTablesIndex++]);
+                    AddBuildings.get_myDataAdapter().Fill(AddBuildings.get_myDataTable());
                     MessageBox.Show("Insertion was successful");    // Successful insertion to database
                     Form3 frm3 = new Form3();
                     frm3.Show();
@@ -167,6 +151,20 @@ namespace StartKoinoxristaProject
         private void Form2_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void ClearBuildingsTable_Click(object sender, EventArgs e)
+        {
+            /*SqlDataAdapter myDataAdapter;
+
+            // Create an object of the database accessor class. This class is inside the program.cs file
+            AccessTheDatabase writeKinoxrista = new AccessTheDatabase();
+
+            // Call the communication method of the database by using the object that has been declared above
+            writeKinoxrista.CommunicateWithDatabase();
+
+            SqlCommand myCommand = new SqlCommand("delete from Buildings");
+             * */
         }
 
        // insert values on apartments table does not work yes 

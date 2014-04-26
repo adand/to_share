@@ -49,6 +49,7 @@
             this.Full_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ApartmentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ClearBuildingsTable = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).BeginInit();
@@ -112,7 +113,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(522, 330);
+            this.SaveButton.Location = new System.Drawing.Point(530, 341);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 6;
@@ -218,11 +219,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(561, 203);
             this.dataGridView1.TabIndex = 9;
             // 
+            // ClearBuildingsTable
+            // 
+            this.ClearBuildingsTable.Location = new System.Drawing.Point(44, 341);
+            this.ClearBuildingsTable.Name = "ClearBuildingsTable";
+            this.ClearBuildingsTable.Size = new System.Drawing.Size(227, 23);
+            this.ClearBuildingsTable.TabIndex = 10;
+            this.ClearBuildingsTable.Text = "clear the database table Bulidings";
+            this.ClearBuildingsTable.UseVisualStyleBackColor = true;
+            this.ClearBuildingsTable.Click += new System.EventHandler(this.ClearBuildingsTable_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(648, 376);
+            this.Controls.Add(this.ClearBuildingsTable);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SaveButton);
@@ -265,6 +277,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Full_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn ApartmentID;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button ClearBuildingsTable;
 
     }
 }

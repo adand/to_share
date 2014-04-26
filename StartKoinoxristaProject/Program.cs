@@ -29,6 +29,10 @@ namespace StartKoinoxristaProject
     {
         private string connectionString;
         private SqlConnection connection;
+        private SqlDataAdapter myDataAdapter;
+        private SqlCommand myCommand;
+        private DataSet myDataSet;
+        private DataTable myDataTable;
         
         // @connString the connection string
         public void set_connectionString(string connString)
@@ -44,6 +48,16 @@ namespace StartKoinoxristaProject
         public SqlConnection get_connection()
         {
             return connection;
+        }
+
+        public SqlDataAdapter get_myDataAdapter()
+        {
+            return myDataAdapter;
+        }
+
+        public DataTable get_myDataTable()
+        {
+            return myDataTable;
         }
 
         public void OpenTheDatabase(SqlConnection myConn)
@@ -73,36 +87,47 @@ namespace StartKoinoxristaProject
         // Create a new DataAdapter object and define which command will use
         // @myCommd the command that DataAdapter will use
         // @return the DataAdapter that was created
-        public SqlDataAdapter DataAdapterInitialization(SqlCommand myCommd)
+        public void DataAdapterInitialization(SqlCommand myCommd)
         {
-            SqlDataAdapter myDataAdapter = new SqlDataAdapter();
+            myDataAdapter = new SqlDataAdapter();
             myDataAdapter.SelectCommand = myCommd;
-
-            return myDataAdapter;
         }
 
         // Creating a data set and it's data tables.
         // @dataTables the number of DataTables that DataSet will store
         // @return the array of DataTables that was created
-        public DataTable[] DataSetInitialization(int dataTables)
+        public void DataSetInitialization()
         {
-            DataSet myDataSet = new DataSet();
-
-            // Declare an array that will store DataTables
-            DataTable[] myDataTables = new DataTable[dataTables];
-
-            // fill the array
-            for (int i = 0; i < dataTables; i++)
-            {
-                myDataTables[i] = new DataTable();
-                myDataSet.Tables.Add(myDataTables[i]);
-            }
-
-            return myDataTables;
+            myDataSet = new DataSet();
+            myDataTable = new DataTable();
+            myDataSet.Tables.Add(myDataTable);
         }
 
+        public void CommandDefinition()
+        {
+
+        }
+
+        public void AccessingProcess(string BuildingID, string Address, string Area, string query)
+        {
+
+            // Call the communication method of the database by using the object that has been declared above
+            CommunicateWithDatabase();
+
+            // Command initialization
+            myCommand = new SqlCommand(query);
+
+            myCommand.Parameters.AddWithValue("@BuildingID", BuildingID);
+            myCommand.Parameters.AddWithValue("@Address", Address);
+            myCommand.Parameters.AddWithValue("@Area", Area);
+
+            // set the communication between Command and Connection
+            myCommand.Connection = connection;
+
+            // Initialize DataAdapter and set it's communication with Command
+            DataAdapterInitialization(myCommand);
+
+            DataSetInitialization();
+        }
     }
-
-    // reading from a database
-
 }
