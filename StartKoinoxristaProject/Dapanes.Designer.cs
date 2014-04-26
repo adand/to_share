@@ -33,6 +33,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.BuildingAddress = new System.Windows.Forms.Label();
+            this.BuildingArea = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -71,6 +75,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(121, 30);
             this.listBox1.TabIndex = 4;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -82,11 +87,56 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "house",
+            "car",
+            "dog",
+            "friend"});
+            this.comboBox1.Location = new System.Drawing.Point(40, 49);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 6;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // BuildingAddress
+            // 
+            this.BuildingAddress.AutoSize = true;
+            this.BuildingAddress.Location = new System.Drawing.Point(37, 33);
+            this.BuildingAddress.Name = "BuildingAddress";
+            this.BuildingAddress.Size = new System.Drawing.Size(63, 13);
+            this.BuildingAddress.TabIndex = 7;
+            this.BuildingAddress.Text = "Διεύθυνση:";
+            this.BuildingAddress.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // BuildingArea
+            // 
+            this.BuildingArea.AutoSize = true;
+            this.BuildingArea.Location = new System.Drawing.Point(244, 33);
+            this.BuildingArea.Name = "BuildingArea";
+            this.BuildingArea.Size = new System.Drawing.Size(50, 13);
+            this.BuildingArea.TabIndex = 8;
+            this.BuildingArea.Text = "Περιοχή:";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(247, 49);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 9;
+            // 
             // Dapanes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 322);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.BuildingArea);
+            this.Controls.Add(this.BuildingAddress);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label3);
@@ -94,6 +144,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Dapanes";
             this.Text = "Dapanes";
+            this.Load += new System.EventHandler(this.Dapanes_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,6 +157,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label BuildingAddress;
+        private System.Windows.Forms.Label BuildingArea;
+        private System.Windows.Forms.ComboBox comboBox2;
 
     }
 }

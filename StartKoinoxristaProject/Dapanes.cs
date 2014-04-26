@@ -56,5 +56,25 @@ namespace StartKoinoxristaProject
             // Display the index of the first selected item in the ListBox.
             System.Diagnostics.Debug.WriteLine(listBox1.SelectedIndices[0].ToString());     
         }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dapanes_Load(object sender, EventArgs e)
+        {
+            //comboBox1.Items.Add("Item 1", "Item 2");
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
