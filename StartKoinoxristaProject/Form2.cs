@@ -74,8 +74,9 @@ namespace StartKoinoxristaProject
 
             myCommand.Connection = writeKinoxrista.get_connection();
 
-            SqlDataAdapter myDataAdapter = new SqlDataAdapter();
-            myDataAdapter.SelectCommand = myCommand;
+            writeKinoxrista.DataAdapterInitialization(myCommand);
+
+            DataSetInitialization();
 
             DataSet myDataSet = new DataSet();
             DataTable myDataTable = new DataTable();

@@ -57,7 +57,7 @@ namespace StartKoinoxristaProject
             }
         }
 
-        // Make a new read-only connection between the application and the database
+        // Make a new read-only communication channel between the application and the database
         // @connString the string that represents the local path of the database
         public void ReadingTheDatabase()
         {
@@ -68,6 +68,14 @@ namespace StartKoinoxristaProject
             set_connection();
             OpenTheDatabase(get_connection());
 
+        }
+
+        // Create a new DataAdapter object and define which command will use
+        // @myCommd the command that DataAdapter will use
+        public void DataAdapterInitialization(SqlCommand myCommd)
+        {
+            SqlDataAdapter myDataAdapter = new SqlDataAdapter();
+            myDataAdapter.SelectCommand = myCommd;
         }
 
     }
