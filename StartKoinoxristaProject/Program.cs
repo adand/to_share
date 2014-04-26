@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
 using System.Data.SqlClient;
 
 
@@ -59,7 +60,7 @@ namespace StartKoinoxristaProject
 
         // Make a new read-only communication channel between the application and the database
         // @connString the string that represents the local path of the database
-        public void ReadingTheDatabase()
+        public void CommunicateWithDatabase()
         {
             string connString =
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
@@ -67,15 +68,37 @@ namespace StartKoinoxristaProject
             set_connectionString(connString);
             set_connection();
             OpenTheDatabase(get_connection());
-
         }
 
         // Create a new DataAdapter object and define which command will use
         // @myCommd the command that DataAdapter will use
-        public void DataAdapterInitialization(SqlCommand myCommd)
+        // @return the DataAdapter that was created
+        public SqlDataAdapter DataAdapterInitialization(SqlCommand myCommd)
         {
             SqlDataAdapter myDataAdapter = new SqlDataAdapter();
             myDataAdapter.SelectCommand = myCommd;
+
+            return myDataAdapter;
+        }
+
+        // Creating a data set and it's data tables.
+        // @dataTables the number of DataTables that DataSet will store
+        // @return the array of DataTables that was created
+        public DataTable[] DataSetInitialization(int dataTables)
+        {
+            DataSet myDataSet = new DataSet();
+
+            // Declare an array that will store DataTables
+            DataTable[] myDataTables = new DataTable[dataTables];
+
+            // fill the array
+            for (int i = 0; i < dataTables; i++)
+            {
+                myDataTables[i] = new DataTable();
+                myDataSet.Tables.Add(myDataTables[i]);
+            }
+
+            return myDataTables;
         }
 
     }

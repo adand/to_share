@@ -14,9 +14,9 @@ namespace StartKoinoxristaProject
 {
     public partial class Form2 : Form
     {
-        private string BuildingID;
-        private string Address;
-        private string Area;
+        //private string BuildingID;
+        //private string Address;
+        //private string Area;
 
         string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
        
@@ -34,11 +34,15 @@ namespace StartKoinoxristaProject
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // Create an object of the class. This class is inside the program.cs file
+            SqlDataAdapter myDataAdapter;
+            DataTable[] myDataTables;   // define a table that will store the DataTables of the DataSet
+            int DataTablesIndex = 0;    // an index that will be used to access myDataTables array
+
+            // Create an object of the database accessor class. This class is inside the program.cs file
             AccessTheDatabase writeKinoxrista = new AccessTheDatabase();
 
-            // Call a method of the database by using the object that has been declared above
-            writeKinoxrista.ReadingTheDatabase();
+            // Call the communication method of the database by using the object that has been declared above
+            writeKinoxrista.CommunicateWithDatabase();
 
             SqlCommand myCommand = new SqlCommand("insert into Buildings values(@BuildingID, @Address, @Area)");
             myCommand.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
@@ -68,32 +72,36 @@ namespace StartKoinoxristaProject
                 catch(SqlException ext) {
 
                     MessageBox.Show("Error :"+ext.Message);
-                
+
                 }
             }
 
+            // set the communication between Command and Connection
             myCommand.Connection = writeKinoxrista.get_connection();
 
-            writeKinoxrista.DataAdapterInitialization(myCommand);
+            // Initialize DataAdapter and set it's communication with Command
+            myDataAdapter = writeKinoxrista.DataAdapterInitialization(myCommand);
 
-            DataSetInitialization();
+            // a variable that will store the number of data tables that will be inside the data set
+            int dataTables;
+            dataTables = 1;
 
-            DataSet myDataSet = new DataSet();
-            DataTable myDataTable = new DataTable();
-            myDataSet.Tables.Add(myDataTable);
+            // call the method that will create the DataSet and the DataTables inside it
+            myDataTables = writeKinoxrista.DataSetInitialization(dataTables);
 
             if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
             {
                 try
                 {
-                    myDataAdapter.Fill(myDataTable);
-                    MessageBox.Show("Insertion was successful");
+                    // Access the DataTable that DataTablesIndex pointing to, and fill it. Set DataTablesIndex pointing to the next DataTable.
+                    myDataAdapter.Fill(myDataTables[DataTablesIndex++]);
+                    MessageBox.Show("Insertion was successful");    // Successful insertion to database
                     Form3 frm3 = new Form3();
                     frm3.Show();
                 }
                 catch (SqlException ex)
                 {
-                    if (ex.Number == 2627)
+                    if (ex.Number == 2627) // case of primary key constraint violation
                     {
                         MessageBox.Show("Duplicate ID");
                     }
