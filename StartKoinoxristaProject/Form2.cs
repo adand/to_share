@@ -77,7 +77,7 @@ namespace StartKoinoxristaProject
             {
                 try
                 {
-                    // Access the DataTable that DataTablesIndex pointing to, and fill it. Set DataTablesIndex pointing to the next DataTable.
+                    // Fill DataTable by using DataAdapter
                     AddBuildings.get_myDataAdapter().Fill(AddBuildings.get_myDataTable());
                     MessageBox.Show("Insertion was successful");    // Successful insertion to database
                     Form3 frm3 = new Form3();
@@ -155,6 +155,22 @@ namespace StartKoinoxristaProject
 
         private void ClearBuildingsTable_Click(object sender, EventArgs e)
         {
+            string query = "delete from Buildings";
+            AccessTheDatabase ClearBuildings = new AccessTheDatabase();
+            ClearBuildings.AccessingProcess(query);
+
+            try
+            {
+                // Fill DataTable by using DataAdapter
+                ClearBuildings.get_myDataAdapter().Fill(ClearBuildings.get_myDataTable());
+                MessageBox.Show("Deletion was successful");    // Successful deletion on database
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Deletion Failed: " + ex.Message + MessageBoxButtons.OK + MessageBoxIcon.Error); // show exeption error, ok button and error icon 
+            }
+
+            
             /*SqlDataAdapter myDataAdapter;
 
             // Create an object of the database accessor class. This class is inside the program.cs file

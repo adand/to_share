@@ -129,5 +129,24 @@ namespace StartKoinoxristaProject
 
             DataSetInitialization();
         }
+
+        public void AccessingProcess(string query)
+        {
+
+            // Call the communication method of the database by using the object that has been declared above
+            CommunicateWithDatabase();
+
+            // Command initialization
+            myCommand = new SqlCommand(query);
+
+            // set the communication between Command and Connection
+            myCommand.Connection = connection;
+
+            // Initialize DataAdapter and set it's communication with Command
+            DataAdapterInitialization(myCommand);
+
+            DataSetInitialization();
+        }
+
     }
 }
