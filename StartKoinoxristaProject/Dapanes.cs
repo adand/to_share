@@ -64,7 +64,21 @@ namespace StartKoinoxristaProject
 
         private void Dapanes_Load(object sender, EventArgs e)
         {
-            //comboBox1.Items.Add("Item 1", "Item 2");
+            string query;
+            query = "select * from Buildings";
+            AccessTheDatabase ShowBuilding = new AccessTheDatabase();
+            ShowBuilding.AccessingProcess(query);
+            ShowBuilding.get_myDataAdapter().Fill(ShowBuilding.get_myDataTable());
+
+            DataTable dt = ShowBuilding.get_myDataTable();
+            /*string addr = dt.Rows[0].ItemArray[1].ToString();
+            MessageBox.Show(addr);*/
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                AddressComboBox.Items.Add(dt.Rows[i]["Address"]);
+                AreaComboBox.Items.Add(dt.Rows[i]["Area"]);
+            }
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -72,9 +86,19 @@ namespace StartKoinoxristaProject
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void AddressComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showBuildingButton_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void AreaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
