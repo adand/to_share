@@ -42,6 +42,40 @@ namespace StartKoinoxristaProject
             // Call the method that will begin the process of database access
             AddBuildings.AccessingProcess(BuildingIDTextBox.Text, AddressTextBox.Text, AreaTextBox.Text, query);
 
+            if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
+            {
+                try
+                {
+                    // Fill DataTable by using DataAdapter
+                    AddBuildings.get_myDataAdapter().Fill(AddBuildings.get_myDataTable());
+                    MessageBox.Show("Insertion was successful");    // Successful insertion to database
+                    Form3 frm3 = new Form3();
+                    frm3.Show();
+                }
+                catch (SqlException ex)
+                {
+                    if (ex.Number == 2627) // case of primary key constraint violation
+                    {
+                        MessageBox.Show("Duplicate ID");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Insertion Failed: " + ex.Message + MessageBoxButtons.OK + MessageBoxIcon.Error); // show exeption error, ok button and error icon 
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Fill All Fields ");
+
+            }
+
+            // Create an object of the database accessor class. This class is inside the program.cs file
+            AccessTheDatabase AddApartments = new AccessTheDatabase();
+
+            // Call the method that will begin the process of database access
+            AddApartments.AccessingProcess(BuildingIDTextBox.Text, AddressTextBox.Text, AreaTextBox.Text, query);
+
             /* need to be fixed
              * 
             //insert apartments
@@ -73,33 +107,7 @@ namespace StartKoinoxristaProject
              * 
             */
 
-            if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
-            {
-                try
-                {
-                    // Fill DataTable by using DataAdapter
-                    AddBuildings.get_myDataAdapter().Fill(AddBuildings.get_myDataTable());
-                    MessageBox.Show("Insertion was successful");    // Successful insertion to database
-                    Form3 frm3 = new Form3();
-                    frm3.Show();
-                }
-                catch (SqlException ex)
-                {
-                    if (ex.Number == 2627) // case of primary key constraint violation
-                    {
-                        MessageBox.Show("Duplicate ID");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Insertion Failed: "+ex.Message +MessageBoxButtons.OK+MessageBoxIcon.Error); // show exeption error, ok button and error icon 
-                    }
-                }
-            }
-            else 
-            {
-                MessageBox.Show("Please Fill All Fields ");
             
-            }
         }
 
             //Console.ReadLine();
@@ -181,6 +189,11 @@ namespace StartKoinoxristaProject
 
             SqlCommand myCommand = new SqlCommand("delete from Buildings");
              * */
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
        // insert values on apartments table does not work yes 

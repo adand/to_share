@@ -19,7 +19,7 @@ namespace StartKoinoxristaProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new DataGridView());
         }
     }
 
@@ -60,6 +60,8 @@ namespace StartKoinoxristaProject
             return myDataTable;
         }
 
+        // Open the communication channel between the application and the database
+        // @myConn the connection that was used to establish the communication
         public void OpenTheDatabase(SqlConnection myConn)
         {
             try
@@ -69,6 +71,20 @@ namespace StartKoinoxristaProject
             catch (Exception eOpen)
             {
                 Console.WriteLine(eOpen.ToString());
+            }
+        }
+
+        // Close the communication channel between the application and the database
+        // @myConn the connection that was used to establish the communication
+        public void CloseTheDatabase(SqlConnection myConn)
+        {
+            try
+            {
+                myConn.Close();
+            }
+            catch (Exception eClose)
+            {
+                Console.WriteLine(eClose.ToString());
             }
         }
 
@@ -108,9 +124,15 @@ namespace StartKoinoxristaProject
 
         }
 
+        // This is one of the overloaded versions of the AccessingProcess method.
+        // This spesific version adds data to the database
+        // It takes as arguments the data of each row. It inserts into the database one row at a time.
+        // @BuildingID the string that contains the data that user wants to insert into that column of the database table.
+        // @Address the string that contains the data that user wants to insert into that column of the database table.
+        // @Area the string that contains the data that user wants to insert into that column of the database table.
+        // @query the string that contains the SQL query that user wants to execute onto the database table.
         public void AccessingProcess(string BuildingID, string Address, string Area, string query)
         {
-
             // Call the communication method of the database by using the object that has been declared above
             CommunicateWithDatabase();
 
@@ -130,9 +152,11 @@ namespace StartKoinoxristaProject
             DataSetInitialization();
         }
 
+        // This is one of the overloaded versions of the AccessingProcess method.
+        // This spesific version deletes data from database table.
+        // @query the string that contains the SQL query that user wants to execute onto the database table.
         public void AccessingProcess(string query)
         {
-
             // Call the communication method of the database by using the object that has been declared above
             CommunicateWithDatabase();
 
@@ -146,6 +170,18 @@ namespace StartKoinoxristaProject
             DataAdapterInitialization(myCommand);
 
             DataSetInitialization();
+
+            /*
+             * //Fill the DataTable with the required data
+            myDataAdapter.Fill(myDataTable);
+             * 
+             */
+
+            /*
+             * // Calling the method that will close the connection between the application and the database
+            CloseTheDatabase(get_connection());
+             * 
+             */
         }
 
     }
