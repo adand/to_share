@@ -14,7 +14,10 @@ create table test(notnull varchar(10) check (notnull != ''));*/
 
 /*drop table costPreDefinedItems;*/
 
-select * from costPreDefinedItems;
+/*select * from costPreDefinedItems;
 update costPreDefinedItems
 set costDescription = null
-where costDescription = 'cd3';
+where costDescription = 'cd3';*/
+
+select * from buildings;
+/*insert into buildings values('503', 'addr503', 'ar301');*/

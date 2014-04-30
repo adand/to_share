@@ -40,3 +40,4 @@ C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoin
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.DataGridView.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.costPredefinedItems.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.createNewBuildingForm.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.queryWithStringFormat.resources
