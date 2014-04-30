@@ -48,7 +48,7 @@ namespace StartKoinoxristaProject
                 SqlConnection con = new SqlConnection();
                 con.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
                 con.Open();
-                adap = new SqlDataAdapter("select AparmentID, FullName, GeneralMM, ElevatorMM, Manager from Apartments", con); 
+                adap = new SqlDataAdapter("select * from Apartments", con); 
                 ds = new DataSet();
                 adap.Fill(ds);
                 dataGridView1.DataSource = ds.Tables[0];

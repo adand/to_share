@@ -66,6 +66,9 @@ namespace StartKoinoxristaProject
                 costDescriptionLabel.Show();
                 costValueTextBox.Show();
                 costValueLabel.Show();
+                saveButton.Show();
+                messageLabel.Show();
+                alreadyInsertedCostDataGridView.Show();
             }
 
             
@@ -120,6 +123,9 @@ namespace StartKoinoxristaProject
             costDescriptionLabel.Hide();
             costValueTextBox.Hide();
             costValueLabel.Hide();
+            saveButton.Hide();
+            messageLabel.Hide();
+            alreadyInsertedCostDataGridView.Hide();
            
             decimal a = 3.5m;
             double b = 7000232165.34;
@@ -130,21 +136,45 @@ namespace StartKoinoxristaProject
             costCategoryComboBox.Items.Add(b.ToString("N", nfi));
             costCategoryComboBox.Items.Add(c);
 
-            string query;
-            query = "select * from Buildings";
+            // Begin reading database table Building in order to fill the comboboxes Address and Area
+
+            string queryOnBuildings;
+            queryOnBuildings = "select * from Buildings";
             AccessTheDatabase ShowBuilding = new AccessTheDatabase();
-            ShowBuilding.AccessingProcess(query);
+            ShowBuilding.AccessingProcess(queryOnBuildings);
             ShowBuilding.get_myDataAdapter().Fill(ShowBuilding.get_myDataTable());
 
-            DataTable dt = ShowBuilding.get_myDataTable();
+            DataTable dtOfBuildings = ShowBuilding.get_myDataTable();
             /*string addr = dt.Rows[0].ItemArray[1].ToString();
             MessageBox.Show(addr);*/
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dtOfBuildings.Rows.Count; i++)
             {
-                AddressComboBox.Items.Add(dt.Rows[i]["Address"]);
-                AreaComboBox.Items.Add(dt.Rows[i]["Area"]);
+                AddressComboBox.Items.Add(dtOfBuildings.Rows[i]["Address"]);
+                AreaComboBox.Items.Add(dtOfBuildings.Rows[i]["Area"]);
             }
+
+
+            string queryOnCostPredefinedItems;
+            queryOnCostPredefinedItems = "select * from costPredefinedItems";
+            AccessTheDatabase showCostPredefinedItems = new AccessTheDatabase();
+            showCostPredefinedItems.AccessingProcess(queryOnCostPredefinedItems);
+            showCostPredefinedItems.get_myDataAdapter().Fill(showCostPredefinedItems.get_myDataTable());
+
+            DataTable dtOfcostPredefinedItems = showCostPredefinedItems.get_myDataTable();
+            /*string addr = dt.Rows[0].ItemArray[1].ToString();
+            MessageBox.Show(addr);*/
+
+            for (int i = 0; i < dtOfcostPredefinedItems.Rows.Count; i++)
+            {
+                costCategoryComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costCategory"]);
+                /*if ((dtOfcostPredefinedItems.Rows[i]["costDescription"] != "") && (dtOfcostPredefinedItems.Rows[i]["costDescription"] is not null))*/
+                if (string.IsNullOrEmpty(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false)
+                {
+                    costDescriptionComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costDescription"]);
+                }
+            }
+
 
             string[] monthNames = { "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος",
                                   "Νοέμβριος", "Δεκέμβριος" };
@@ -192,6 +222,21 @@ namespace StartKoinoxristaProject
         }
 
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void costCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

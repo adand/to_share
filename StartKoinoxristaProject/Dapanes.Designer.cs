@@ -43,10 +43,10 @@
             this.costDescriptionLabel = new System.Windows.Forms.Label();
             this.costValueTextBox = new System.Windows.Forms.TextBox();
             this.costValueLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.messageLabel = new System.Windows.Forms.Label();
+            this.alreadyInsertedCostDataGridView = new System.Windows.Forms.DataGridView();
+            this.saveButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.alreadyInsertedCostDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // continueButton
@@ -139,6 +139,7 @@
             this.costCategoryComboBox.Name = "costCategoryComboBox";
             this.costCategoryComboBox.Size = new System.Drawing.Size(121, 21);
             this.costCategoryComboBox.TabIndex = 15;
+            this.costCategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.costCategoryComboBox_SelectedIndexChanged);
             // 
             // costCategoryLabel
             // 
@@ -183,40 +184,42 @@
             this.costValueLabel.TabIndex = 20;
             this.costValueLabel.Text = "Cost:";
             // 
-            // label1
+            // messageLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(515, 144);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(373, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Ήδη καταχωρημένες δαπάνες πολυκατοικίας γι\' αυτή τη χρονική περίοδο";
+            this.messageLabel.AutoSize = true;
+            this.messageLabel.Location = new System.Drawing.Point(515, 144);
+            this.messageLabel.Name = "messageLabel";
+            this.messageLabel.Size = new System.Drawing.Size(373, 13);
+            this.messageLabel.TabIndex = 21;
+            this.messageLabel.Text = "Ήδη καταχωρημένες δαπάνες πολυκατοικίας γι\' αυτή τη χρονική περίοδο";
             // 
-            // dataGridView1
+            // alreadyInsertedCostDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(518, 160);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(453, 150);
-            this.dataGridView1.TabIndex = 22;
+            this.alreadyInsertedCostDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.alreadyInsertedCostDataGridView.Location = new System.Drawing.Point(518, 160);
+            this.alreadyInsertedCostDataGridView.Name = "alreadyInsertedCostDataGridView";
+            this.alreadyInsertedCostDataGridView.Size = new System.Drawing.Size(453, 150);
+            this.alreadyInsertedCostDataGridView.TabIndex = 22;
+            this.alreadyInsertedCostDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // button1
+            // saveButton
             // 
-            this.button1.Location = new System.Drawing.Point(896, 92);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.saveButton.Location = new System.Drawing.Point(896, 92);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 23;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // Dapanes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1178, 322);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(1029, 371);
+            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.alreadyInsertedCostDataGridView);
+            this.Controls.Add(this.messageLabel);
             this.Controls.Add(this.costValueLabel);
             this.Controls.Add(this.costValueTextBox);
             this.Controls.Add(this.costDescriptionLabel);
@@ -235,7 +238,7 @@
             this.Name = "Dapanes";
             this.Text = "Dapanes";
             this.Load += new System.EventHandler(this.Dapanes_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alreadyInsertedCostDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,9 +261,9 @@
         private System.Windows.Forms.Label costDescriptionLabel;
         private System.Windows.Forms.TextBox costValueTextBox;
         private System.Windows.Forms.Label costValueLabel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label messageLabel;
+        private System.Windows.Forms.DataGridView alreadyInsertedCostDataGridView;
+        private System.Windows.Forms.Button saveButton;
 
     }
 }
