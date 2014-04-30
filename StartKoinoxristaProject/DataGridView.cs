@@ -37,7 +37,7 @@ namespace StartKoinoxristaProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Error" + ex.Message);
             }
         }
 
