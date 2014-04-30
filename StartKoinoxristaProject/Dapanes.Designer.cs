@@ -175,6 +175,7 @@
             this.costDescriptionComboBox.Size = new System.Drawing.Size(303, 21);
             this.costDescriptionComboBox.TabIndex = 17;
             this.costDescriptionComboBox.Text = "Select a category from the list or type your own description";
+            this.costDescriptionComboBox.SelectedIndexChanged += new System.EventHandler(this.costDescriptionComboBox_SelectedIndexChanged);
             // 
             // buildingsBindingSource
             // 

@@ -150,7 +150,22 @@ namespace StartKoinoxristaProject
 
         private void costCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string queryOnBuildings;
+            queryOnBuildings = string.Format("select costDescription from costPreDefinedItems where costCategory = '{0}'", costCategoryComboBox.SelectedItem);
+            AccessTheDatabase ShowBuilding = new AccessTheDatabase();
+            ShowBuilding.AccessingProcess(queryOnBuildings);
+            ShowBuilding.get_myDataAdapter().Fill(ShowBuilding.get_myDataTable());
 
+            DataTable dtOfBuildings = ShowBuilding.get_myDataTable();
+            /*string addr = dt.Rows[0].ItemArray[1].ToString();
+            MessageBox.Show(addr);*/
+
+            AddressComboBox.Items.Clear();
+            for (int i = 0; i < dtOfBuildings.Rows.Count; i++)
+            {
+                costDescriptionComboBox.Items.Add(dtOfBuildings.Rows[i]["costDescription"]);
+                // AreaComboBox.Items.Add(dtOfBuildings.Rows[i]["Area"]);
+            }
         }
 
         private void continueButton_Click(object sender, EventArgs e)
@@ -163,7 +178,7 @@ namespace StartKoinoxristaProject
                 invalidChoice = true;
             }
 
-            if (invalidChoice == false)
+            if (invalidChoice == true)
             {
                 continueButton.Hide();
 
@@ -183,7 +198,7 @@ namespace StartKoinoxristaProject
                 alreadyInsertedCostDataGridView.Show();
 
                 string queryOnCostPredefinedItems;
-                queryOnCostPredefinedItems = "select * from costPredefinedItems";
+                queryOnCostPredefinedItems = "select costCategory, costDescription from costPredefinedItems group by costCategory";
                 AccessTheDatabase showCostPredefinedItems = new AccessTheDatabase();
                 showCostPredefinedItems.AccessingProcess(queryOnCostPredefinedItems);
                 showCostPredefinedItems.get_myDataAdapter().Fill(showCostPredefinedItems.get_myDataTable());
@@ -242,6 +257,11 @@ namespace StartKoinoxristaProject
             System.Diagnostics.Debug.WriteLine(listBox1.SelectedIndices[0].ToString());  
              * 
              */
+        }
+
+        private void costDescriptionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
