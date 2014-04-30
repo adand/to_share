@@ -34,8 +34,9 @@ C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\bin\Debug\StartKoin
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csprojResolveAssemblyReference.cache
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Dapanes.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
-C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form2.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
 C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.DataGridView.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.costPredefinedItems.resources
+C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.createNewBuildingForm.resources

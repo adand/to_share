@@ -12,7 +12,7 @@ using System.IO;
 
 namespace StartKoinoxristaProject
 {
-    public partial class Form2 : Form
+    public partial class createNewBuildingForm : Form
     {
         //private string BuildingID;
         //private string Address;
@@ -21,7 +21,7 @@ namespace StartKoinoxristaProject
         string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
        
 
-        public Form2()
+        public createNewBuildingForm()
         {
             InitializeComponent();
             
@@ -158,7 +158,9 @@ namespace StartKoinoxristaProject
 
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            apartmentDetailsDataGridView.Hide();
+            clearBuildingsTableButton.Hide();
+            SaveButton.Hide();
         }
 
         private void ClearBuildingsTable_Click(object sender, EventArgs e)
@@ -194,6 +196,16 @@ namespace StartKoinoxristaProject
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void continueButton_Click(object sender, EventArgs e)
+        {
+            BuildingIDTextBox.Enabled = false;
+            AddressTextBox.Enabled = false;
+            AreaTextBox.Enabled = false;
+            continueButton.Hide();
+            apartmentDetailsDataGridView.Show();
+            SaveButton.Show();
         }
 
        // insert values on apartments table does not work yes 

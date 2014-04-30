@@ -20,7 +20,7 @@ namespace StartKoinoxristaProject
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form2 frm = new Form2();
+            createNewBuildingForm frm = new createNewBuildingForm();
             frm.Show();
             
         }
@@ -40,6 +40,12 @@ namespace StartKoinoxristaProject
             this.Hide();
             Dapanes dap1 = new Dapanes();
             dap1.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            costPredefinedItems a = new costPredefinedItems();
+            a.Show();
         }
     }
 

@@ -11,44 +11,27 @@ using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
-    public partial class DataGridView : Form
+    public partial class costPredefinedItems : Form
     {
-        SqlDataAdapter adap;
-        SqlCommandBuilder cmdb1;
-        DataSet ds;
-
-        public DataGridView()
+        public costPredefinedItems()
         {
             InitializeComponent();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void SaveApartments_Click(object sender, EventArgs e)
+        private void costPredefinedItems_Load(object sender, EventArgs e)
         {
-            try
-            {
-                cmdb1 = new SqlCommandBuilder(adap);
-                adap.Update(ds);
-                MessageBox.Show("Information updated");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error");
-            }
-        }
-
-        private void DataGridView_Load(object sender, EventArgs e)
-        {
+            /*
             try
             {
                 SqlConnection con = new SqlConnection();
                 con.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
                 con.Open();
-                adap = new SqlDataAdapter("select * from Apartments", con); 
+                adap = new SqlDataAdapter("select * from costPredefinedItems", con);
                 ds = new DataSet();
                 adap.Fill(ds);
                 dataGridView1.DataSource = ds.Tables[0];
@@ -57,6 +40,7 @@ namespace StartKoinoxristaProject
             {
                 MessageBox.Show(ex.Message);
             }
+             */
         }
     }
 }
