@@ -3,4 +3,13 @@
 /*create table costPreDefinedItems(costCategory varchar(20) not null check (costCategory != ''), costDescription varchar(40),
 constraint unique_combination unique(costCategory, costDescription));*/
 
-select * from costPreDefinedItems;
+/*create table test(a int, b varchar(10));*/
+
+/*insert into test values(123, 'abc');
+insert into test values(124, 'bcd');
+insert into test values(125, 'efg');
+insert into test values(123, 'wxy');
+insert into test values(123, 'abc');
+*/
+
+select * from costPredefinedItems;

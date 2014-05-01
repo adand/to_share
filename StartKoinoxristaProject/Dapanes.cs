@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
@@ -150,6 +151,8 @@ namespace StartKoinoxristaProject
 
         private void costCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            costDescriptionComboBox.Items.Clear();
+            
             string queryOnBuildings;
             queryOnBuildings = string.Format("select costDescription from costPreDefinedItems where costCategory = '{0}'", costCategoryComboBox.SelectedItem);
             AccessTheDatabase ShowBuilding = new AccessTheDatabase();
@@ -197,23 +200,44 @@ namespace StartKoinoxristaProject
                 messageLabel.Show();
                 alreadyInsertedCostDataGridView.Show();
 
-                string queryOnCostPredefinedItems;
-                queryOnCostPredefinedItems = "select costCategory, costDescription from costPredefinedItems group by costCategory";
-                AccessTheDatabase showCostPredefinedItems = new AccessTheDatabase();
-                showCostPredefinedItems.AccessingProcess(queryOnCostPredefinedItems);
-                showCostPredefinedItems.get_myDataAdapter().Fill(showCostPredefinedItems.get_myDataTable());
+                string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
 
-                DataTable dtOfcostPredefinedItems = showCostPredefinedItems.get_myDataTable();
-                /*string addr = dt.Rows[0].ItemArray[1].ToString();
-                MessageBox.Show(addr);*/
+                string queryString1 = "select distinct costCategory from costPredefinedItems";
+                string queryString2 = "select distinct costDescription from costPredefinedItems";
 
-                for (int i = 0; i < dtOfcostPredefinedItems.Rows.Count; i++)
+                // Create and open the connection in a using block. This 
+                // ensures that all resources will be closed and disposed 
+                // when the code exits.
+                using(SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    costCategoryComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costCategory"]);
-                    if ((string.IsNullOrEmpty(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false) &&
-                        (string.IsNullOrWhiteSpace(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false))
+                    SqlCommand command1 = new SqlCommand(queryString1, connection);
+                    SqlCommand command2 = new SqlCommand(queryString2, connection);
+
+                    try
                     {
-                        costDescriptionComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costDescription"]);
+                        connection.Open();
+                        SqlDataReader reader1 = command1.ExecuteReader();
+
+                        while (reader1.Read())
+                        {
+                            costCategoryComboBox.Items.Add(reader1[0]);
+                        }
+
+                        reader1.Close();
+
+                        SqlDataReader reader2 = command2.ExecuteReader();
+
+                        while (reader2.Read())
+                        {
+                            costDescriptionComboBox.Items.Add(reader2[0]);
+                        }
+
+                        reader2.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
