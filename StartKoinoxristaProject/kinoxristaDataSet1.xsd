@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="kinoxristaDataSet1" targetNamespace="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns:mstns="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="kinoxristaDataSet" targetNamespace="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns:mstns="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns="http://tempuri.org/kinoxristaDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -227,7 +227,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="kinoxristaDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="kinoxristaDataSet1" msprop:Generator_UserDSName="kinoxristaDataSet1">
+  <xs:element name="kinoxristaDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="kinoxristaDataSet" msprop:Generator_UserDSName="kinoxristaDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="Apartments" msprop:Generator_TableClassName="ApartmentsDataTable" msprop:Generator_TableVarName="tableApartments" msprop:Generator_TablePropName="Apartments" msprop:Generator_RowDeletingName="ApartmentsRowDeleting" msprop:Generator_RowChangingName="ApartmentsRowChanging" msprop:Generator_RowEvHandlerName="ApartmentsRowChangeEventHandler" msprop:Generator_RowDeletedName="ApartmentsRowDeleted" msprop:Generator_UserTableName="Apartments" msprop:Generator_RowChangedName="ApartmentsRowChanged" msprop:Generator_RowEvArgName="ApartmentsRowChangeEvent" msprop:Generator_RowClassName="ApartmentsRow">

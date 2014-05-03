@@ -20,9 +20,9 @@ namespace StartKoinoxristaProject {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("kinoxristaDataSet1")]
+    [global::System.Xml.Serialization.XmlRootAttribute("kinoxristaDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class kinoxristaDataSet1 : global::System.Data.DataSet {
+    public partial class kinoxristaDataSet : global::System.Data.DataSet {
         
         private ApartmentsDataTable tableApartments;
         
@@ -38,7 +38,7 @@ namespace StartKoinoxristaProject {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public kinoxristaDataSet1() {
+        public kinoxristaDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -49,7 +49,7 @@ namespace StartKoinoxristaProject {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected kinoxristaDataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected kinoxristaDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -187,7 +187,7 @@ namespace StartKoinoxristaProject {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            kinoxristaDataSet1 cln = ((kinoxristaDataSet1)(base.Clone()));
+            kinoxristaDataSet cln = ((kinoxristaDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -295,7 +295,7 @@ namespace StartKoinoxristaProject {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "kinoxristaDataSet1";
+            this.DataSetName = "kinoxristaDataSet";
             this.Prefix = "";
             this.Namespace = "http://tempuri.org/kinoxristaDataSet1.xsd";
             this.EnforceConstraints = true;
@@ -353,7 +353,7 @@ namespace StartKoinoxristaProject {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+            kinoxristaDataSet ds = new kinoxristaDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -684,7 +684,7 @@ namespace StartKoinoxristaProject {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+                kinoxristaDataSet ds = new kinoxristaDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -975,7 +975,7 @@ namespace StartKoinoxristaProject {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+                kinoxristaDataSet ds = new kinoxristaDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1242,7 +1242,7 @@ namespace StartKoinoxristaProject {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+                kinoxristaDataSet ds = new kinoxristaDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1563,7 +1563,7 @@ namespace StartKoinoxristaProject {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+                kinoxristaDataSet ds = new kinoxristaDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1811,7 +1811,7 @@ namespace StartKoinoxristaProject {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                kinoxristaDataSet1 ds = new kinoxristaDataSet1();
+                kinoxristaDataSet ds = new kinoxristaDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2535,7 +2535,7 @@ namespace StartKoinoxristaProject {
         }
     }
 }
-namespace StartKoinoxristaProject.kinoxristaDataSet1TableAdapters {
+namespace StartKoinoxristaProject.kinoxristaDataSetTableAdapters {
     
     
     /// <summary>
@@ -2738,7 +2738,7 @@ SELECT BuildingID, AparmentID, FullName, GeneralMM, ElevatorMM, Manager FROM Apa
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(kinoxristaDataSet1.ApartmentsDataTable dataTable) {
+        public virtual int Fill(kinoxristaDataSet.ApartmentsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -2751,9 +2751,9 @@ SELECT BuildingID, AparmentID, FullName, GeneralMM, ElevatorMM, Manager FROM Apa
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual kinoxristaDataSet1.ApartmentsDataTable GetData() {
+        public virtual kinoxristaDataSet.ApartmentsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            kinoxristaDataSet1.ApartmentsDataTable dataTable = new kinoxristaDataSet1.ApartmentsDataTable();
+            kinoxristaDataSet.ApartmentsDataTable dataTable = new kinoxristaDataSet.ApartmentsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -2761,14 +2761,14 @@ SELECT BuildingID, AparmentID, FullName, GeneralMM, ElevatorMM, Manager FROM Apa
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1.ApartmentsDataTable dataTable) {
+        public virtual int Update(kinoxristaDataSet.ApartmentsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1 dataSet) {
+        public virtual int Update(kinoxristaDataSet dataSet) {
             return this.Adapter.Update(dataSet, "Apartments");
         }
         
@@ -3199,7 +3199,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(kinoxristaDataSet1.BuildingsDataTable dataTable) {
+        public virtual int Fill(kinoxristaDataSet.BuildingsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -3212,9 +3212,9 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual kinoxristaDataSet1.BuildingsDataTable GetData() {
+        public virtual kinoxristaDataSet.BuildingsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            kinoxristaDataSet1.BuildingsDataTable dataTable = new kinoxristaDataSet1.BuildingsDataTable();
+            kinoxristaDataSet.BuildingsDataTable dataTable = new kinoxristaDataSet.BuildingsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3222,14 +3222,14 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1.BuildingsDataTable dataTable) {
+        public virtual int Update(kinoxristaDataSet.BuildingsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1 dataSet) {
+        public virtual int Update(kinoxristaDataSet dataSet) {
             return this.Adapter.Update(dataSet, "Buildings");
         }
         
@@ -3546,7 +3546,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(kinoxristaDataSet1.costPreDefinedItemsDataTable dataTable) {
+        public virtual int Fill(kinoxristaDataSet.costPreDefinedItemsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -3559,9 +3559,9 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual kinoxristaDataSet1.costPreDefinedItemsDataTable GetData() {
+        public virtual kinoxristaDataSet.costPreDefinedItemsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            kinoxristaDataSet1.costPreDefinedItemsDataTable dataTable = new kinoxristaDataSet1.costPreDefinedItemsDataTable();
+            kinoxristaDataSet.costPreDefinedItemsDataTable dataTable = new kinoxristaDataSet.costPreDefinedItemsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3569,14 +3569,14 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1.costPreDefinedItemsDataTable dataTable) {
+        public virtual int Update(kinoxristaDataSet.costPreDefinedItemsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1 dataSet) {
+        public virtual int Update(kinoxristaDataSet dataSet) {
             return this.Adapter.Update(dataSet, "costPreDefinedItems");
         }
         
@@ -3793,7 +3793,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(kinoxristaDataSet1.dapanesDataTable dataTable) {
+        public virtual int Fill(kinoxristaDataSet.dapanesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -3806,9 +3806,9 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual kinoxristaDataSet1.dapanesDataTable GetData() {
+        public virtual kinoxristaDataSet.dapanesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            kinoxristaDataSet1.dapanesDataTable dataTable = new kinoxristaDataSet1.dapanesDataTable();
+            kinoxristaDataSet.dapanesDataTable dataTable = new kinoxristaDataSet.dapanesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3816,14 +3816,14 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1.dapanesDataTable dataTable) {
+        public virtual int Update(kinoxristaDataSet.dapanesDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1 dataSet) {
+        public virtual int Update(kinoxristaDataSet dataSet) {
             return this.Adapter.Update(dataSet, "dapanes");
         }
         
@@ -4051,7 +4051,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(kinoxristaDataSet1.testDataTable dataTable) {
+        public virtual int Fill(kinoxristaDataSet.testDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -4064,9 +4064,9 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual kinoxristaDataSet1.testDataTable GetData() {
+        public virtual kinoxristaDataSet.testDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            kinoxristaDataSet1.testDataTable dataTable = new kinoxristaDataSet1.testDataTable();
+            kinoxristaDataSet.testDataTable dataTable = new kinoxristaDataSet.testDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -4074,14 +4074,14 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1.testDataTable dataTable) {
+        public virtual int Update(kinoxristaDataSet.testDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(kinoxristaDataSet1 dataSet) {
+        public virtual int Update(kinoxristaDataSet dataSet) {
             return this.Adapter.Update(dataSet, "test");
         }
         
@@ -4311,7 +4311,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(kinoxristaDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(kinoxristaDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._apartmentsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Apartments.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
@@ -4366,7 +4366,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(kinoxristaDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(kinoxristaDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._apartmentsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Apartments.Select(null, null, global::System.Data.DataViewRowState.Added);
@@ -4416,7 +4416,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(kinoxristaDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(kinoxristaDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             if ((this._testTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.test.Select(null, null, global::System.Data.DataViewRowState.Deleted);
@@ -4490,7 +4490,7 @@ SELECT BuildingID, Address, Area FROM Buildings WHERE (BuildingID = @BuildingID)
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(kinoxristaDataSet1 dataSet) {
+        public virtual int UpdateAll(kinoxristaDataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

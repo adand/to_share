@@ -33,7 +33,7 @@ namespace StartKoinoxristaProject
         private SqlCommand myCommand;
         private DataSet myDataSet;
         private DataTable myDataTable;
-        
+
         // @connString the connection string
         public void set_connectionString(string connString)
         {
@@ -93,7 +93,7 @@ namespace StartKoinoxristaProject
         public void CommunicateWithDatabase()
         {
             string connString =
-                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
 
             set_connectionString(connString);
             set_connection();

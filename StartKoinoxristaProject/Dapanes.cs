@@ -31,6 +31,8 @@ namespace StartKoinoxristaProject
 
         private void Dapanes_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'kinoxristaDataSet1.Apartments' table. You can move, or remove it, as needed.
+            this.apartmentsTableAdapter.Fill(this.kinoxristaDataSet1.Apartments);
             // TODO: This line of code loads data into the 'kinoxristaDataSet.Buildings' table. You can move, or remove it, as needed.
             this.buildingsTableAdapter.Fill(this.kinoxristaDataSet.Buildings);
 
@@ -184,16 +186,13 @@ namespace StartKoinoxristaProject
                 alreadyInsertedCostDataGridView.Show();
 
                 string connectionString =
-                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
 
                 // Provide the query string with a parameter placeholder. 
-                string queryString =
-                    "SELECT ProductID, UnitPrice, ProductName from dbo.products "
-                        + "WHERE UnitPrice > @pricePoint "
-                        + "ORDER BY UnitPrice DESC;";
-
-                // Specify the parameter value. 
-                int paramValue = 5;
+                string queryString1 =
+                    "SELECT distinct costCategory from costPreDefinedItems";
+                string queryString2 =
+                    "SELECT distinct costDescription from costPreDefinedItems";
 
                 // Create and open the connection in a using block. This 
                 // ensures that all resources will be closed and disposed 
@@ -202,8 +201,8 @@ namespace StartKoinoxristaProject
                     new SqlConnection(connectionString))
                 {
                     // Create the Command and Parameter objects.
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    command.Parameters.AddWithValue("@pricePoint", paramValue);
+                    SqlCommand command1 = new SqlCommand(queryString1, connection);
+                    SqlCommand command2 = new SqlCommand(queryString2, connection);
 
                     // Open the connection in a try/catch block.  
                     // Create and execute the DataReader, writing the result 
@@ -211,17 +210,27 @@ namespace StartKoinoxristaProject
                     try
                     {
                         connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
+
+                        SqlDataReader reader1 = command1.ExecuteReader();
+                        
+                        while (reader1.Read())
                         {
-                            Console.WriteLine("\t{0}\t{1}\t{2}",
-                                reader[0], reader[1], reader[2]);
+                            costCategoryComboBox.Items.Add(reader1[0]);
                         }
-                        reader.Close();
+                        reader1.Close();
+
+                        SqlDataReader reader2 = command2.ExecuteReader();
+
+                        while (reader2.Read())
+                        {
+                            costDescriptionComboBox.Items.Add(reader2[0]);
+                        }
+                        reader2.Close();
+
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        MessageBox.Show(ex.Message);
                     }
                     Console.ReadLine();
                 }
@@ -267,6 +276,11 @@ namespace StartKoinoxristaProject
             System.Diagnostics.Debug.WriteLine(listBox1.SelectedIndices[0].ToString());  
              * 
              */
+        }
+
+        private void buildingIDTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
