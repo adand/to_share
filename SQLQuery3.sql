@@ -2,4 +2,5 @@
 insert into costPreDefinedItems values('cc1','cd1');
 insert into costPreDefinedItems values('cc2','cd2');
 insert into costPreDefinedItems values('cc3','cd3');*/
-select * from costPreDefinedItems;
+insert into Buildings values(107, 'address107', 'area107');
+select * from buildings;
