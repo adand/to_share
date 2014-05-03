@@ -220,7 +220,7 @@
             // messageLabel
             // 
             this.messageLabel.AutoSize = true;
-            this.messageLabel.Location = new System.Drawing.Point(512, 248);
+            this.messageLabel.Location = new System.Drawing.Point(212, 248);
             this.messageLabel.Name = "messageLabel";
             this.messageLabel.Size = new System.Drawing.Size(376, 13);
             this.messageLabel.TabIndex = 21;
@@ -229,9 +229,9 @@
             // alreadyInsertedCostDataGridView
             // 
             this.alreadyInsertedCostDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.alreadyInsertedCostDataGridView.Location = new System.Drawing.Point(515, 264);
+            this.alreadyInsertedCostDataGridView.Location = new System.Drawing.Point(215, 264);
             this.alreadyInsertedCostDataGridView.Name = "alreadyInsertedCostDataGridView";
-            this.alreadyInsertedCostDataGridView.Size = new System.Drawing.Size(453, 150);
+            this.alreadyInsertedCostDataGridView.Size = new System.Drawing.Size(753, 150);
             this.alreadyInsertedCostDataGridView.TabIndex = 22;
             this.alreadyInsertedCostDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
