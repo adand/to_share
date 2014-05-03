@@ -61,24 +61,43 @@ namespace StartKoinoxristaProject
 
             // Begin reading database table Building in order to fill the comboboxes Address and Area
 
-            string queryOnBuildings;
-            queryOnBuildings = "select distinct Area from Buildings";
-            AccessTheDatabase ShowBuilding = new AccessTheDatabase();
-            ShowBuilding.AccessingProcess(queryOnBuildings);
-            ShowBuilding.get_myDataAdapter().Fill(ShowBuilding.get_myDataTable());
+            string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
-            DataTable dtOfBuildings = ShowBuilding.get_myDataTable();
-            /*string addr = dt.Rows[0].ItemArray[1].ToString();
-            MessageBox.Show(addr);*/
+            // Provide the query string with a parameter placeholder. 
+            string queryString1 =
+                "SELECT distinct area from buildings";
 
-            for (int i = 0; i < dtOfBuildings.Rows.Count; i++)
+            // Create and open the connection in a using block. This 
+            // ensures that all resources will be closed and disposed 
+            // when the code exits. 
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
-                /*
-                 * I'm going to do it after the user has select the area
-                 * AddressComboBox.Items.Add(dtOfBuildings.Rows[i]["Address"]);
-                 */
-                AreaComboBox.Items.Add(dtOfBuildings.Rows[i]["Area"]);
+                // Create the Command and Parameter objects.
+                SqlCommand command1 = new SqlCommand(queryString1, connection);
+
+                // Open the connection in a try/catch block.  
+                // Create and execute the DataReader, writing the result 
+                // set to the console window. 
+                try
+                {
+                    connection.Open();
+
+                    SqlDataReader reader1 = command1.ExecuteReader();
+
+                    while (reader1.Read())
+                    {
+                        AreaComboBox.Items.Add(reader1[0]);
+                    }
+                    reader1.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "r1");
+                }
             }
+            
 
             string[] monthNames = { "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος",
                                   "Νοέμβριος", "Δεκέμβριος" };
@@ -107,21 +126,41 @@ namespace StartKoinoxristaProject
 
         private void AreaComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string queryOnBuildings;
-            queryOnBuildings = string.Format("select Address from Buildings where Area = '{0}'", AreaComboBox.SelectedItem);
-            AccessTheDatabase ShowBuilding = new AccessTheDatabase();
-            ShowBuilding.AccessingProcess(queryOnBuildings);
-            ShowBuilding.get_myDataAdapter().Fill(ShowBuilding.get_myDataTable());
+            string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
-            DataTable dtOfBuildings = ShowBuilding.get_myDataTable();
-            /*string addr = dt.Rows[0].ItemArray[1].ToString();
-            MessageBox.Show(addr);*/
+            // Provide the query string with a parameter placeholder. 
+            string queryString1 =
+                string.Format("SELECT address from buildings where area = '{0}'", AreaComboBox.SelectedItem);
 
-            AddressComboBox.Items.Clear();
-            for (int i = 0; i < dtOfBuildings.Rows.Count; i++)
+            // Create and open the connection in a using block. This 
+            // ensures that all resources will be closed and disposed 
+            // when the code exits. 
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
-                 AddressComboBox.Items.Add(dtOfBuildings.Rows[i]["Address"]);
-                // AreaComboBox.Items.Add(dtOfBuildings.Rows[i]["Area"]);
+                // Create the Command and Parameter objects.
+                SqlCommand command1 = new SqlCommand(queryString1, connection);
+
+                // Open the connection in a try/catch block.  
+                // Create and execute the DataReader, writing the result 
+                // set to the console window. 
+                try
+                {
+                    connection.Open();
+
+                    SqlDataReader reader1 = command1.ExecuteReader();
+
+                    while (reader1.Read())
+                    {
+                        AddressComboBox.Items.Add(reader1[0]);
+                    }
+                    reader1.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "r1");
+                }
             }
         }
 
@@ -162,7 +201,7 @@ namespace StartKoinoxristaProject
             costDescriptionComboBox.ResetText();
 
             string connectionString =
-                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
             string queryString2 =
                     "SELECT distinct costDescription from costPreDefinedItems where costCategory = @costCategoryComboBox";
@@ -204,6 +243,8 @@ namespace StartKoinoxristaProject
                 String connectionString =
                     @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
+                SqlConnection connection = new SqlConnection(connectionString);
+
                 // Create a new data adapter based on the specified query.
                 dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
 
@@ -235,7 +276,10 @@ namespace StartKoinoxristaProject
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             alreadyInsertedCostDataGridView.DataSource = bindingSource1;
-            GetData("select * from dapanes");
+            string queryString = string.Format("select * from dapanes where buildingID = (select buildingID from buildings where address = '{0}' and area = '{1}')", 
+                AddressComboBox.SelectedItem, AreaComboBox.SelectedItem);/*
+            + "where dapanes.buildingID = buildings.buildingID and buildings.Address = '{0}'", AddressComboBox.SelectedItem);*/
+            GetData(queryString);
             
             bool invalidChoice = false;
 
@@ -245,7 +289,7 @@ namespace StartKoinoxristaProject
                 invalidChoice = true;
             }
 
-            if (invalidChoice == true)
+            if (invalidChoice == false)
             {
                 continueButton.Hide();
 
@@ -268,7 +312,7 @@ namespace StartKoinoxristaProject
                 alreadyInsertedCostDataGridView.Show();
 
                 string connectionString =
-                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
                 // Provide the query string with a parameter placeholder. 
                 string queryString1 =
