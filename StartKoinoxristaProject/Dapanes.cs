@@ -14,6 +14,10 @@ namespace StartKoinoxristaProject
 {
     public partial class Dapanes : Form
     {
+        private BindingSource bindingSource1 = new BindingSource();
+        private SqlDataAdapter dataAdapter = new SqlDataAdapter();
+
+
         public Dapanes()
         {
             InitializeComponent();
@@ -155,6 +159,7 @@ namespace StartKoinoxristaProject
         {
             costDescriptionComboBox.Enabled = true;
             costDescriptionComboBox.Items.Clear();
+            costDescriptionComboBox.ResetText();
 
             string connectionString =
                     @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
@@ -189,8 +194,49 @@ namespace StartKoinoxristaProject
 
         }
 
+        private void GetData(string selectCommand)
+        {
+            try
+            {
+                // Specify a connection string. Replace the given value with a 
+                // valid connection string for a Northwind SQL Server sample
+                // database accessible to your system.
+                String connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+
+                // Create a new data adapter based on the specified query.
+                dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
+
+                // Create a command builder to generate SQL update, insert, and
+                // delete commands based on selectCommand. These are used to
+                // update the database.
+                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
+
+                // Populate a new data table and bind it to the BindingSource.
+                DataTable table = new DataTable();
+                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                dataAdapter.Fill(table);
+                bindingSource1.DataSource = table;
+
+                // Resize the DataGridView columns to fit the newly loaded content.
+                alreadyInsertedCostDataGridView.AutoResizeColumns(
+                    DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
         private void continueButton_Click(object sender, EventArgs e)
         {
+
+            // Bind the DataGridView to the BindingSource
+            // and load the data from the database.
+            alreadyInsertedCostDataGridView.DataSource = bindingSource1;
+            GetData("select * from dapanes");
+            
             bool invalidChoice = false;
 
             if ((AddressComboBox.SelectedItem == null) || (AreaComboBox.SelectedItem == null) || (monthComboBox.SelectedItem == null) ||
