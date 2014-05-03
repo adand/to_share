@@ -153,6 +153,39 @@ namespace StartKoinoxristaProject
 
         private void costCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            costDescriptionComboBox.Enabled = true;
+            costDescriptionComboBox.Items.Clear();
+
+            string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
+
+            string queryString2 =
+                    "SELECT distinct costDescription from costPreDefinedItems where costCategory = @costCategoryComboBox";
+
+            using (SqlConnection connection =
+                    new SqlConnection(connectionString))
+            {
+                SqlCommand command2 = new SqlCommand(queryString2, connection);
+                command2.Parameters.AddWithValue("@costCategoryComboBox", costCategoryComboBox.SelectedItem);
+
+                try
+                {
+                    connection.Open();
+
+                    SqlDataReader reader2 = command2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+                        costDescriptionComboBox.Items.Add(reader2[0]);
+                    }
+                    reader2.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "r2");
+                }
+            }
 
         }
 
@@ -177,7 +210,10 @@ namespace StartKoinoxristaProject
 
                 costCategoryComboBox.Show();
                 costCategoryLabel.Show();
+                
                 costDescriptionComboBox.Show();
+                costDescriptionComboBox.Enabled = false;
+
                 costDescriptionLabel.Show();
                 costValueTextBox.Show();
                 costValueLabel.Show();
@@ -191,8 +227,6 @@ namespace StartKoinoxristaProject
                 // Provide the query string with a parameter placeholder. 
                 string queryString1 =
                     "SELECT distinct costCategory from costPreDefinedItems";
-                string queryString2 =
-                    "SELECT distinct costDescription from costPreDefinedItems";
 
                 // Create and open the connection in a using block. This 
                 // ensures that all resources will be closed and disposed 
@@ -202,7 +236,6 @@ namespace StartKoinoxristaProject
                 {
                     // Create the Command and Parameter objects.
                     SqlCommand command1 = new SqlCommand(queryString1, connection);
-                    SqlCommand command2 = new SqlCommand(queryString2, connection);
 
                     // Open the connection in a try/catch block.  
                     // Create and execute the DataReader, writing the result 
@@ -218,21 +251,11 @@ namespace StartKoinoxristaProject
                             costCategoryComboBox.Items.Add(reader1[0]);
                         }
                         reader1.Close();
-
-                        SqlDataReader reader2 = command2.ExecuteReader();
-
-                        while (reader2.Read())
-                        {
-                            costDescriptionComboBox.Items.Add(reader2[0]);
-                        }
-                        reader2.Close();
-
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message + "r1");
                     }
-                    Console.ReadLine();
                 }
 
             }

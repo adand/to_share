@@ -55,6 +55,7 @@
             this.apartmentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.apartmentsTableAdapter = new StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.ApartmentsTableAdapter();
             this.tableAdapterManager = new StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.TableAdapterManager();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.buildingsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.alreadyInsertedCostDataGridView)).BeginInit();
@@ -155,7 +156,7 @@
             // 
             this.costCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.costCategoryComboBox.FormattingEnabled = true;
-            this.costCategoryComboBox.Location = new System.Drawing.Point(515, 49);
+            this.costCategoryComboBox.Location = new System.Drawing.Point(515, 62);
             this.costCategoryComboBox.Name = "costCategoryComboBox";
             this.costCategoryComboBox.Size = new System.Drawing.Size(121, 21);
             this.costCategoryComboBox.TabIndex = 15;
@@ -164,7 +165,7 @@
             // costCategoryLabel
             // 
             this.costCategoryLabel.AutoSize = true;
-            this.costCategoryLabel.Location = new System.Drawing.Point(512, 33);
+            this.costCategoryLabel.Location = new System.Drawing.Point(512, 46);
             this.costCategoryLabel.Name = "costCategoryLabel";
             this.costCategoryLabel.Size = new System.Drawing.Size(76, 13);
             this.costCategoryLabel.TabIndex = 16;
@@ -176,11 +177,10 @@
             this.costDescriptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.buildingsBindingSource, "BuildingID", true));
             this.costDescriptionComboBox.DisplayMember = "test";
             this.costDescriptionComboBox.FormattingEnabled = true;
-            this.costDescriptionComboBox.Location = new System.Drawing.Point(700, 48);
+            this.costDescriptionComboBox.Location = new System.Drawing.Point(700, 62);
             this.costDescriptionComboBox.Name = "costDescriptionComboBox";
             this.costDescriptionComboBox.Size = new System.Drawing.Size(303, 21);
             this.costDescriptionComboBox.TabIndex = 17;
-            this.costDescriptionComboBox.Text = "Select a category from the list or type your own description";
             // 
             // buildingsBindingSource
             // 
@@ -195,7 +195,7 @@
             // costDescriptionLabel
             // 
             this.costDescriptionLabel.AutoSize = true;
-            this.costDescriptionLabel.Location = new System.Drawing.Point(697, 32);
+            this.costDescriptionLabel.Location = new System.Drawing.Point(697, 33);
             this.costDescriptionLabel.Name = "costDescriptionLabel";
             this.costDescriptionLabel.Size = new System.Drawing.Size(87, 13);
             this.costDescriptionLabel.TabIndex = 18;
@@ -203,7 +203,7 @@
             // 
             // costValueTextBox
             // 
-            this.costValueTextBox.Location = new System.Drawing.Point(903, 90);
+            this.costValueTextBox.Location = new System.Drawing.Point(903, 111);
             this.costValueTextBox.Name = "costValueTextBox";
             this.costValueTextBox.Size = new System.Drawing.Size(100, 20);
             this.costValueTextBox.TabIndex = 19;
@@ -211,7 +211,7 @@
             // costValueLabel
             // 
             this.costValueLabel.AutoSize = true;
-            this.costValueLabel.Location = new System.Drawing.Point(866, 97);
+            this.costValueLabel.Location = new System.Drawing.Point(866, 114);
             this.costValueLabel.Name = "costValueLabel";
             this.costValueLabel.Size = new System.Drawing.Size(31, 13);
             this.costValueLabel.TabIndex = 20;
@@ -220,16 +220,16 @@
             // messageLabel
             // 
             this.messageLabel.AutoSize = true;
-            this.messageLabel.Location = new System.Drawing.Point(515, 193);
+            this.messageLabel.Location = new System.Drawing.Point(512, 248);
             this.messageLabel.Name = "messageLabel";
-            this.messageLabel.Size = new System.Drawing.Size(373, 13);
+            this.messageLabel.Size = new System.Drawing.Size(376, 13);
             this.messageLabel.TabIndex = 21;
-            this.messageLabel.Text = "Ήδη καταχωρημένες δαπάνες πολυκατοικίας γι\' αυτή τη χρονική περίοδο";
+            this.messageLabel.Text = "Ήδη καταχωρημένες δαπάνες πολυκατοικίας γι\' αυτή τη χρονική περίοδο:";
             // 
             // alreadyInsertedCostDataGridView
             // 
             this.alreadyInsertedCostDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.alreadyInsertedCostDataGridView.Location = new System.Drawing.Point(518, 209);
+            this.alreadyInsertedCostDataGridView.Location = new System.Drawing.Point(515, 264);
             this.alreadyInsertedCostDataGridView.Name = "alreadyInsertedCostDataGridView";
             this.alreadyInsertedCostDataGridView.Size = new System.Drawing.Size(453, 150);
             this.alreadyInsertedCostDataGridView.TabIndex = 22;
@@ -237,7 +237,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(928, 126);
+            this.saveButton.Location = new System.Drawing.Point(928, 155);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 23;
@@ -278,11 +278,21 @@
             this.tableAdapterManager.testTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(697, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(287, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "(Select a category from the list or type your own description)";
+            // 
             // Dapanes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 475);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.alreadyInsertedCostDataGridView);
             this.Controls.Add(this.messageLabel);
@@ -343,6 +353,7 @@
         private System.Windows.Forms.BindingSource apartmentsBindingSource;
         private kinoxristaDataSet1TableAdapters.ApartmentsTableAdapter apartmentsTableAdapter;
         private kinoxristaDataSet1TableAdapters.TableAdapterManager tableAdapterManager;
+        private System.Windows.Forms.Label label1;
 
     }
 }
