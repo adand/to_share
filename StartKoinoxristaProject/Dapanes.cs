@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
@@ -163,7 +164,7 @@ namespace StartKoinoxristaProject
                 invalidChoice = true;
             }
 
-            if (invalidChoice == false)
+            if (invalidChoice == true)
             {
                 continueButton.Hide();
 
@@ -182,25 +183,49 @@ namespace StartKoinoxristaProject
                 messageLabel.Show();
                 alreadyInsertedCostDataGridView.Show();
 
-                string queryOnCostPredefinedItems;
-                queryOnCostPredefinedItems = "select * from costPredefinedItems";
-                AccessTheDatabase showCostPredefinedItems = new AccessTheDatabase();
-                showCostPredefinedItems.AccessingProcess(queryOnCostPredefinedItems);
-                showCostPredefinedItems.get_myDataAdapter().Fill(showCostPredefinedItems.get_myDataTable());
+                string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
 
-                DataTable dtOfcostPredefinedItems = showCostPredefinedItems.get_myDataTable();
-                /*string addr = dt.Rows[0].ItemArray[1].ToString();
-                MessageBox.Show(addr);*/
+                // Provide the query string with a parameter placeholder. 
+                string queryString =
+                    "SELECT ProductID, UnitPrice, ProductName from dbo.products "
+                        + "WHERE UnitPrice > @pricePoint "
+                        + "ORDER BY UnitPrice DESC;";
 
-                for (int i = 0; i < dtOfcostPredefinedItems.Rows.Count; i++)
+                // Specify the parameter value. 
+                int paramValue = 5;
+
+                // Create and open the connection in a using block. This 
+                // ensures that all resources will be closed and disposed 
+                // when the code exits. 
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString))
                 {
-                    costCategoryComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costCategory"]);
-                    if ((string.IsNullOrEmpty(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false) &&
-                        (string.IsNullOrWhiteSpace(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false))
+                    // Create the Command and Parameter objects.
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    command.Parameters.AddWithValue("@pricePoint", paramValue);
+
+                    // Open the connection in a try/catch block.  
+                    // Create and execute the DataReader, writing the result 
+                    // set to the console window. 
+                    try
                     {
-                        costDescriptionComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costDescription"]);
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("\t{0}\t{1}\t{2}",
+                                reader[0], reader[1], reader[2]);
+                        }
+                        reader.Close();
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.ReadLine();
                 }
+
             }
             else
             {
