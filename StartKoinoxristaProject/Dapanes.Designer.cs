@@ -51,10 +51,16 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.buildingsTableAdapter = new StartKoinoxristaProject.kinoxristaDataSetTableAdapters.BuildingsTableAdapter();
             this.buildingsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.kinoxristaDataSet1 = new StartKoinoxristaProject.kinoxristaDataSet1();
+            this.apartmentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.apartmentsTableAdapter = new StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.ApartmentsTableAdapter();
+            this.tableAdapterManager = new StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.TableAdapterManager();
             ((System.ComponentModel.ISupportInitialize)(this.buildingsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.alreadyInsertedCostDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingsBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.apartmentsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // continueButton
@@ -248,11 +254,35 @@
             this.buildingsBindingSource1.DataMember = "Buildings";
             this.buildingsBindingSource1.DataSource = this.kinoxristaDataSet;
             // 
+            // kinoxristaDataSet1
+            // 
+            this.kinoxristaDataSet1.DataSetName = "kinoxristaDataSet1";
+            this.kinoxristaDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // apartmentsBindingSource
+            // 
+            this.apartmentsBindingSource.DataMember = "Apartments";
+            this.apartmentsBindingSource.DataSource = this.kinoxristaDataSet1;
+            // 
+            // apartmentsTableAdapter
+            // 
+            this.apartmentsTableAdapter.ClearBeforeFill = true;
+            // 
+            // tableAdapterManager
+            // 
+            this.tableAdapterManager.ApartmentsTableAdapter = this.apartmentsTableAdapter;
+            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager.BuildingsTableAdapter = null;
+            this.tableAdapterManager.costPreDefinedItemsTableAdapter = null;
+            this.tableAdapterManager.dapanesTableAdapter = null;
+            this.tableAdapterManager.testTableAdapter = null;
+            this.tableAdapterManager.UpdateOrder = StartKoinoxristaProject.kinoxristaDataSet1TableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            // 
             // Dapanes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 371);
+            this.ClientSize = new System.Drawing.Size(1029, 475);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.alreadyInsertedCostDataGridView);
             this.Controls.Add(this.messageLabel);
@@ -278,6 +308,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.alreadyInsertedCostDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingsBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kinoxristaDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.apartmentsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +339,10 @@
         private System.Windows.Forms.BindingSource buildingsBindingSource;
         private kinoxristaDataSetTableAdapters.BuildingsTableAdapter buildingsTableAdapter;
         private System.Windows.Forms.BindingSource buildingsBindingSource1;
+        private kinoxristaDataSet1 kinoxristaDataSet1;
+        private System.Windows.Forms.BindingSource apartmentsBindingSource;
+        private kinoxristaDataSet1TableAdapters.ApartmentsTableAdapter apartmentsTableAdapter;
+        private kinoxristaDataSet1TableAdapters.TableAdapterManager tableAdapterManager;
 
     }
 }

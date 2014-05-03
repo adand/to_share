@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
@@ -30,6 +31,8 @@ namespace StartKoinoxristaProject
 
         private void Dapanes_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'kinoxristaDataSet1.Apartments' table. You can move, or remove it, as needed.
+            this.apartmentsTableAdapter.Fill(this.kinoxristaDataSet1.Apartments);
             // TODO: This line of code loads data into the 'kinoxristaDataSet.Buildings' table. You can move, or remove it, as needed.
             this.buildingsTableAdapter.Fill(this.kinoxristaDataSet.Buildings);
 
@@ -163,7 +166,7 @@ namespace StartKoinoxristaProject
                 invalidChoice = true;
             }
 
-            if (invalidChoice == false)
+            if (invalidChoice == true)
             {
                 continueButton.Hide();
 
@@ -182,25 +185,56 @@ namespace StartKoinoxristaProject
                 messageLabel.Show();
                 alreadyInsertedCostDataGridView.Show();
 
-                string queryOnCostPredefinedItems;
-                queryOnCostPredefinedItems = "select * from costPredefinedItems";
-                AccessTheDatabase showCostPredefinedItems = new AccessTheDatabase();
-                showCostPredefinedItems.AccessingProcess(queryOnCostPredefinedItems);
-                showCostPredefinedItems.get_myDataAdapter().Fill(showCostPredefinedItems.get_myDataTable());
+                string connectionString =
+                    @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\kinoxrista.mdf;Integrated Security=True;Connect Timeout=30";
 
-                DataTable dtOfcostPredefinedItems = showCostPredefinedItems.get_myDataTable();
-                /*string addr = dt.Rows[0].ItemArray[1].ToString();
-                MessageBox.Show(addr);*/
+                // Provide the query string with a parameter placeholder. 
+                string queryString1 =
+                    "SELECT distinct costCategory from costPreDefinedItems";
+                string queryString2 =
+                    "SELECT distinct costDescription from costPreDefinedItems";
 
-                for (int i = 0; i < dtOfcostPredefinedItems.Rows.Count; i++)
+                // Create and open the connection in a using block. This 
+                // ensures that all resources will be closed and disposed 
+                // when the code exits. 
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString))
                 {
-                    costCategoryComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costCategory"]);
-                    if ((string.IsNullOrEmpty(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false) &&
-                        (string.IsNullOrWhiteSpace(dtOfcostPredefinedItems.Rows[i]["costDescription"].ToString()) == false))
+                    // Create the Command and Parameter objects.
+                    SqlCommand command1 = new SqlCommand(queryString1, connection);
+                    SqlCommand command2 = new SqlCommand(queryString2, connection);
+
+                    // Open the connection in a try/catch block.  
+                    // Create and execute the DataReader, writing the result 
+                    // set to the console window. 
+                    try
                     {
-                        costDescriptionComboBox.Items.Add(dtOfcostPredefinedItems.Rows[i]["costDescription"]);
+                        connection.Open();
+
+                        SqlDataReader reader1 = command1.ExecuteReader();
+                        
+                        while (reader1.Read())
+                        {
+                            costCategoryComboBox.Items.Add(reader1[0]);
+                        }
+                        reader1.Close();
+
+                        SqlDataReader reader2 = command2.ExecuteReader();
+
+                        while (reader2.Read())
+                        {
+                            costDescriptionComboBox.Items.Add(reader2[0]);
+                        }
+                        reader2.Close();
+
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    Console.ReadLine();
                 }
+
             }
             else
             {
@@ -242,6 +276,11 @@ namespace StartKoinoxristaProject
             System.Diagnostics.Debug.WriteLine(listBox1.SelectedIndices[0].ToString());  
              * 
              */
+        }
+
+        private void buildingIDTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
