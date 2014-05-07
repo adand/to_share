@@ -151,7 +151,7 @@ namespace StartKoinoxristaProject
         // on click event handler for navigating back home 
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form1 hm = new Form1();
+            mainForm hm = new mainForm();
             hm.Show();
             this.Hide();
         }
