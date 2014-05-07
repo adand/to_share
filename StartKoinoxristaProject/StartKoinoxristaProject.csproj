@@ -77,17 +77,17 @@
     <Compile Include="DataGridView.Designer.cs">
       <DependentUpon>DataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="mainForm.Designer.cs">
+      <DependentUpon>mainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="createNewBuilding.cs">
+    <Compile Include="Buildings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="createNewBuilding.Designer.cs">
-      <DependentUpon>createNewBuilding.cs</DependentUpon>
+    <Compile Include="Buildings.Designer.cs">
+      <DependentUpon>Buildings.cs</DependentUpon>
     </Compile>
     <Compile Include="Form3.cs">
       <SubType>Form</SubType>
@@ -113,6 +113,12 @@
     <Compile Include="queryWithStringFormat.Designer.cs">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="toReplaceBuildings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="toReplaceBuildings.Designer.cs">
+      <DependentUpon>toReplaceBuildings.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="costPredefinedItems.resx">
       <DependentUpon>costPredefinedItems.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,11 +128,11 @@
     <EmbeddedResource Include="DataGridView.resx">
       <DependentUpon>DataGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="mainForm.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="createNewBuilding.resx">
-      <DependentUpon>createNewBuilding.cs</DependentUpon>
+    <EmbeddedResource Include="Buildings.resx">
+      <DependentUpon>Buildings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
@@ -142,6 +148,9 @@
     </Compile>
     <EmbeddedResource Include="queryWithStringFormat.resx">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="toReplaceBuildings.resx">
+      <DependentUpon>toReplaceBuildings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="kinoxristaDataSet.xsc">
       <DependentUpon>kinoxristaDataSet.xsd</DependentUpon>
