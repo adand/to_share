@@ -34,6 +34,8 @@
             this.messageBoardLbl = new System.Windows.Forms.Label();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
+            this.instantMessageBoardLbl = new System.Windows.Forms.Label();
+            this.issueMessageBoardLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,11 +96,32 @@
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
+            // instantMessageBoardLbl
+            // 
+            this.instantMessageBoardLbl.AutoSize = true;
+            this.instantMessageBoardLbl.Location = new System.Drawing.Point(131, 374);
+            this.instantMessageBoardLbl.Name = "instantMessageBoardLbl";
+            this.instantMessageBoardLbl.Size = new System.Drawing.Size(109, 13);
+            this.instantMessageBoardLbl.TabIndex = 6;
+            this.instantMessageBoardLbl.Text = "instantMessageBoard";
+            // 
+            // issueMessageBoardLbl
+            // 
+            this.issueMessageBoardLbl.AutoSize = true;
+            this.issueMessageBoardLbl.Location = new System.Drawing.Point(131, 387);
+            this.issueMessageBoardLbl.Name = "issueMessageBoardLbl";
+            this.issueMessageBoardLbl.Size = new System.Drawing.Size(102, 13);
+            this.issueMessageBoardLbl.TabIndex = 7;
+            this.issueMessageBoardLbl.Text = "issueMessageBoard";
+            this.issueMessageBoardLbl.Click += new System.EventHandler(this.issueMessageBoardLbl_Click);
+            // 
             // toReplaceBuildings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 404);
+            this.ClientSize = new System.Drawing.Size(663, 435);
+            this.Controls.Add(this.issueMessageBoardLbl);
+            this.Controls.Add(this.instantMessageBoardLbl);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.messageBoardLbl);
@@ -122,6 +145,8 @@
         private System.Windows.Forms.Label messageBoardLbl;
         private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.Label instantMessageBoardLbl;
+        private System.Windows.Forms.Label issueMessageBoardLbl;
 
     }
 }
