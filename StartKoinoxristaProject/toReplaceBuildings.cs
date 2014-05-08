@@ -15,6 +15,7 @@ namespace StartKoinoxristaProject
     {
         BindingSource bindingSource1 = new BindingSource();
         SqlDataAdapter da;
+        DataSet ds;
 
         public toReplaceBuildings()
         {
@@ -26,6 +27,8 @@ namespace StartKoinoxristaProject
             dataGridView1.DataSource = bindingSource1;
             GetData("select * from Buildings order by buildingID");
             messageBoardLbl.ResetText();
+            instantMessageBoardLbl.Hide();
+            issueMessageBoardLbl.Hide();
             saveBtn.Hide();
             cancelBtn.Hide();
         }
@@ -36,7 +39,9 @@ namespace StartKoinoxristaProject
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             da = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
+            ds = new DataSet();
             DataTable dt = new DataTable();
+            ds.Tables.Add(dt);
             da.Fill(dt);
             bindingSource1.DataSource = dt;
             dataGridView1.ReadOnly = true;
@@ -59,6 +64,7 @@ namespace StartKoinoxristaProject
             saveBtn.Show();
             cancelBtn.Show();
             messageBoardLbl.Text = "Edit in progress ...";
+            dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -75,17 +81,21 @@ namespace StartKoinoxristaProject
                 try
                 {
                     messageBoardLbl.ResetText();
-                    da.Update((DataTable)bindingSource1.DataSource);
-                    MessageBox.Show("Saved");
+                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    MessageBox.Show("Added: " + ds.HasChanges(DataRowState.Added) + " rows");
+                    instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
+                    instantMessageBoardLbl.Show();
                     saveBtn.Hide();
                     cancelBtn.Hide();
                     GetData(da.SelectCommand.CommandText);
                     editBtn.Show();
                     dataGridView1.ReadOnly = true;
                 }
-                catch (Exception ex)
+                catch (SqlException sqlEx)
                 {
-                    MessageBox.Show(ex.Message);
+                    instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve the issue to insert the rest of the records.";
+                    instantMessageBoardLbl.ForeColor = Color.Red;
+                    instantMessageBoardLbl.Show();
                 }
             }
             else if (result == DialogResult.No)
@@ -131,6 +141,11 @@ namespace StartKoinoxristaProject
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void issueMessageBoardLbl_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
