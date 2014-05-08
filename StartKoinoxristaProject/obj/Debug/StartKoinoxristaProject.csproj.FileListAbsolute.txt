@@ -52,10 +52,9 @@ C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaP
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.costPredefinedItems.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Dapanes.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.DataGridView.resources
-C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.createNewBuildingForm.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form3.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.queryWithStringFormat.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.mainForm.resources
-C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.toReplaceBuildings.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Buildings.resources

@@ -19,7 +19,7 @@ namespace StartKoinoxristaProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new toReplaceBuildings());
+            Application.Run(new mainForm());
         }
     }
 

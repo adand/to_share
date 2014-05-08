@@ -8,206 +8,165 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.IO;
 
 namespace StartKoinoxristaProject
 {
-    public partial class createNewBuildingForm : Form
+    public partial class Buildings : Form
     {
-        //private string BuildingID;
-        //private string Address;
-        //private string Area;
+        BindingSource bindingSource1 = new BindingSource();
+        SqlDataAdapter da;
+        DataSet ds;
 
-        string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-       
-
-        public createNewBuildingForm()
+        public Buildings()
         {
             InitializeComponent();
-            
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void toReplaceBuildings_Load(object sender, EventArgs e)
         {
-
+            dataGridView1.DataSource = bindingSource1;
+            GetData("select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID");
+            messageBoardLbl.ResetText();
+            instantMessageBoardLbl.Hide();
+            issueMessageBoardLbl.Hide();
+            saveBtn.Hide();
+            cancelBtn.Hide();
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        public void GetData(string selectCommand)
         {
-            string query = "insert into Buildings values(@BuildingID, @Address, @Area)";
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            da = new SqlDataAdapter(selectCommand, connectionString);
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
+            ds = new DataSet();
+            DataTable dt = new DataTable();
+            ds.Tables.Add(dt);
+            da.Fill(dt);
+            bindingSource1.DataSource = dt;
+            dataGridView1.ReadOnly = true;
+        }
 
-            // Create an object of the database accessor class. This class is inside the program.cs file
-            AccessTheDatabase AddBuildings = new AccessTheDatabase();
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
-            // Call the method that will begin the process of database access
-            AddBuildings.AccessingProcess(BuildingIDTextBox.Text, AddressTextBox.Text, AreaTextBox.Text, query);
+        private void reloadBtn_Click(object sender, EventArgs e)
+        {
+            GetData(da.SelectCommand.CommandText);
+        }
 
-            if (BuildingIDTextBox.Text != "" && AreaTextBox.Text != "" && AddressTextBox.Text != "") //avoid empty fields 
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            dataGridView1.ReadOnly = false;
+            editBtn.Hide();
+            saveBtn.Show();
+            cancelBtn.Show();
+            messageBoardLbl.Text = "Edit in progress ...";
+            dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
+        }
+
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            string message = "Are you sure you want to update the database with changes?";
+            string caption = "Update confirmation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
             {
                 try
                 {
-                    // Fill DataTable by using DataAdapter
-                    AddBuildings.get_myDataAdapter().Fill(AddBuildings.get_myDataTable());
-                    MessageBox.Show("Insertion was successful");    // Successful insertion to database
-                    Form3 frm3 = new Form3();
-                    frm3.Show();
+                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    MessageBox.Show("Added: " + ds.HasChanges(DataRowState.Added) + " rows");
+                    messageBoardLbl.ResetText();
+                    instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
+                    instantMessageBoardLbl.Show();
+                    issueMessageBoardLbl.Hide();
+                    saveBtn.Hide();
+                    cancelBtn.Hide();
+                    GetData(da.SelectCommand.CommandText);
+                    editBtn.Show();
+                    dataGridView1.ReadOnly = true;
                 }
-                catch (SqlException ex)
+                catch (SqlException sqlEx)
                 {
-                    if (ex.Number == 2627) // case of primary key constraint violation
+                    instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve rule's violation to insert the rest of the records.";
+                    string messageIntro = "Rule affected: ";
+                    switch (sqlEx.Number)
                     {
-                        MessageBox.Show("Duplicate ID");
+                        case 2627:
+                        {
+                            issueMessageBoardLbl.Text = messageIntro + "Building ID must be unique. Also, the combination of Address, Area must be unique too.";
+                            break;
+                        }
+                        case 515:
+                        {
+                            issueMessageBoardLbl.Text = messageIntro + "None of the fields allowed to be blank!";
+                            break;
+                        }
+                        case 8152:
+                        {
+                            issueMessageBoardLbl.Text = messageIntro + "The maximum number of characters for Building ID is 3. Address, Area can contain at most 20 characters each.";
+                            break;
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("Insertion Failed: " + ex.Message + MessageBoxButtons.OK + MessageBoxIcon.Error); // show exeption error, ok button and error icon 
-                    }
+                    instantMessageBoardLbl.ForeColor = Color.Red;
+                    instantMessageBoardLbl.Show();
+                    issueMessageBoardLbl.Show();
                 }
             }
-            else
+            else if (result == DialogResult.No)
             {
-                MessageBox.Show("Please Fill All Fields ");
-
-            }
-
-            // Create an object of the database accessor class. This class is inside the program.cs file
-            AccessTheDatabase AddApartments = new AccessTheDatabase();
-
-            // Call the method that will begin the process of database access
-            AddApartments.AccessingProcess(BuildingIDTextBox.Text, AddressTextBox.Text, AreaTextBox.Text, query);
-
-            /* need to be fixed
-             * 
-            //insert apartments
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-               
+                messageBoardLbl.ResetText();
+                MessageBox.Show("Not Saved");
                 try
                 {
-                    
-                    SqlCommand instcomd = new SqlCommand("insert into Apartments values (@BuildingID,@ApartmentID,@FullName,@GeneralMM,@ElevatorMM,@Manager)");
-                    instcomd.Parameters.AddWithValue("@BuildingID", BuildingIDTextBox.Text);
-                    instcomd.Parameters.AddWithValue("@ApartmentID", row.Cells[0].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@FullName", row.Cells[1].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@GeneralMM", row.Cells[2].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@ElevatorMM", row.Cells[3].Value.ToString());
-                    instcomd.Parameters.AddWithValue("@Manager", row.Cells[4].Value.ToString());
-
-
-                    instcomd.Connection = AddBuildings.get_connection();
-                   
-                    instcomd.ExecuteNonQuery();
+                    GetData(da.SelectCommand.CommandText);
+                    saveBtn.Hide();
+                    cancelBtn.Hide();
+                    editBtn.Show();
                 }
-                catch(SqlException ext) {
-
-                    MessageBox.Show("Error :"+ext.Message);
-
-                }
-            }
-             * 
-            */
-
-            
-        }
-
-            //Console.ReadLine();
-
-            private static void DisplaySqlErrors(SqlException exception)
-            {
-                for (int i = 0; i < exception.Errors.Count; i++)
+                catch
                 {
-                    Console.WriteLine("Index #" + i + "\n" +
-                    "Error: " + exception.Errors[i].ToString() + "\n");
+                    messageBoardLbl.Text = "Reloading from database failed";
                 }
-                Console.ReadLine();
             }
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
-        private void BuildingIDTextBox_TextChanged(object sender, EventArgs e)
+        private void cancelBtn_Click(object sender, EventArgs e)
         {
-               
-        }
+            string message = "Are you sure you want to Abort?";
+            string caption = "Confirm Cancellation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result;
 
-        private void AddressTextBox_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
+            result = MessageBox.Show(message, caption, buttons);
 
-        private void AreaTextBox_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        // on click event handler for navigating back home 
-        private void homeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainForm hm = new mainForm();
-            hm.Show();
-            this.Hide();
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-            apartmentDetailsDataGridView.Hide();
-            clearBuildingsTableButton.Hide();
-            SaveButton.Hide();
-        }
-
-        private void ClearBuildingsTable_Click(object sender, EventArgs e)
-        {
-            string query = "delete from Buildings";
-            AccessTheDatabase ClearBuildings = new AccessTheDatabase();
-            ClearBuildings.AccessingProcess(query);
-
-            try
+            if (result == DialogResult.Yes)
             {
-                // Fill DataTable by using DataAdapter
-                ClearBuildings.get_myDataAdapter().Fill(ClearBuildings.get_myDataTable());
-                MessageBox.Show("Deletion was successful");    // Successful deletion on database
+                try
+                {
+                    messageBoardLbl.ResetText();
+                    GetData(da.SelectCommand.CommandText);
+                    saveBtn.Hide();
+                    cancelBtn.Hide();
+                    editBtn.Show();
+                    dataGridView1.ReadOnly = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Deletion Failed: " + ex.Message + MessageBoxButtons.OK + MessageBoxIcon.Error); // show exeption error, ok button and error icon 
-            }
-
-            
-            /*SqlDataAdapter myDataAdapter;
-
-            // Create an object of the database accessor class. This class is inside the program.cs file
-            AccessTheDatabase writeKinoxrista = new AccessTheDatabase();
-
-            // Call the communication method of the database by using the object that has been declared above
-            writeKinoxrista.CommunicateWithDatabase();
-
-            SqlCommand myCommand = new SqlCommand("delete from Buildings");
-             * */
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void issueMessageBoardLbl_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void continueButton_Click(object sender, EventArgs e)
-        {
-            BuildingIDTextBox.Enabled = false;
-            AddressTextBox.Enabled = false;
-            AreaTextBox.Enabled = false;
-            continueButton.Hide();
-            apartmentDetailsDataGridView.Show();
-            SaveButton.Show();
-        }
-
-       // insert values on apartments table does not work yes 
     }
 }
