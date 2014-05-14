@@ -1,6 +1,4 @@
-﻿/*create table costPreDefinedItems(costCategory varchar(20), costDescription varchar(40));
-insert into costPreDefinedItems values('cc1','cd1');
-insert into costPreDefinedItems values('cc2','cd2');
-insert into costPreDefinedItems values('cc3','cd3');*/
-insert into Buildings values(107, 'address107', 'area107');
-select * from buildings;
+﻿/*insert into Apartments values('744', 'ad', 'a1', 3.5, 4.7);
+insert into Apartments values('745', 'ac', 'a2', 3.9, 4.2);*/
+insert into Apartments values('744', 'ab', 'a5', 3, 4);
+select * from Apartments;

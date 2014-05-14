@@ -20,7 +20,7 @@ namespace StartKoinoxristaProject
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            createNewBuildingForm frm = new createNewBuildingForm();
+            Buildings frm = new Buildings();
             frm.Show();
             
         }

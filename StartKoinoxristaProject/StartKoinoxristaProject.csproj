@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apartments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Apartments.Designer.cs">
+      <DependentUpon>Apartments.cs</DependentUpon>
+    </Compile>
     <Compile Include="costPredefinedItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,12 +88,6 @@
     </Compile>
     <Compile Include="mainForm.Designer.cs">
       <DependentUpon>mainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Buildings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Buildings.Designer.cs">
-      <DependentUpon>Buildings.cs</DependentUpon>
     </Compile>
     <Compile Include="Form3.cs">
       <SubType>Form</SubType>
@@ -113,12 +113,15 @@
     <Compile Include="queryWithStringFormat.Designer.cs">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="toReplaceBuildings.cs">
+    <Compile Include="Buildings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="toReplaceBuildings.Designer.cs">
-      <DependentUpon>toReplaceBuildings.cs</DependentUpon>
+    <Compile Include="Buildings.Designer.cs">
+      <DependentUpon>Buildings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Apartments.resx">
+      <DependentUpon>Apartments.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="costPredefinedItems.resx">
       <DependentUpon>costPredefinedItems.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,9 +133,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Buildings.resx">
-      <DependentUpon>Buildings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
@@ -149,8 +149,8 @@
     <EmbeddedResource Include="queryWithStringFormat.resx">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="toReplaceBuildings.resx">
-      <DependentUpon>toReplaceBuildings.cs</DependentUpon>
+    <EmbeddedResource Include="Buildings.resx">
+      <DependentUpon>Buildings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="kinoxristaDataSet.xsc">
       <DependentUpon>kinoxristaDataSet.xsd</DependentUpon>

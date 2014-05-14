@@ -1,6 +1,6 @@
 ﻿namespace StartKoinoxristaProject
 {
-    partial class toReplaceBuildings
+    partial class Apartments
     {
         /// <summary>
         /// Required designer variable.
@@ -36,6 +36,10 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.instantMessageBoardLbl = new System.Windows.Forms.Label();
             this.issueMessageBoardLbl = new System.Windows.Forms.Label();
+            this.areaCbx = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.addressCbx = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,12 +48,13 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(134, 90);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(444, 248);
+            this.dataGridView1.Size = new System.Drawing.Size(619, 248);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(505, 57);
+            this.exitBtn.Location = new System.Drawing.Point(678, 61);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 1;
@@ -59,7 +64,7 @@
             // 
             // editBtn
             // 
-            this.editBtn.Location = new System.Drawing.Point(504, 341);
+            this.editBtn.Location = new System.Drawing.Point(678, 344);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(75, 23);
             this.editBtn.TabIndex = 2;
@@ -78,7 +83,7 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(503, 341);
+            this.cancelBtn.Location = new System.Drawing.Point(678, 344);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 4;
@@ -88,7 +93,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(422, 341);
+            this.saveBtn.Location = new System.Drawing.Point(597, 344);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 5;
@@ -115,11 +120,51 @@
             this.issueMessageBoardLbl.Text = "issueMessageBoard";
             this.issueMessageBoardLbl.Click += new System.EventHandler(this.issueMessageBoardLbl_Click);
             // 
-            // toReplaceBuildings
+            // areaCbx
+            // 
+            this.areaCbx.FormattingEnabled = true;
+            this.areaCbx.Location = new System.Drawing.Point(134, 63);
+            this.areaCbx.Name = "areaCbx";
+            this.areaCbx.Size = new System.Drawing.Size(121, 21);
+            this.areaCbx.TabIndex = 8;
+            this.areaCbx.SelectedIndexChanged += new System.EventHandler(this.areaCbx_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(134, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Area:";
+            // 
+            // addressCbx
+            // 
+            this.addressCbx.FormattingEnabled = true;
+            this.addressCbx.Location = new System.Drawing.Point(305, 62);
+            this.addressCbx.Name = "addressCbx";
+            this.addressCbx.Size = new System.Drawing.Size(121, 21);
+            this.addressCbx.TabIndex = 10;
+            this.addressCbx.SelectedIndexChanged += new System.EventHandler(this.addressCbx_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(305, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Address:";
+            // 
+            // Apartments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 435);
+            this.ClientSize = new System.Drawing.Size(950, 478);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.addressCbx);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.areaCbx);
             this.Controls.Add(this.issueMessageBoardLbl);
             this.Controls.Add(this.instantMessageBoardLbl);
             this.Controls.Add(this.saveBtn);
@@ -128,9 +173,9 @@
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "toReplaceBuildings";
-            this.Text = "toReplaceBuildings";
-            this.Load += new System.EventHandler(this.toReplaceBuildings_Load);
+            this.Name = "Apartments";
+            this.Text = "Apartments";
+            this.Load += new System.EventHandler(this.Apartments_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -147,6 +192,10 @@
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label instantMessageBoardLbl;
         private System.Windows.Forms.Label issueMessageBoardLbl;
+        private System.Windows.Forms.ComboBox areaCbx;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox addressCbx;
+        private System.Windows.Forms.Label label2;
 
     }
 }

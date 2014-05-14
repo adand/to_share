@@ -11,26 +11,69 @@ using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
-    public partial class Buildings : Form
+    public partial class Apartments : Form
     {
         BindingSource bindingSource1 = new BindingSource();
         SqlDataAdapter da;
         DataSet ds;
+        string selectedID;
 
-        public Buildings()
+        public Apartments()
         {
             InitializeComponent();
         }
 
-        private void toReplaceBuildings_Load(object sender, EventArgs e)
+        private void fillTheAreaComboBox()
         {
-            dataGridView1.DataSource = bindingSource1;
-            GetData("select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID");
-            messageBoardLbl.ResetText();
-            instantMessageBoardLbl.Hide();
-            issueMessageBoardLbl.Hide();
-            saveBtn.Hide();
-            cancelBtn.Hide();
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand("select distinct bArea from buildings order by bArea", connection);
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            if(reader.HasRows)
+            {
+                while(reader.Read())
+                {
+                    areaCbx.Items.Add(reader["bArea"]);
+                }
+            }
+        }
+
+        private void fillTheAddressComboBox(string selectedArea)
+        {
+            addressCbx.ResetText();
+            addressCbx.Items.Clear();
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            SqlConnection connection = new SqlConnection(connectionString);
+            
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "select bAddress from buildings where bArea = @param_area order by bAddress";
+            command.Connection = connection;
+
+            SqlParameter param_area = new SqlParameter();
+            param_area.ParameterName = "@param_area";
+            param_area.SqlDbType = SqlDbType.NVarChar;
+            param_area.Value = selectedArea;
+
+            command.Parameters.Add(param_area);
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    addressCbx.Items.Add(reader["bAddress"]);
+                }
+            }
+        }
+
+        private void Apartments_Load(object sender, EventArgs e)
+        {
+            fillTheAreaComboBox();
         }
 
         public void GetData(string selectCommand)
@@ -100,7 +143,7 @@ namespace StartKoinoxristaProject
                     {
                         case 2627:
                         {
-                            issueMessageBoardLbl.Text = messageIntro + "Building ID must be unique. Also, the combination of Address, Area must be unique too.";
+                            issueMessageBoardLbl.Text = messageIntro + "Building ID must be unique. Also, the Apartment ID must be unique too.";
                             break;
                         }
                         case 515:
@@ -167,6 +210,52 @@ namespace StartKoinoxristaProject
         private void issueMessageBoardLbl_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void areaCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillTheAddressComboBox(areaCbx.SelectedItem.ToString());
+        }
+
+        private void addressCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            using(SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+
+                SqlParameter param_area = new SqlParameter();
+                param_area.ParameterName = "@Area";
+                param_area.SqlDbType = SqlDbType.NVarChar;
+                param_area.Value = areaCbx.SelectedItem.ToString();
+
+                SqlParameter param_address = new SqlParameter();
+                param_address.ParameterName = "@Address";
+                param_address.SqlDbType = SqlDbType.NVarChar;
+                param_address.Value = addressCbx.SelectedItem.ToString();
+
+                command.Parameters.Add(param_area);
+                command.Parameters.Add(param_address);
+
+                connection.Open();
+                selectedID = command.ExecuteScalar().ToString();
+
+                dataGridView1.DataSource = bindingSource1;
+                GetData(string.Format("select * from Apartments where buildingID = '{0}'", selectedID));
+                messageBoardLbl.ResetText();
+                instantMessageBoardLbl.Hide();
+                issueMessageBoardLbl.Hide();
+                saveBtn.Hide();
+                cancelBtn.Hide();
+            }
         }
     }
 }
