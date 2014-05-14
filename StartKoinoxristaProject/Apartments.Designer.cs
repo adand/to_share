@@ -36,6 +36,10 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.instantMessageBoardLbl = new System.Windows.Forms.Label();
             this.issueMessageBoardLbl = new System.Windows.Forms.Label();
+            this.areaCbx = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.addressCbx = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,11 +120,51 @@
             this.issueMessageBoardLbl.Text = "issueMessageBoard";
             this.issueMessageBoardLbl.Click += new System.EventHandler(this.issueMessageBoardLbl_Click);
             // 
+            // areaCbx
+            // 
+            this.areaCbx.FormattingEnabled = true;
+            this.areaCbx.Location = new System.Drawing.Point(134, 63);
+            this.areaCbx.Name = "areaCbx";
+            this.areaCbx.Size = new System.Drawing.Size(121, 21);
+            this.areaCbx.TabIndex = 8;
+            this.areaCbx.SelectedIndexChanged += new System.EventHandler(this.areaCbx_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(134, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Area:";
+            // 
+            // addressCbx
+            // 
+            this.addressCbx.FormattingEnabled = true;
+            this.addressCbx.Location = new System.Drawing.Point(305, 62);
+            this.addressCbx.Name = "addressCbx";
+            this.addressCbx.Size = new System.Drawing.Size(121, 21);
+            this.addressCbx.TabIndex = 10;
+            this.addressCbx.SelectedIndexChanged += new System.EventHandler(this.addressCbx_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(305, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Address:";
+            // 
             // Apartments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 478);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.addressCbx);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.areaCbx);
             this.Controls.Add(this.issueMessageBoardLbl);
             this.Controls.Add(this.instantMessageBoardLbl);
             this.Controls.Add(this.saveBtn);
@@ -148,6 +192,10 @@
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label instantMessageBoardLbl;
         private System.Windows.Forms.Label issueMessageBoardLbl;
+        private System.Windows.Forms.ComboBox areaCbx;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox addressCbx;
+        private System.Windows.Forms.Label label2;
 
     }
 }
