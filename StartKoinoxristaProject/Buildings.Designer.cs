@@ -115,7 +115,7 @@
             this.issueMessageBoardLbl.Text = "issueMessageBoard";
             this.issueMessageBoardLbl.Click += new System.EventHandler(this.issueMessageBoardLbl_Click);
             // 
-            // toReplaceBuildings
+            // Buildings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,8 +128,8 @@
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "toReplaceBuildings";
-            this.Text = "toReplaceBuildings";
+            this.Name = "Buildings";
+            this.Text = "Buildings";
             this.Load += new System.EventHandler(this.toReplaceBuildings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
