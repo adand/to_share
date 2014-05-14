@@ -1,1 +1,0 @@
-﻿select * from costPreDefinedItems where costCategory = 'cc1';

@@ -58,3 +58,4 @@ C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaP
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.mainForm.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Buildings.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Apartments.resources
