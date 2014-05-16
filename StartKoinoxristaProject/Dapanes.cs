@@ -16,7 +16,7 @@ namespace StartKoinoxristaProject
     {
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
-
+        private string selectedBuildingID;
 
         public Dapanes()
         {
@@ -66,7 +66,7 @@ namespace StartKoinoxristaProject
 
             // Provide the query string with a parameter placeholder. 
             string queryString1 =
-                "SELECT distinct area from buildings";
+                "SELECT distinct bArea from buildings";
 
             // Create and open the connection in a using block. This 
             // ensures that all resources will be closed and disposed 
@@ -114,9 +114,48 @@ namespace StartKoinoxristaProject
 
         }
 
+        public void set_selectedBuildingID()
+        {
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+
+                SqlParameter param_area = new SqlParameter();
+                param_area.ParameterName = "@Area";
+                param_area.SqlDbType = SqlDbType.NVarChar;
+                param_area.Value = AreaComboBox.SelectedItem.ToString();
+
+                SqlParameter param_address = new SqlParameter();
+                param_address.ParameterName = "@Address";
+                param_address.SqlDbType = SqlDbType.NVarChar;
+                param_address.Value = AddressComboBox.SelectedItem.ToString();
+
+                command.Parameters.Add(param_area);
+                command.Parameters.Add(param_address);
+
+                connection.Open();
+                selectedBuildingID = command.ExecuteScalar().ToString();
+            }
+        }
+
         private void AddressComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            set_selectedBuildingID();
 
+                /*dataGridView1.DataSource = bindingSource1;
+                GetData(string.Format("select buildingID, owner as Owner, apartmentID as Apartment_ID, generalProportion as General_Proportion, " +
+                "elevatorProportion as Elevator_Proportion from Apartments where buildingID = '{0}'", selectedID));
+                dataGridView1.Columns["buildingID"].Visible = false;
+                messageBoardLbl.ResetText();
+                instantMessageBoardLbl.Hide();
+                issueMessageBoardLbl.Hide();
+                saveBtn.Hide();
+                cancelBtn.Hide();
+                editBtn.Show();*/
         }
 
         private void showBuildingButton_Click(object sender, EventArgs e)
@@ -126,12 +165,13 @@ namespace StartKoinoxristaProject
 
         private void AreaComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AddressComboBox.Items.Clear();
             string connectionString =
                     @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
             // Provide the query string with a parameter placeholder. 
             string queryString1 =
-                string.Format("SELECT address from buildings where area = '{0}'", AreaComboBox.SelectedItem);
+                string.Format("SELECT bAddress from buildings where bArea = '{0}'", AreaComboBox.SelectedItem);
 
             // Create and open the connection in a using block. This 
             // ensures that all resources will be closed and disposed 
@@ -199,6 +239,7 @@ namespace StartKoinoxristaProject
             costDescriptionComboBox.Enabled = true;
             costDescriptionComboBox.Items.Clear();
             costDescriptionComboBox.ResetText();
+            costValueTextBox.Clear();
 
             string connectionString =
                     @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
@@ -276,11 +317,14 @@ namespace StartKoinoxristaProject
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             alreadyInsertedCostDataGridView.DataSource = bindingSource1;
-            string queryString = string.Format("select * from dapanes where buildingID = (select buildingID from buildings where address = '{0}' and area = '{1}')", 
-                AddressComboBox.SelectedItem, AreaComboBox.SelectedItem);/*
-            + "where dapanes.buildingID = buildings.buildingID and buildings.Address = '{0}'", AddressComboBox.SelectedItem);*/
+            string queryString = string.Format("select * from dapanes where buildingID = (select buildingID from buildings where bAddress = '{0}' and bArea = '{1}')", 
+                AddressComboBox.SelectedItem, AreaComboBox.SelectedItem);
             GetData(queryString);
-            
+
+            alreadyInsertedCostDataGridView.Columns["buildingID"].Visible = false;
+            alreadyInsertedCostDataGridView.Columns["theMonth"].Visible = false;
+            alreadyInsertedCostDataGridView.Columns["theYear"].Visible = false;
+
             bool invalidChoice = false;
 
             if ((AddressComboBox.SelectedItem == null) || (AreaComboBox.SelectedItem == null) || (monthComboBox.SelectedItem == null) ||
@@ -394,6 +438,11 @@ namespace StartKoinoxristaProject
         private void buildingIDTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void costDescriptionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            costValueTextBox.Clear();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace StartKoinoxristaProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Apartments());
+            Application.Run(new comboBoxInsideDataGridView());
         }
     }
 

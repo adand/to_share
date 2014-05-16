@@ -106,8 +106,9 @@ namespace StartKoinoxristaProject
             editBtn.Hide();
             saveBtn.Show();
             cancelBtn.Show();
+            deleteButton.Show();
             messageBoardLbl.Text = "Edit in progress ...";
-            dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
+            dataGridView1.CurrentCell = dataGridView1[1, dataGridView1.Rows.Count - 1];
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -123,13 +124,19 @@ namespace StartKoinoxristaProject
             {
                 try
                 {
-                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        row[0] = selectedID;
+                    }
+                    int r = da.Update(dt);
                     MessageBox.Show("Added: " + ds.HasChanges(DataRowState.Added) + " rows");
                     messageBoardLbl.ResetText();
                     instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
                     instantMessageBoardLbl.Show();
                     issueMessageBoardLbl.Hide();
                     saveBtn.Hide();
+                    deleteButton.Hide();
                     cancelBtn.Hide();
                     GetData(da.SelectCommand.CommandText);
                     editBtn.Show();
@@ -143,7 +150,7 @@ namespace StartKoinoxristaProject
                     {
                         case 2627:
                         {
-                            issueMessageBoardLbl.Text = messageIntro + "Building ID must be unique. Also, the Apartment ID must be unique too.";
+                            issueMessageBoardLbl.Text = messageIntro + "Apartment ID must be unique.";
                             break;
                         }
                         case 515:
@@ -154,6 +161,11 @@ namespace StartKoinoxristaProject
                         case 8152:
                         {
                             issueMessageBoardLbl.Text = messageIntro + "The maximum number of characters for Building ID is 3. Address, Area can contain at most 20 characters each.";
+                            break;
+                        }
+                        default:
+                        {
+                            MessageBox.Show(sqlEx.Message);
                             break;
                         }
                     }
@@ -171,6 +183,7 @@ namespace StartKoinoxristaProject
                     GetData(da.SelectCommand.CommandText);
                     saveBtn.Hide();
                     cancelBtn.Hide();
+                    deleteButton.Hide();
                     editBtn.Show();
                 }
                 catch
@@ -197,6 +210,7 @@ namespace StartKoinoxristaProject
                     GetData(da.SelectCommand.CommandText);
                     saveBtn.Hide();
                     cancelBtn.Hide();
+                    deleteButton.Hide();
                     editBtn.Show();
                     dataGridView1.ReadOnly = true;
                 }
@@ -249,13 +263,22 @@ namespace StartKoinoxristaProject
                 selectedID = command.ExecuteScalar().ToString();
 
                 dataGridView1.DataSource = bindingSource1;
-                GetData(string.Format("select * from Apartments where buildingID = '{0}'", selectedID));
+                GetData(string.Format("select buildingID, owner as Owner, apartmentID as Apartment_ID, generalProportion as General_Proportion, " +
+                "elevatorProportion as Elevator_Proportion from Apartments where buildingID = '{0}'", selectedID));
+                dataGridView1.Columns["buildingID"].Visible = false;
                 messageBoardLbl.ResetText();
                 instantMessageBoardLbl.Hide();
                 issueMessageBoardLbl.Hide();
                 saveBtn.Hide();
                 cancelBtn.Hide();
+                deleteButton.Hide();
+                editBtn.Show();
             }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
         }
     }
 }
