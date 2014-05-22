@@ -36,6 +36,7 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.instantMessageBoardLbl = new System.Windows.Forms.Label();
             this.issueMessageBoardLbl = new System.Windows.Forms.Label();
+            this.deleteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,10 +47,11 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(444, 248);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(505, 57);
+            this.exitBtn.Location = new System.Drawing.Point(503, 61);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 1;
@@ -59,7 +61,7 @@
             // 
             // editBtn
             // 
-            this.editBtn.Location = new System.Drawing.Point(504, 341);
+            this.editBtn.Location = new System.Drawing.Point(422, 61);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(75, 23);
             this.editBtn.TabIndex = 2;
@@ -78,7 +80,7 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(503, 341);
+            this.cancelBtn.Location = new System.Drawing.Point(503, 344);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 4;
@@ -88,7 +90,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(422, 341);
+            this.saveBtn.Location = new System.Drawing.Point(341, 344);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 5;
@@ -115,11 +117,22 @@
             this.issueMessageBoardLbl.Text = "issueMessageBoard";
             this.issueMessageBoardLbl.Click += new System.EventHandler(this.issueMessageBoardLbl_Click);
             // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Location = new System.Drawing.Point(422, 344);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(75, 23);
+            this.deleteBtn.TabIndex = 8;
+            this.deleteBtn.Text = "Delete";
+            this.deleteBtn.UseVisualStyleBackColor = true;
+            this.deleteBtn.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Buildings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 435);
+            this.Controls.Add(this.deleteBtn);
             this.Controls.Add(this.issueMessageBoardLbl);
             this.Controls.Add(this.instantMessageBoardLbl);
             this.Controls.Add(this.saveBtn);
@@ -147,6 +160,7 @@
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label instantMessageBoardLbl;
         private System.Windows.Forms.Label issueMessageBoardLbl;
+        private System.Windows.Forms.Button deleteBtn;
 
     }
 }

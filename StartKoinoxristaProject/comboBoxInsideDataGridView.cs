@@ -73,7 +73,7 @@ namespace StartKoinoxristaProject
         {
             DataGridViewComboBoxColumn column =
                 new DataGridViewComboBoxColumn();
-            column.DataPropertyName = "abc";
+            column.DataPropertyName = ColumnName.costCategory.ToString();
                 column.HeaderText = ColumnName.costCategory.ToString();
                 /*column.DropDownWidth = 160;
                 column.Width = 90;
@@ -87,7 +87,7 @@ namespace StartKoinoxristaProject
             {
                 comboboxColumn.DataSource = RetrieveAlternativeTitles();
                 comboboxColumn.ValueMember = ColumnName.costCategory.ToString();
-                comboboxColumn.DisplayMember = comboboxColumn.ValueMember;
+                comboboxColumn.DisplayMember = ColumnName.costCategory.ToString();
             }
         }
 

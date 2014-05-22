@@ -26,11 +26,8 @@ namespace StartKoinoxristaProject
         {
             dataGridView1.DataSource = bindingSource1;
             GetData("select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID");
-            messageBoardLbl.ResetText();
-            instantMessageBoardLbl.Hide();
-            issueMessageBoardLbl.Hide();
-            saveBtn.Hide();
-            cancelBtn.Hide();
+            whileEditingControls(false);
+            resetLabelsText();
         }
 
         public void GetData(string selectCommand)
@@ -50,6 +47,8 @@ namespace StartKoinoxristaProject
         private void exitBtn_Click(object sender, EventArgs e)
         {
             this.Close();
+            mainForm myMainForm = new mainForm();
+            myMainForm.Show();
         }
 
         private void reloadBtn_Click(object sender, EventArgs e)
@@ -60,11 +59,51 @@ namespace StartKoinoxristaProject
         private void editBtn_Click(object sender, EventArgs e)
         {
             dataGridView1.ReadOnly = false;
-            editBtn.Hide();
-            saveBtn.Show();
-            cancelBtn.Show();
+            whileNotEditingControls(false);
+            whileEditingControls(true);
             messageBoardLbl.Text = "Edit in progress ...";
             dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
+        }
+
+        public void whileEditingControls(bool displayStatus)
+        {
+            Control[] whileEditingControls = { saveBtn, deleteBtn, cancelBtn, messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
+            for (int i = 0; i < whileEditingControls.Length; i++)
+            {
+                if (displayStatus)
+                {
+                    whileEditingControls[i].Show();
+                }
+                else
+                {
+                    whileEditingControls[i].Hide();
+                }
+            }
+        }
+
+        public void whileNotEditingControls(bool displayStatus)
+        {
+            Control[] whileNotEditingControls = { editBtn, exitBtn };
+            for (int i = 0; i < whileNotEditingControls.Length; i++)
+            {
+                if (displayStatus)
+                {
+                    whileNotEditingControls[i].Show();
+                }
+                else
+                {
+                    whileNotEditingControls[i].Hide();
+                }
+            }
+        }
+
+        public void resetLabelsText()
+        {
+            Label[] labels = { messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
+            for (int i = 0; i < labels.Length; i++ )
+            {
+                labels[i].ResetText();
+            }
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -81,15 +120,12 @@ namespace StartKoinoxristaProject
                 try
                 {
                     int r = da.Update((DataTable)bindingSource1.DataSource);
-                    MessageBox.Show("Added: " + ds.HasChanges(DataRowState.Added) + " rows");
+                    whileEditingControls(false);
                     messageBoardLbl.ResetText();
                     instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
                     instantMessageBoardLbl.Show();
-                    issueMessageBoardLbl.Hide();
-                    saveBtn.Hide();
-                    cancelBtn.Hide();
                     GetData(da.SelectCommand.CommandText);
-                    editBtn.Show();
+                    whileNotEditingControls(true);
                     dataGridView1.ReadOnly = true;
                 }
                 catch (SqlException sqlEx)
@@ -167,6 +203,16 @@ namespace StartKoinoxristaProject
         private void issueMessageBoardLbl_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
