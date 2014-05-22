@@ -181,6 +181,7 @@
             this.costDescriptionComboBox.Name = "costDescriptionComboBox";
             this.costDescriptionComboBox.Size = new System.Drawing.Size(303, 21);
             this.costDescriptionComboBox.TabIndex = 17;
+            this.costDescriptionComboBox.SelectedIndexChanged += new System.EventHandler(this.costDescriptionComboBox_SelectedIndexChanged);
             // 
             // buildingsBindingSource
             // 

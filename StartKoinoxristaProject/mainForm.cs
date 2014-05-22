@@ -32,7 +32,7 @@ namespace StartKoinoxristaProject
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -46,6 +46,18 @@ namespace StartKoinoxristaProject
         {
             costPredefinedItems a = new costPredefinedItems();
             a.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Apartments newApartment = new Apartments();
+            newApartment.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 

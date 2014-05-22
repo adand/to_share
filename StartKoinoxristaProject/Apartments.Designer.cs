@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.addressCbx = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.deleteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,7 +65,7 @@
             // 
             // editBtn
             // 
-            this.editBtn.Location = new System.Drawing.Point(678, 344);
+            this.editBtn.Location = new System.Drawing.Point(597, 61);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(75, 23);
             this.editBtn.TabIndex = 2;
@@ -93,7 +94,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(597, 344);
+            this.saveBtn.Location = new System.Drawing.Point(516, 344);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 5;
@@ -141,7 +142,7 @@
             // addressCbx
             // 
             this.addressCbx.FormattingEnabled = true;
-            this.addressCbx.Location = new System.Drawing.Point(305, 62);
+            this.addressCbx.Location = new System.Drawing.Point(308, 63);
             this.addressCbx.Name = "addressCbx";
             this.addressCbx.Size = new System.Drawing.Size(121, 21);
             this.addressCbx.TabIndex = 10;
@@ -156,11 +157,22 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Address:";
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(597, 344);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 12;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
             // Apartments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 478);
+            this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.addressCbx);
             this.Controls.Add(this.label1);
@@ -196,6 +208,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox addressCbx;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button deleteButton;
 
     }
 }
