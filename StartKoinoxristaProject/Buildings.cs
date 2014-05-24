@@ -27,7 +27,6 @@ namespace StartKoinoxristaProject
             dataGridView1.DataSource = bindingSource1;
             GetData("select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID");
             whileEditingControls(false);
-            resetLabelsText();
         }
 
         public void GetData(string selectCommand)
@@ -41,7 +40,6 @@ namespace StartKoinoxristaProject
             ds.Tables.Add(dt);
             da.Fill(dt);
             bindingSource1.DataSource = dt;
-            dataGridView1.ReadOnly = true;
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
@@ -58,7 +56,6 @@ namespace StartKoinoxristaProject
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            dataGridView1.ReadOnly = false;
             whileNotEditingControls(false);
             whileEditingControls(true);
             messageBoardLbl.Text = "Edit in progress ...";
@@ -73,10 +70,13 @@ namespace StartKoinoxristaProject
                 if (displayStatus)
                 {
                     whileEditingControls[i].Show();
+                    dataGridView1.ReadOnly = false;
                 }
                 else
                 {
                     whileEditingControls[i].Hide();
+                    dataGridView1.ReadOnly = true;
+                    resetLabelsText();
                 }
             }
         }
@@ -121,17 +121,14 @@ namespace StartKoinoxristaProject
                 {
                     int r = da.Update((DataTable)bindingSource1.DataSource);
                     whileEditingControls(false);
-                    messageBoardLbl.ResetText();
-                    instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
-                    instantMessageBoardLbl.Show();
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
                     GetData(da.SelectCommand.CommandText);
                     whileNotEditingControls(true);
-                    dataGridView1.ReadOnly = true;
                 }
                 catch (SqlException sqlEx)
                 {
                     instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve rule's violation to insert the rest of the records.";
-                    string messageIntro = "Rule affected: ";
+                    string messageIntro = "Rule affected:\n";
                     switch (sqlEx.Number)
                     {
                         case 2627:
@@ -149,6 +146,11 @@ namespace StartKoinoxristaProject
                             issueMessageBoardLbl.Text = messageIntro + "The maximum number of characters for Building ID is 3. Address, Area can contain at most 20 characters each.";
                             break;
                         }
+                        default:
+                        {
+                            MessageBox.Show(sqlEx.Message + ": " + sqlEx.Number.ToString());
+                            break;
+                        }
                     }
                     instantMessageBoardLbl.ForeColor = Color.Red;
                     instantMessageBoardLbl.Show();
@@ -158,13 +160,12 @@ namespace StartKoinoxristaProject
             else if (result == DialogResult.No)
             {
                 messageBoardLbl.ResetText();
-                MessageBox.Show("Not Saved");
+                MessageBox.Show("Not Saved!");
                 try
                 {
                     GetData(da.SelectCommand.CommandText);
-                    saveBtn.Hide();
-                    cancelBtn.Hide();
-                    editBtn.Show();
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
                 }
                 catch
                 {
@@ -188,10 +189,8 @@ namespace StartKoinoxristaProject
                 {
                     messageBoardLbl.ResetText();
                     GetData(da.SelectCommand.CommandText);
-                    saveBtn.Hide();
-                    cancelBtn.Hide();
-                    editBtn.Show();
-                    dataGridView1.ReadOnly = true;
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +211,10 @@ namespace StartKoinoxristaProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            foreach (DataGridViewRow item in this.dataGridView1.SelectedRows)
+            {
+                dataGridView1.Rows.RemoveAt(item.Index);
+            }
         }
     }
 }
