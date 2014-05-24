@@ -73,6 +73,7 @@ namespace StartKoinoxristaProject
 
         private void Apartments_Load(object sender, EventArgs e)
         {
+            dataGridView1.DataSource = bindingSource1;
             fillTheAreaComboBox();
         }
 
@@ -87,12 +88,46 @@ namespace StartKoinoxristaProject
             ds.Tables.Add(dt);
             da.Fill(dt);
             bindingSource1.DataSource = dt;
-            dataGridView1.ReadOnly = true;
+            whileEditingControls(false);
+        }
+
+        public void whileEditingControls(bool displayStatus)
+        {
+            Control[] whileEditingControls = { saveBtn, deleteBtn, cancelBtn, messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
+            for (int i = 0; i < whileEditingControls.Length; i++)
+            {
+                if (displayStatus)
+                {
+                    whileEditingControls[i].Show();
+                    dataGridView1.ReadOnly = false;
+                    areaCbx.Enabled = false;
+                    addressCbx.Enabled = false;
+                }
+                else
+                {
+                    whileEditingControls[i].Hide();
+                    dataGridView1.ReadOnly = true;
+                    resetLabelsText();
+                    areaCbx.Enabled = true;
+                    addressCbx.Enabled = true;
+                }
+            }
+        }
+
+        public void resetLabelsText()
+        {
+            Label[] labels = { messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i].ResetText();
+            }
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
             this.Close();
+            mainForm myMainForm = new mainForm();
+            myMainForm.Show();
         }
 
         private void reloadBtn_Click(object sender, EventArgs e)
@@ -102,13 +137,26 @@ namespace StartKoinoxristaProject
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            dataGridView1.ReadOnly = false;
-            editBtn.Hide();
-            saveBtn.Show();
-            cancelBtn.Show();
-            deleteButton.Show();
+            whileNotEditingControls(false);
+            whileEditingControls(true);
             messageBoardLbl.Text = "Edit in progress ...";
             dataGridView1.CurrentCell = dataGridView1[1, dataGridView1.Rows.Count - 1];
+        }
+
+        public void whileNotEditingControls(bool displayStatus)
+        {
+            Control[] whileNotEditingControls = { editBtn, exitBtn };
+            for (int i = 0; i < whileNotEditingControls.Length; i++)
+            {
+                if (displayStatus)
+                {
+                    whileNotEditingControls[i].Show();
+                }
+                else
+                {
+                    whileNotEditingControls[i].Hide();
+                }
+            }
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -127,20 +175,16 @@ namespace StartKoinoxristaProject
                     DataTable dt = (DataTable)bindingSource1.DataSource;
                     foreach (DataRow row in dt.Rows)
                     {
-                        row[0] = selectedID;
+                        if (row[0].ToString().Length == 0)
+                        {
+                            row[0] = selectedID;
+                        }
                     }
-                    int r = da.Update(dt);
-                    MessageBox.Show("Added: " + ds.HasChanges(DataRowState.Added) + " rows");
-                    messageBoardLbl.ResetText();
-                    instantMessageBoardLbl.Text = "Saved! " + r + " row(s) affected.";
-                    instantMessageBoardLbl.Show();
-                    issueMessageBoardLbl.Hide();
-                    saveBtn.Hide();
-                    deleteButton.Hide();
-                    cancelBtn.Hide();
+                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    whileEditingControls(false);
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
                     GetData(da.SelectCommand.CommandText);
-                    editBtn.Show();
-                    dataGridView1.ReadOnly = true;
+                    whileNotEditingControls(true);
                 }
                 catch (SqlException sqlEx)
                 {
@@ -177,14 +221,12 @@ namespace StartKoinoxristaProject
             else if (result == DialogResult.No)
             {
                 messageBoardLbl.ResetText();
-                MessageBox.Show("Not Saved");
+                MessageBox.Show("Not Saved!");
                 try
                 {
                     GetData(da.SelectCommand.CommandText);
-                    saveBtn.Hide();
-                    cancelBtn.Hide();
-                    deleteButton.Hide();
-                    editBtn.Show();
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
                 }
                 catch
                 {
@@ -208,11 +250,8 @@ namespace StartKoinoxristaProject
                 {
                     messageBoardLbl.ResetText();
                     GetData(da.SelectCommand.CommandText);
-                    saveBtn.Hide();
-                    cancelBtn.Hide();
-                    deleteButton.Hide();
-                    editBtn.Show();
-                    dataGridView1.ReadOnly = true;
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
                 }
                 catch (Exception ex)
                 {
@@ -233,11 +272,13 @@ namespace StartKoinoxristaProject
 
         private void areaCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            editBtn.Hide();
             fillTheAddressComboBox(areaCbx.SelectedItem.ToString());
         }
 
         private void addressCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            editBtn.Show();
             string connectionString =
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             using(SqlConnection connection = new SqlConnection(connectionString))
@@ -266,13 +307,9 @@ namespace StartKoinoxristaProject
                 GetData(string.Format("select buildingID, owner as Owner, apartmentID as Apartment_ID, generalProportion as General_Proportion, " +
                 "elevatorProportion as Elevator_Proportion from Apartments where buildingID = '{0}'", selectedID));
                 dataGridView1.Columns["buildingID"].Visible = false;
-                messageBoardLbl.ResetText();
-                instantMessageBoardLbl.Hide();
-                issueMessageBoardLbl.Hide();
-                saveBtn.Hide();
-                cancelBtn.Hide();
-                deleteButton.Hide();
-                editBtn.Show();
+                resetLabelsText();
+                whileEditingControls(false);
+                whileNotEditingControls(true);
             }
         }
 
