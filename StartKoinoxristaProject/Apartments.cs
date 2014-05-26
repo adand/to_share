@@ -75,6 +75,10 @@ namespace StartKoinoxristaProject
         {
             dataGridView1.DataSource = bindingSource1;
             fillTheAreaComboBox();
+            whileEditingControls(false);
+            dataGridView1.Hide();
+            whileNotEditingControls(false);
+            exitBtn.Show();
         }
 
         public void GetData(string selectCommand)
@@ -89,6 +93,17 @@ namespace StartKoinoxristaProject
             da.Fill(dt);
             bindingSource1.DataSource = dt;
             whileEditingControls(false);
+
+            decimal generalTotal = 0;
+            decimal elevatorTotal = 0;
+            //Calculate the total of General Proportion
+            for (int i=0; i<dt.Rows.Count; i++)
+            {
+                generalTotal += (decimal)dt.Rows[i]["General Proportion (‰)"];
+                elevatorTotal += (decimal)dt.Rows[i]["Elevator Proportion (‰)"];
+            } 
+            generalTotalLbl.Text = "General Proportion Column Total: " + generalTotal.ToString() + " (‰)";
+            elevatorTotalLbl.Text = "Elevator Proportion Column Total: " + elevatorTotal.ToString() + " (‰)";
         }
 
         public void whileEditingControls(bool displayStatus)
@@ -145,7 +160,7 @@ namespace StartKoinoxristaProject
 
         public void whileNotEditingControls(bool displayStatus)
         {
-            Control[] whileNotEditingControls = { editBtn, exitBtn };
+            Control[] whileNotEditingControls = { editBtn, exitBtn, generalTotalLbl, elevatorTotalLbl };
             for (int i = 0; i < whileNotEditingControls.Length; i++)
             {
                 if (displayStatus)
@@ -175,9 +190,12 @@ namespace StartKoinoxristaProject
                     DataTable dt = (DataTable)bindingSource1.DataSource;
                     foreach (DataRow row in dt.Rows)
                     {
-                        if (row[0].ToString().Length == 0)
+                        if (row.RowState.ToString() != "Deleted")
                         {
-                            row[0] = selectedID;
+                            if (row[0].ToString().Length == 0)
+                            {
+                                row[0] = selectedID;
+                            }
                         }
                     }
                     int r = da.Update((DataTable)bindingSource1.DataSource);
@@ -272,13 +290,16 @@ namespace StartKoinoxristaProject
 
         private void areaCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editBtn.Hide();
+            whileNotEditingControls(false);
+            exitBtn.Show();
+            dataGridView1.Hide();
             fillTheAddressComboBox(areaCbx.SelectedItem.ToString());
         }
 
         private void addressCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editBtn.Show();
+            whileNotEditingControls(true);
+            dataGridView1.Show();
             string connectionString =
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             using(SqlConnection connection = new SqlConnection(connectionString))
@@ -304,8 +325,8 @@ namespace StartKoinoxristaProject
                 selectedID = command.ExecuteScalar().ToString();
 
                 dataGridView1.DataSource = bindingSource1;
-                GetData(string.Format("select buildingID, owner as Owner, apartmentID as Apartment_ID, generalProportion as General_Proportion, " +
-                "elevatorProportion as Elevator_Proportion from Apartments where buildingID = '{0}'", selectedID));
+                GetData(string.Format("select buildingID, owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
+                "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = '{0}' order by apartmentID", selectedID));
                 dataGridView1.Columns["buildingID"].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);
@@ -315,7 +336,10 @@ namespace StartKoinoxristaProject
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+            foreach (DataGridViewRow item in this.dataGridView1.SelectedRows)
+            {
+                dataGridView1.Rows.RemoveAt(item.Index);
+            }
         }
     }
 }
