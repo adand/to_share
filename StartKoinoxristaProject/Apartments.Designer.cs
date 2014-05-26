@@ -41,6 +41,8 @@
             this.addressCbx = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.deleteBtn = new System.Windows.Forms.Button();
+            this.generalTotalLbl = new System.Windows.Forms.Label();
+            this.elevatorTotalLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,7 +78,7 @@
             // messageBoardLbl
             // 
             this.messageBoardLbl.AutoSize = true;
-            this.messageBoardLbl.Location = new System.Drawing.Point(136, 341);
+            this.messageBoardLbl.Location = new System.Drawing.Point(131, 341);
             this.messageBoardLbl.Name = "messageBoardLbl";
             this.messageBoardLbl.Size = new System.Drawing.Size(80, 13);
             this.messageBoardLbl.TabIndex = 3;
@@ -167,11 +169,31 @@
             this.deleteBtn.UseVisualStyleBackColor = true;
             this.deleteBtn.Click += new System.EventHandler(this.deleteButton_Click);
             // 
+            // generalTotalLbl
+            // 
+            this.generalTotalLbl.AutoSize = true;
+            this.generalTotalLbl.Location = new System.Drawing.Point(131, 400);
+            this.generalTotalLbl.Name = "generalTotalLbl";
+            this.generalTotalLbl.Size = new System.Drawing.Size(35, 13);
+            this.generalTotalLbl.TabIndex = 13;
+            this.generalTotalLbl.Text = "label3";
+            // 
+            // elevatorTotalLbl
+            // 
+            this.elevatorTotalLbl.AutoSize = true;
+            this.elevatorTotalLbl.Location = new System.Drawing.Point(131, 413);
+            this.elevatorTotalLbl.Name = "elevatorTotalLbl";
+            this.elevatorTotalLbl.Size = new System.Drawing.Size(35, 13);
+            this.elevatorTotalLbl.TabIndex = 14;
+            this.elevatorTotalLbl.Text = "label4";
+            // 
             // Apartments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 478);
+            this.Controls.Add(this.elevatorTotalLbl);
+            this.Controls.Add(this.generalTotalLbl);
             this.Controls.Add(this.deleteBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.addressCbx);
@@ -209,6 +231,8 @@
         private System.Windows.Forms.ComboBox addressCbx;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button deleteBtn;
+        private System.Windows.Forms.Label generalTotalLbl;
+        private System.Windows.Forms.Label elevatorTotalLbl;
 
     }
 }
