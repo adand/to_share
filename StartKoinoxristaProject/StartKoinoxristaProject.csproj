@@ -71,6 +71,7 @@
     <Compile Include="comboBoxInsideDataGridView.Designer.cs">
       <DependentUpon>comboBoxInsideDataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cost.cs" />
     <Compile Include="costPredefinedItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +89,12 @@
     </Compile>
     <Compile Include="DataGridView.Designer.cs">
       <DependentUpon>DataGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="handleTheForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="handleTheForm.Designer.cs">
+      <DependentUpon>handleTheForm.cs</DependentUpon>
     </Compile>
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
@@ -145,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataGridView.resx">
       <DependentUpon>DataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="handleTheForm.resx">
+      <DependentUpon>handleTheForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>

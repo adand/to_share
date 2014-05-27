@@ -1,6 +1,6 @@
 ﻿namespace StartKoinoxristaProject
 {
-    partial class costPredefinedItems
+    partial class handleTheForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(75, 77);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(400, 216);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // costPredefinedItems
+            // handleTheForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 386);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "costPredefinedItems";
-            this.Text = "costPredefinedItems";
-            this.Load += new System.EventHandler(this.costPredefinedItems_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ClientSize = new System.Drawing.Size(624, 325);
+            this.Name = "handleTheForm";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.handleTheForm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
@@ -18,29 +17,13 @@ namespace StartKoinoxristaProject
             InitializeComponent();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void costPredefinedItems_Load(object sender, EventArgs e)
         {
-            /*
-            try
-            {
-                SqlConnection con = new SqlConnection();
-                con.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\adand\Projects\ABM\to_share\StartKoinoxristaProject\kinoxrista.mdf;Integrated Security=True";
-                con.Open();
-                adap = new SqlDataAdapter("select * from costPredefinedItems", con);
-                ds = new DataSet();
-                adap.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-             */
+            int b = 7;
+            Cost cost1 = new Cost();
+            Cost cost2 = new Cost(b);
+            MessageBox.Show(cost1.CostValue.ToString());
+            MessageBox.Show(cost2.CostValue.ToString());
         }
     }
 }

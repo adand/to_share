@@ -11,25 +11,41 @@ using System.Data.SqlClient;
 
 namespace StartKoinoxristaProject
 {
-    public partial class Buildings : Form
+    public partial class Buildings : handleTheForm
     {
-        BindingSource bindingSource1 = new BindingSource();
-        SqlDataAdapter da;
-        DataSet ds;
+        private SqlDataAdapter da;
+        private DataSet ds;
 
+        //default constructor
         public Buildings()
         {
+            // initialize the objects that are on the form
             InitializeComponent();
+            MessageBox.Show("inside default constructor");
+        }
+
+        // overloaded constructor method
+        public Buildings(string queryString)
+        {
+            // initialize the objects that are on the form
+            InitializeComponent();
+
+            // get the value of the property
+            BindingSource bindingSource1 = BindingSource1;
+
+            dataGridView1.DataSource = bindingSource1;
+            bindingSource1.DataSource = GetData(queryString);
         }
 
         private void toReplaceBuildings_Load(object sender, EventArgs e)
         {
+            /*MessageBox.Show("form loader");
             dataGridView1.DataSource = bindingSource1;
-            GetData("select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID");
-            whileEditingControls(false);
+            string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
+            whileEditingControls(false);*/
         }
 
-        public void GetData(string selectCommand)
+        /*public void GetData(string selectCommand)
         {
             string connectionString =
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
@@ -40,7 +56,7 @@ namespace StartKoinoxristaProject
             ds.Tables.Add(dt);
             da.Fill(dt);
             bindingSource1.DataSource = dt;
-        }
+        }*/
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
@@ -62,7 +78,7 @@ namespace StartKoinoxristaProject
             dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
         }
 
-        public void whileEditingControls(bool displayStatus)
+        /*public void whileEditingControls(bool displayStatus)
         {
             Control[] whileEditingControls = { saveBtn, deleteBtn, cancelBtn, messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
             for (int i = 0; i < whileEditingControls.Length; i++)
@@ -79,7 +95,7 @@ namespace StartKoinoxristaProject
                     resetLabelsText();
                 }
             }
-        }
+        }*/
 
         public void whileNotEditingControls(bool displayStatus)
         {
@@ -119,7 +135,10 @@ namespace StartKoinoxristaProject
             {
                 try
                 {
+                    int r = 0;
+                    /*
                     int r = da.Update((DataTable)bindingSource1.DataSource);
+                     * */
                     whileEditingControls(false);
                     MessageBox.Show("Saved! " + r + " row(s) affected.");
                     GetData(da.SelectCommand.CommandText);
@@ -173,7 +192,7 @@ namespace StartKoinoxristaProject
                 }
             }
         }
-
+        
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             string message = "Are you sure you want to Abort?";
