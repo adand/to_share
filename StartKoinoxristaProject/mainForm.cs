@@ -12,6 +12,8 @@ namespace StartKoinoxristaProject
 {
     public partial class mainForm : Form
     {
+        private string queryString;
+
         public mainForm()
         {
             InitializeComponent();
@@ -20,9 +22,15 @@ namespace StartKoinoxristaProject
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Buildings frm = new Buildings();
-            frm.Show();
-            
+
+            // define the query string that will be used in buildings form
+            string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
+
+            // this will call an overloaded constructor method
+            Buildings blds1 = new Buildings(queryString);
+
+            // this will call the function toReplaceBuildings_Load
+            blds1.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
