@@ -13,31 +13,24 @@ namespace StartKoinoxristaProject
 {
     public partial class handleTheForm : Form
     {
-        private DataGridView dataGridView1;
-        private BindingSource bindingSource1;
-        private SqlDataAdapter da;
-        private DataSet ds;
-        private DataTable dt;
+        private BindingSource bindingSource1 = new BindingSource();
+        private SqlDataAdapter da = new SqlDataAdapter();
+        private DataSet ds = new DataSet();
+        private DataTable dt = new DataTable();
+        private Control editBtn;
+        private Control exitBtn;
         private Control saveBtn;
         private Control deleteBtn;
         private Control cancelBtn;
         private Control messageBoardLbl;
         private Control instantMessageBoardLbl;
         private Control issueMessageBoardLbl;
-
+            
         public handleTheForm()
         {
-            InitializeComponent();
-            dataGridView1 = new DataGridView();
-            bindingSource1 = new BindingSource();
+            InitializeComponent();            
             ds = new DataSet();
             dt = new DataTable();
-            saveBtn = new Control();
-            deleteBtn = new Control();
-            cancelBtn = new Control();
-            messageBoardLbl = new Control();
-            instantMessageBoardLbl = new Control();
-            issueMessageBoardLbl = new Control();
         }
 
         public BindingSource BindingSource1
@@ -46,15 +39,90 @@ namespace StartKoinoxristaProject
             set { bindingSource1 = value; }
         }
 
-        public DataGridView DataGridView1
+        public Control EditBtn
         {
-            get { return dataGridView1;}
-            set { dataGridView1 = value;}
+            get { return editBtn;}
+            set { editBtn = value;}
+        }
+
+        public Control ExitBtn
+        {
+            get { return exitBtn;}
+            set { exitBtn = value;}
+        }
+
+        public Control SaveBtn
+        {
+            get { return saveBtn;}
+            set { saveBtn = value;}
+        }
+
+        public Control DeleteBtn
+        {
+            get { return deleteBtn;}
+            set { deleteBtn = value;}
+        }
+
+        public Control CancelBtn
+        {
+            get { return cancelBtn;}
+            set { cancelBtn = value;}
+        }
+
+        public Control MessageBoardLbl
+        {
+            get { return messageBoardLbl;}
+            set { messageBoardLbl = value;}
+        }
+
+        public Control InstantMessageBoardLbl
+        {
+            get { return instantMessageBoardLbl;}
+            set { instantMessageBoardLbl = value;}
+        }
+
+        public Control IssueMessageBoardLbl
+        {
+            get { return issueMessageBoardLbl;}
+            set { issueMessageBoardLbl = value;}
         }
 
         private void handleTheForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void exit()
+        {
+            this.Close();
+            mainForm myMainForm = new mainForm();
+            myMainForm.Show();
+        }
+
+        public void cancel()
+        {
+            string message = "Are you sure you want to Abort?";
+            string caption = "Confirm Cancellation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            saveBtn.Hide();
+            /*if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    messageBoardLbl.ResetText();
+                    GetData(da.SelectCommand.CommandText);
+                    whileEditingControls(false);
+                    // whileNotEditingControls(true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }*/
         }
 
         public DataTable GetData(string selectCommand)

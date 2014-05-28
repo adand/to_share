@@ -90,6 +90,12 @@
     <Compile Include="DataGridView.Designer.cs">
       <DependentUpon>DataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="dataGridViewProgramm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataGridViewProgramm.Designer.cs">
+      <DependentUpon>dataGridViewProgramm.cs</DependentUpon>
+    </Compile>
     <Compile Include="handleTheForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataGridView.resx">
       <DependentUpon>DataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataGridViewProgramm.resx">
+      <DependentUpon>dataGridViewProgramm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="handleTheForm.resx">
       <DependentUpon>handleTheForm.cs</DependentUpon>
