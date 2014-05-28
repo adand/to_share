@@ -13,6 +13,7 @@ namespace StartKoinoxristaProject
 {
     public partial class handleTheForm : Form
     {
+        private DataGridView dataGridView2 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter da = new SqlDataAdapter();
         private DataSet ds = new DataSet();
@@ -22,9 +23,9 @@ namespace StartKoinoxristaProject
         private Control saveBtn;
         private Control deleteBtn;
         private Control cancelBtn;
-        private Control messageBoardLbl;
-        private Control instantMessageBoardLbl;
-        private Control issueMessageBoardLbl;
+        private Label messageBoardLbl;
+        private Label instantMessageBoardLbl;
+        private Label issueMessageBoardLbl;
             
         public handleTheForm()
         {
@@ -69,27 +70,50 @@ namespace StartKoinoxristaProject
             set { cancelBtn = value;}
         }
 
-        public Control MessageBoardLbl
+        public Label MessageBoardLbl
         {
             get { return messageBoardLbl;}
             set { messageBoardLbl = value;}
         }
 
-        public Control InstantMessageBoardLbl
+        public Label InstantMessageBoardLbl
         {
             get { return instantMessageBoardLbl;}
             set { instantMessageBoardLbl = value;}
         }
 
-        public Control IssueMessageBoardLbl
+        public Label IssueMessageBoardLbl
         {
             get { return issueMessageBoardLbl;}
             set { issueMessageBoardLbl = value;}
         }
 
+        /*public void set_dataGridView(DataGridView dataGridView1)
+        {
+            this.dataGridView1 = dataGridView1;
+        }*/
+
+        public DataGridView DataGridView1
+        {
+            get { return dataGridView1; }
+            set { dataGridView1 = value; }
+        }
+
+        public DataGridView DataGridView2
+        {
+            get { return dataGridView2; }
+            set { dataGridView2 = value; }
+        }
+
+        public void setDataSource()
+        {
+            dataGridView1.DataSource = bindingSource1;
+            dataGridView1.Hide();
+        }
+        
         private void handleTheForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public void exit()
@@ -97,6 +121,11 @@ namespace StartKoinoxristaProject
             this.Close();
             mainForm myMainForm = new mainForm();
             myMainForm.Show();
+        }
+
+        public void edit()
+        {
+
         }
 
         public void cancel()
@@ -144,15 +173,40 @@ namespace StartKoinoxristaProject
                 if (displayStatus)
                 {
                     whileEditingControls[i].Show();
-                    //dataGridView1.ReadOnly = false;
+                    dataGridView1.ReadOnly = false;
                     
                 }
                 else
                 {
                     whileEditingControls[i].Hide();
-                    /*dataGridView1.ReadOnly = true;
-                    resetLabelsText();*/
+                    dataGridView1.ReadOnly = true;
+                    resetLabelsText();
                 }
+            }
+        }
+
+        public void whileNotEditingControls(bool displayStatus)
+        {
+            Control[] whileNotEditingControls = { editBtn, exitBtn };
+            for (int i = 0; i < whileNotEditingControls.Length; i++)
+            {
+                if (displayStatus)
+                {
+                    whileNotEditingControls[i].Show();
+                }
+                else
+                {
+                    whileNotEditingControls[i].Hide();
+                }
+            }
+        }
+
+        public void resetLabelsText()
+        {
+            Label[] labels = { messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i].ResetText();
             }
         }
     }

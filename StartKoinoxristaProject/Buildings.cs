@@ -33,13 +33,14 @@ namespace StartKoinoxristaProject
             // get the value of the property
             BindingSource bindingSource1 = BindingSource1;
 
-            //set the value of the property
-            DataGridView1 = dataGridView1;
-
-
             // define the data source for the dataGridView
             dataGridView1.DataSource = bindingSource1;
             bindingSource1.DataSource = GetData(queryString);
+
+            // bind dataGridView1 of the parent form with dataTable
+            setDataSource();
+
+            DataGridView2 = dataGridView1;
 
             // initialize the object's buttons
             EditBtn = editBtn;
@@ -89,6 +90,7 @@ namespace StartKoinoxristaProject
 
         private void editBtn_Click(object sender, EventArgs e)
         {
+            edit();
             whileNotEditingControls(false);
             whileEditingControls(true);
             messageBoardLbl.Text = "Edit in progress ...";
@@ -114,7 +116,7 @@ namespace StartKoinoxristaProject
             }
         }*/
 
-        public void whileNotEditingControls(bool displayStatus)
+        /*public void whileNotEditingControls(bool displayStatus)
         {
             Control[] whileNotEditingControls = { editBtn, exitBtn };
             for (int i = 0; i < whileNotEditingControls.Length; i++)
@@ -128,16 +130,16 @@ namespace StartKoinoxristaProject
                     whileNotEditingControls[i].Hide();
                 }
             }
-        }
+        }*/
 
-        public void resetLabelsText()
+        /*public void resetLabelsText()
         {
             Label[] labels = { messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
             for (int i = 0; i < labels.Length; i++ )
             {
                 labels[i].ResetText();
             }
-        }
+        }*/
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
