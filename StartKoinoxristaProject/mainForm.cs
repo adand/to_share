@@ -19,20 +19,6 @@ namespace StartKoinoxristaProject
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-
-            // define the query string that will be used in buildings form
-            string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
-
-            // this will call an overloaded constructor method
-            Buildings blds1 = new Buildings(queryString);
-
-            // this will call the function toReplaceBuildings_Load
-            blds1.Show();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
 
@@ -66,6 +52,20 @@ namespace StartKoinoxristaProject
         private void button5_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void buildingsBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            // define the query string that will be used in buildings form
+            string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
+
+            // this will call an overloaded constructor method
+            Buildings blds1 = new Buildings(queryString);
+
+            // this will call the function toReplaceBuildings_Load
+            blds1.Show();
         }
     }
 

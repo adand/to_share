@@ -143,7 +143,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "Buildings";
             this.Text = "Buildings";
-            this.Load += new System.EventHandler(this.toReplaceBuildings_Load);
+            this.Load += new System.EventHandler(this.buildings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -33,12 +33,31 @@ namespace StartKoinoxristaProject
             // get the value of the property
             BindingSource bindingSource1 = BindingSource1;
 
+            //set the value of the property
+            DataGridView1 = dataGridView1;
+
+
+            // define the data source for the dataGridView
             dataGridView1.DataSource = bindingSource1;
             bindingSource1.DataSource = GetData(queryString);
+
+            // initialize the object's buttons
+            EditBtn = editBtn;
+            ExitBtn = exitBtn;
+            SaveBtn = saveBtn;
+            DeleteBtn = deleteBtn;
+            CancelBtn = cancelBtn;
+            MessageBoardLbl = messageBoardLbl;
+            InstantMessageBoardLbl = instantMessageBoardLbl;
+            IssueMessageBoardLbl = issueMessageBoardLbl;
         }
 
-        private void toReplaceBuildings_Load(object sender, EventArgs e)
+        private void buildings_Load(object sender, EventArgs e)
         {
+            // hide the edit-buttons
+            whileEditingControls(false);
+
+
             /*MessageBox.Show("form loader");
             dataGridView1.DataSource = bindingSource1;
             string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
@@ -60,9 +79,7 @@ namespace StartKoinoxristaProject
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
-            this.Close();
-            mainForm myMainForm = new mainForm();
-            myMainForm.Show();
+            exit();
         }
 
         private void reloadBtn_Click(object sender, EventArgs e)
@@ -195,27 +212,7 @@ namespace StartKoinoxristaProject
         
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            string message = "Are you sure you want to Abort?";
-            string caption = "Confirm Cancellation";
-            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-            DialogResult result;
-
-            result = MessageBox.Show(message, caption, buttons);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    messageBoardLbl.ResetText();
-                    GetData(da.SelectCommand.CommandText);
-                    whileEditingControls(false);
-                    whileNotEditingControls(true);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            cancel();
         }
 
         private void issueMessageBoardLbl_Click(object sender, EventArgs e)

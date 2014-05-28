@@ -1,6 +1,6 @@
 ﻿namespace StartKoinoxristaProject
 {
-    partial class handleTheForm
+    partial class dataGridViewProgramm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(134, 73);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // handleTheForm
+            // dataGridViewProgramm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 325);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "handleTheForm";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.handleTheForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ClientSize = new System.Drawing.Size(461, 308);
+            this.Name = "dataGridViewProgramm";
+            this.Text = "dataGridViewProgramm";
+            this.Load += new System.EventHandler(this.dataGridViewProgramm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
-
     }
 }
