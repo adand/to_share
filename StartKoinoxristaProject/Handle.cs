@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
-namespace StartKoinoxristaProject
-{
-    public partial class handleTheForm : Form
+/*namespace StartKoinoxristaProject
+{*/
+    public class Handle : Form
     {
-        private DataGridView dataGridView2 = new DataGridView();
+        private DataGridView dataGridView1 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter da = new SqlDataAdapter();
         private DataSet ds = new DataSet();
@@ -26,10 +24,10 @@ namespace StartKoinoxristaProject
         private Label messageBoardLbl;
         private Label instantMessageBoardLbl;
         private Label issueMessageBoardLbl;
-            
-        public handleTheForm()
+
+        public Handle()
         {
-            InitializeComponent();            
+            //InitializeComponent();            
             ds = new DataSet();
             dt = new DataTable();
         }
@@ -99,12 +97,6 @@ namespace StartKoinoxristaProject
             set { dataGridView1 = value; }
         }
 
-        public DataGridView DataGridView2
-        {
-            get { return dataGridView2; }
-            set { dataGridView2 = value; }
-        }
-
         public void setDataSource()
         {
             dataGridView1.DataSource = bindingSource1;
@@ -118,9 +110,10 @@ namespace StartKoinoxristaProject
 
         public void exit()
         {
-            this.Close();
+            Application.Exit();
+            /*this.Close();
             mainForm myMainForm = new mainForm();
-            myMainForm.Show();
+            myMainForm.Show();*/
         }
 
         public void edit()
@@ -210,4 +203,4 @@ namespace StartKoinoxristaProject
             }
         }
     }
-}
+//}

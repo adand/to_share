@@ -65,6 +65,9 @@
     <Compile Include="Apartments.Designer.cs">
       <DependentUpon>Apartments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Build.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="comboBoxInsideDataGridView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,9 +77,6 @@
     <Compile Include="Cost.cs" />
     <Compile Include="costPredefinedItems.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="costPredefinedItems.Designer.cs">
-      <DependentUpon>costPredefinedItems.cs</DependentUpon>
     </Compile>
     <Compile Include="Dapanes.cs">
       <SubType>Form</SubType>
@@ -90,11 +90,8 @@
     <Compile Include="DataGridView.Designer.cs">
       <DependentUpon>DataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="handleTheForm.cs">
+    <Compile Include="Handle.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="handleTheForm.Designer.cs">
-      <DependentUpon>handleTheForm.cs</DependentUpon>
     </Compile>
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
@@ -126,12 +123,6 @@
     <Compile Include="queryWithStringFormat.Designer.cs">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Buildings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Buildings.Designer.cs">
-      <DependentUpon>Buildings.cs</DependentUpon>
-    </Compile>
     <Compile Include="testing_with_DataGridViewComboBoxColumn .cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,17 +135,11 @@
     <EmbeddedResource Include="comboBoxInsideDataGridView.resx">
       <DependentUpon>comboBoxInsideDataGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="costPredefinedItems.resx">
-      <DependentUpon>costPredefinedItems.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dapanes.resx">
       <DependentUpon>Dapanes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataGridView.resx">
       <DependentUpon>DataGridView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="handleTheForm.resx">
-      <DependentUpon>handleTheForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
@@ -173,9 +158,6 @@
     </Compile>
     <EmbeddedResource Include="queryWithStringFormat.resx">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Buildings.resx">
-      <DependentUpon>Buildings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="testing_with_DataGridViewComboBoxColumn .resx">
       <DependentUpon>testing_with_DataGridViewComboBoxColumn .cs</DependentUpon>

@@ -62,21 +62,10 @@ namespace StartKoinoxristaProject
             string queryString = "select buildingID as Building_ID, bAddress as Address, bArea as Area from Buildings order by buildingID";
 
             // this will call an overloaded constructor method
-            Buildings blds1 = new Buildings(queryString);
+            Build blds1 = new Build(queryString);
 
             // this will call the function toReplaceBuildings_Load
             blds1.Show();
         }
     }
-
-    public class test
-    {
-        private int t = 4;
-
-        public int gett()
-        {
-            return t;
-        }
-    }
-
 }
