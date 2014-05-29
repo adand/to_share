@@ -7,23 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
-namespace StartKoinoxristaProject
+/*namespace StartKoinoxristaProject
+{*/
+public class costPredefinedItems : Form
 {
-    public partial class costPredefinedItems : Form
-    {
-        public costPredefinedItems()
-        {
-            InitializeComponent();
-        }
+    private DataGridView dataGridView1 = new DataGridView();
 
-        private void costPredefinedItems_Load(object sender, EventArgs e)
-        {
-            int b = 7;
-            Cost cost1 = new Cost();
-            Cost cost2 = new Cost(b);
-            MessageBox.Show(cost1.CostValue.ToString());
-            MessageBox.Show(cost2.CostValue.ToString());
-        }
+    public costPredefinedItems()
+    {
+        this.dataGridView1.Dock = DockStyle.Fill;
+        this.Controls.Add(dataGridView1);
+        this.Text = "Demo";
+    }
+
+    private void costPredefinedItems_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
     }
 }
+//}

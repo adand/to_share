@@ -1,34 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
 
-namespace StartKoinoxristaProject
-{
-    public partial class Buildings : handleTheForm
+/*namespace StartKoinoxristaProject
+{*/
+    public class Build : Handle
     {
         private SqlDataAdapter da;
         private DataSet ds;
+        private DataGridView dataGridView1 = new DataGridView();
+        private Button editBtn = new Button();
+        private Button exitBtn = new Button();
+        private Button saveBtn = new Button();
+        private Button deleteBtn = new Button();
+        private Button cancelBtn = new Button();
+        private Label messageBoardLbl = new Label();
+        private Label instantMessageBoardLbl = new Label();
+        private Label issueMessageBoardLbl = new Label();
+
 
         //default constructor
-        public Buildings()
+        public Build()
         {
+            /*
             // initialize the objects that are on the form
             InitializeComponent();
             MessageBox.Show("inside default constructor");
+             * */
         }
 
         // overloaded constructor method
-        public Buildings(string queryString)
+        public Build(string queryString)
         {
+            /*
             // initialize the objects that are on the form
             InitializeComponent();
+             * */
+
+            this.Controls.Add(dataGridView1);
 
             // get the value of the property
             BindingSource bindingSource1 = BindingSource1;
@@ -40,7 +55,7 @@ namespace StartKoinoxristaProject
             // bind dataGridView1 of the parent form with dataTable
             setDataSource();
 
-            DataGridView2 = dataGridView1;
+            //DataGridView2 = dataGridView1;
 
             // initialize the object's buttons
             EditBtn = editBtn;
@@ -235,4 +250,4 @@ namespace StartKoinoxristaProject
             }
         }
     }
-}
+//}
