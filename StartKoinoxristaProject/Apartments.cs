@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 namespace StartKoinoxristaProject
 {
     public partial class Apartments : Form
+
     {
         BindingSource bindingSource1 = new BindingSource();
         SqlDataAdapter da;

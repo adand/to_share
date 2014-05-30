@@ -28,35 +28,19 @@ using System.Drawing;
         //default constructor
         public Build()
         {
-            /*
-            // initialize the objects that are on the form
-            InitializeComponent();
-            MessageBox.Show("inside default constructor");
-             * */
         }
 
         // overloaded constructor method
         public Build(string queryString)
         {
-            /*
-            // initialize the objects that are on the form
-            InitializeComponent();
-             * */
+            DataGridView1 = dataGridView1;
+            GetData(queryString);
 
-            this.Controls.Add(dataGridView1);
+            InitializeButtons();
+        }
 
-            // get the value of the property
-            BindingSource bindingSource1 = BindingSource1;
-
-            // define the data source for the dataGridView
-            dataGridView1.DataSource = bindingSource1;
-            bindingSource1.DataSource = GetData(queryString);
-
-            // bind dataGridView1 of the parent form with dataTable
-            setDataSource();
-
-            //DataGridView2 = dataGridView1;
-
+        public void InitializeButtons()
+        {
             // initialize the object's buttons
             EditBtn = editBtn;
             ExitBtn = exitBtn;
@@ -66,9 +50,12 @@ using System.Drawing;
             MessageBoardLbl = messageBoardLbl;
             InstantMessageBoardLbl = instantMessageBoardLbl;
             IssueMessageBoardLbl = issueMessageBoardLbl;
+
+            this.Controls.Add(dataGridView1);
+            this.Controls.Add(editBtn);
         }
 
-        private void buildings_Load(object sender, EventArgs e)
+        private void Build_Load(object sender, EventArgs e)
         {
             // hide the edit-buttons
             whileEditingControls(false);
@@ -248,6 +235,19 @@ using System.Drawing;
             {
                 dataGridView1.Rows.RemoveAt(item.Index);
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Build
+            // 
+            this.ClientSize = new System.Drawing.Size(740, 372);
+            this.Name = "Build";
+            this.Load += new System.EventHandler(this.Build_Load);
+            this.ResumeLayout(false);
+
         }
     }
 //}

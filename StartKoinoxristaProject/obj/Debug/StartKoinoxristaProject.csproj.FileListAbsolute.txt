@@ -55,7 +55,11 @@ C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaP
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Properties.Resources.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.queryWithStringFormat.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.csproj.GenerateResource.Cache
-C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.mainForm.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Apartments.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.comboBoxInsideDataGridView.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.testing_with_DataGridViewComboBoxColumn.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Build.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Handle.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\mainForm.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Buildings.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Apart.resources
