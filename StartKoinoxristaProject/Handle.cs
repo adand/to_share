@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Drawing;
 
 /*namespace StartKoinoxristaProject
 {*/
     public class Handle : Form
     {
-        private DataGridView dataGridView1 = new DataGridView();
+        private DataGridView dataGridView1;
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter da = new SqlDataAdapter();
-        private DataSet ds = new DataSet();
-        private DataTable dt = new DataTable();
+        private DataSet ds;
         private Control editBtn;
         private Control exitBtn;
         private Control saveBtn;
@@ -24,12 +24,18 @@ using System.Windows.Forms;
         private Label messageBoardLbl;
         private Label instantMessageBoardLbl;
         private Label issueMessageBoardLbl;
+        private ComboBox filterComboBox;
+        private ComboBox filteredComboBox;
 
         public Handle()
         {
-            //InitializeComponent();            
-            ds = new DataSet();
-            dt = new DataTable();
+            
+        }
+
+        public DataGridView DataGridView1
+        {
+            get { return dataGridView1; }
+            set { dataGridView1 = value; }
         }
 
         public BindingSource BindingSource1
@@ -86,22 +92,22 @@ using System.Windows.Forms;
             set { issueMessageBoardLbl = value;}
         }
 
+        public ComboBox FilterComboBox
+        {
+            get { return filterComboBox; }
+            set { filterComboBox = value; }
+        }
+
+        public ComboBox FilteredComboBox
+        {
+            get { return filteredComboBox; }
+            set { filteredComboBox = value; }
+        }
+
         /*public void set_dataGridView(DataGridView dataGridView1)
         {
             this.dataGridView1 = dataGridView1;
         }*/
-
-        public DataGridView DataGridView1
-        {
-            get { return dataGridView1; }
-            set { dataGridView1 = value; }
-        }
-
-        public void setDataSource()
-        {
-            dataGridView1.DataSource = bindingSource1;
-            dataGridView1.Hide();
-        }
         
         private void handleTheForm_Load(object sender, EventArgs e)
         {
@@ -110,15 +116,146 @@ using System.Windows.Forms;
 
         public void exit()
         {
-            Application.Exit();
-            /*this.Close();
+            this.Close();
             mainForm myMainForm = new mainForm();
-            myMainForm.Show();*/
+            myMainForm.Show();
         }
 
         public void edit()
         {
+            whileNotEditingControls(false);
+            whileEditingControls(true);
+            messageBoardLbl.Text = "Edit in progress ...";
+        }
 
+        public void save(string duplicateID_message, string blankField_message, string max_characters_message)
+        {
+            string message = "Are you sure you want to update the database with changes?";
+            string caption = "Update confirmation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    whileEditingControls(false);
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
+                    GetData(da.SelectCommand.CommandText);
+                    whileNotEditingControls(true);
+                }
+                catch (SqlException sqlEx)
+                {
+                    instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve rule's violation to insert the rest of the records.";
+                    string messageIntro = "Rule affected: ";
+                    switch (sqlEx.Number)
+                    {
+                        case 2627:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + duplicateID_message;
+                                break;
+                            }
+                        case 515:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + blankField_message;
+                                break;
+                            }
+                        case 8152:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + max_characters_message;
+                                break;
+                            }
+                        default:
+                            {
+                                MessageBox.Show(sqlEx.Message);
+                                break;
+                            }
+                    }
+                    instantMessageBoardLbl.ForeColor = Color.Red;
+                    instantMessageBoardLbl.Show();
+                    issueMessageBoardLbl.Show();
+                }
+            }
+            else if (result == DialogResult.No)
+            {
+                messageBoardLbl.ResetText();
+                MessageBox.Show("Not Saved!");
+                try
+                {
+                    GetData(da.SelectCommand.CommandText);
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
+                }
+                catch
+                {
+                    messageBoardLbl.Text = "Reloading from database failed";
+                }
+            }
+        }
+
+        public void fillTheComboBox(string queryString, string columnTitle)
+        {
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    filterComboBox.Items.Add(reader[columnTitle]);
+                }
+            }
+        }
+
+        public void fillTheComboBox(string queryString, string columnTitle, string filterItem)
+        {
+            filteredComboBox.ResetText();
+            filteredComboBox.Items.Clear();
+            string connectionString =
+                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = queryString;
+            command.Connection = connection;
+
+            SqlParameter parameter = new SqlParameter();
+            parameter.ParameterName = "@parameter";
+            parameter.SqlDbType = SqlDbType.NVarChar;
+            parameter.Value = filterItem;
+
+            command.Parameters.Add(parameter);
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    filteredComboBox.Items.Add(reader[columnTitle]);
+                }
+            }
+        }
+
+        public void hideTheItem()
+        {
+            dataGridView1.Hide();
+        }
+
+        public void delete()
+        {
+            foreach (DataGridViewRow item in this.dataGridView1.SelectedRows)
+            {
+                dataGridView1.Rows.RemoveAt(item.Index);
+            }
         }
 
         public void cancel()
@@ -130,32 +267,34 @@ using System.Windows.Forms;
 
             result = MessageBox.Show(message, caption, buttons);
 
-            saveBtn.Hide();
-            /*if (result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 try
                 {
-                    messageBoardLbl.ResetText();
                     GetData(da.SelectCommand.CommandText);
                     whileEditingControls(false);
-                    // whileNotEditingControls(true);
+                    whileNotEditingControls(true);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            }*/
+            }
         }
 
-        public DataTable GetData(string selectCommand)
+        public void GetData(string selectCommand)
         {
             string connectionString =
                 @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             da = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
+            ds = new DataSet();
+            DataTable dt = new DataTable();
             ds.Tables.Add(dt);
             da.Fill(dt);
-            return dt;
+
+            dataGridView1.DataSource = bindingSource1;
+            bindingSource1.DataSource = dt;
         }
 
         public void whileEditingControls(bool displayStatus)
@@ -194,6 +333,8 @@ using System.Windows.Forms;
             }
         }
 
+        
+
         public void resetLabelsText()
         {
             Label[] labels = { messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
@@ -201,6 +342,24 @@ using System.Windows.Forms;
             {
                 labels[i].ResetText();
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Handle
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "Handle";
+            this.Load += new System.EventHandler(this.Handle_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void Handle_Load(object sender, EventArgs e)
+        {
+
         }
     }
 //}
