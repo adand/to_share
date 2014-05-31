@@ -12,7 +12,8 @@ using System.Drawing;
 {*/
     public class Handle : Form
     {
-        private DataGridView dataGridView1;
+        private string connectionString;
+        private DataGridView dataGridView1 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter da = new SqlDataAdapter();
         private DataSet ds;
@@ -30,6 +31,12 @@ using System.Drawing;
         public Handle()
         {
             
+        }
+
+        public string ConnectionString
+        {
+            get { return connectionString; }
+            set { connectionString = value; }
         }
 
         public DataGridView DataGridView1
@@ -199,18 +206,19 @@ using System.Drawing;
 
         public void fillTheComboBox(string queryString, string columnTitle)
         {
-            string connectionString =
-                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
 
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            using (connection)
             {
-                while (reader.Read())
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    filterComboBox.Items.Add(reader[columnTitle]);
+                    while (reader.Read())
+                    {
+                        filterComboBox.Items.Add(reader[columnTitle]);
+                    }
                 }
             }
         }
@@ -219,8 +227,6 @@ using System.Drawing;
         {
             filteredComboBox.ResetText();
             filteredComboBox.Items.Clear();
-            string connectionString =
-                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand command = new SqlCommand();
@@ -235,19 +241,17 @@ using System.Drawing;
             command.Parameters.Add(parameter);
 
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            using (connection)
             {
-                while (reader.Read())
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    filteredComboBox.Items.Add(reader[columnTitle]);
+                    while (reader.Read())
+                    {
+                        filteredComboBox.Items.Add(reader[columnTitle]);
+                    }
                 }
             }
-        }
-
-        public void hideTheItem()
-        {
-            dataGridView1.Hide();
         }
 
         public void delete()
@@ -284,8 +288,6 @@ using System.Drawing;
 
         public void GetData(string selectCommand)
         {
-            string connectionString =
-                @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
             da = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
             ds = new DataSet();
@@ -306,7 +308,6 @@ using System.Drawing;
                 {
                     whileEditingControls[i].Show();
                     dataGridView1.ReadOnly = false;
-                    
                 }
                 else
                 {

@@ -28,8 +28,10 @@ using System.Drawing;
             InitializeComponent();
         }
 
-        public Buildings(string queryString)
+        public Buildings(string queryString, string connectionString)
         {
+            ConnectionString = connectionString;
+
             InitializeComponent();
             DataGridView1 = dataGridView2;
             GetData(queryString);

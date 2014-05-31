@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Data.SqlClient;
 
 /*namespace StartKoinoxristaProject
 {*/
     public class mainForm : Form
     {
+        private string connectionString;
         private Button buildingsBtn;
         private Button button2;
         private Button button3;
@@ -20,6 +22,7 @@ using System.Drawing;
         public mainForm()
         {
             InitializeComponent();
+            connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
         }
 
         private void InitializeComponent()
@@ -113,7 +116,8 @@ using System.Drawing;
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Buildings c1 = new Buildings("select buildingID as 'Building ID', bAddress as Address, bArea as Area from buildings order by buildingID");
+            string queryString = "select buildingID as 'Building ID', bAddress as Address, bArea as Area from buildings order by buildingID";
+            Buildings c1 = new Buildings(queryString, connectionString);
             c1.Show();
         }
 
@@ -125,7 +129,14 @@ using System.Drawing;
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Apart a1 = new Apart("");
+            Apart a1 = new Apart(connectionString);
+            string queryString = "select distinct bArea from buildings order by bArea";
+            string columnTitle = "bArea";
+            a1.fillTheComboBox(queryString, columnTitle);
+
+            a1.DataGridView1.Hide();
+            a1.whileEditingControls(false);
+            a1.EditBtn.Hide();
             a1.Show();
         }
     }
