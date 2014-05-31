@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,42 +12,45 @@ using System.Drawing;
 {*/
     class Apart : Handle
     {
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView1 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
-        private System.Windows.Forms.Button exitBtn;
-        private System.Windows.Forms.Button editBtn;
-        private System.Windows.Forms.Button saveBtn;
-        private System.Windows.Forms.Button deleteBtn;
-        private System.Windows.Forms.Button cancelBtn;
-        private System.Windows.Forms.Label messageBoardLbl;
-        private System.Windows.Forms.Label instantMessageBoardLbl;
-        private System.Windows.Forms.Label issueMessageBoardLbl;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox filterComboBox;
-        private System.Windows.Forms.ComboBox filteredComboBox;
-        private System.Windows.Forms.Label areaLbl;
-        private System.Windows.Forms.Label addressLbl;
-    
+        private System.Windows.Forms.Button exitBtn = new Button();
+        private System.Windows.Forms.Button editBtn = new Button();
+        private System.Windows.Forms.Button saveBtn = new Button();
+        private System.Windows.Forms.Button deleteBtn = new Button();
+        private System.Windows.Forms.Button cancelBtn = new Button();
+        private System.Windows.Forms.Label messageBoardLbl = new Label();
+        private System.Windows.Forms.Label instantMessageBoardLbl = new Label();
+        private System.Windows.Forms.Label issueMessageBoardLbl = new Label();
+        private System.Windows.Forms.Label label4 = new Label();
+        private System.Windows.Forms.Label label5 = new Label();
+        private System.Windows.Forms.ComboBox filterComboBox = new ComboBox();
+        private System.Windows.Forms.ComboBox filteredComboBox = new ComboBox();
+        private System.Windows.Forms.Label areaLbl = new Label();
+        private System.Windows.Forms.Label addressLbl = new Label();
+        private Control[] filterControlItems;
+
         public Apart()
-        {
-
-        }
-
-        public Apart(string queryString)
         {
             InitializeComponent();
             InitializeButtons();
             dataGridView1.DataSource = bindingSource1;
-            string queryString2 = "select distinct bArea from buildings order by bArea";
-            string columnTitle = "bArea";
-            fillTheComboBox(queryString2, columnTitle);
-            MessageBox.Show("stop");
+        }
+
+        public Apart(string connectionString)
+        {
+            InitializeComponent();
+            InitializeButtons();
+            dataGridView1.DataSource = bindingSource1;
+
+            ConnectionString = connectionString;
+            filterControlItems = new Control[] {filterComboBox, filteredComboBox};
         }
 
         public void InitializeButtons()
         {
             // initialize the object's buttons
+            DataGridView1 = dataGridView1;
             FilterComboBox = filterComboBox;
             FilteredComboBox = filteredComboBox;
             EditBtn = editBtn;
@@ -105,6 +109,7 @@ using System.Drawing;
             this.editBtn.TabIndex = 2;
             this.editBtn.Text = "Edit";
             this.editBtn.UseVisualStyleBackColor = true;
+            this.editBtn.Click += new System.EventHandler(this.editBtn_Click);
             // 
             // saveBtn
             // 
@@ -132,6 +137,7 @@ using System.Drawing;
             this.cancelBtn.TabIndex = 5;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // messageBoardLbl
             // 
@@ -178,22 +184,23 @@ using System.Drawing;
             this.label5.TabIndex = 10;
             this.label5.Text = "label5";
             // 
-            // comboBox1
+            // filterComboBox
             // 
             this.filterComboBox.FormattingEnabled = true;
             this.filterComboBox.Location = new System.Drawing.Point(116, 46);
-            this.filterComboBox.Name = "comboBox1";
+            this.filterComboBox.Name = "filterComboBox";
             this.filterComboBox.Size = new System.Drawing.Size(121, 21);
             this.filterComboBox.TabIndex = 11;
             this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // comboBox2
+            // filteredComboBox
             // 
             this.filteredComboBox.FormattingEnabled = true;
             this.filteredComboBox.Location = new System.Drawing.Point(286, 46);
-            this.filteredComboBox.Name = "comboBox2";
+            this.filteredComboBox.Name = "filteredComboBox";
             this.filteredComboBox.Size = new System.Drawing.Size(121, 21);
             this.filteredComboBox.TabIndex = 12;
+            this.filteredComboBox.SelectedIndexChanged += new System.EventHandler(this.filteredComboBox_SelectedIndexChanged);
             // 
             // areaLbl
             // 
@@ -232,6 +239,7 @@ using System.Drawing;
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Apart";
+            this.Load += new System.EventHandler(this.Apart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -240,9 +248,11 @@ using System.Drawing;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string queryString2 = "select bAddress from buildings where bArea = @parameter order by bAddress";
+            dataGridView1.Hide();
+            editBtn.Hide();
+            string queryString = "select bAddress from buildings where bArea = @parameter order by bAddress";
             string columnTitle = "bAddress";
-            fillTheComboBox(queryString2, columnTitle, filterComboBox.SelectedItem.ToString());
+            fillTheComboBox(queryString, columnTitle, filterComboBox.SelectedItem.ToString());
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
@@ -250,6 +260,73 @@ using System.Drawing;
             exit();
         }
 
+        private void filteredComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Show();
+            whileNotEditingControls(true);
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
 
+                SqlParameter param_area = new SqlParameter();
+                param_area.ParameterName = "@Area";
+                param_area.SqlDbType = SqlDbType.NVarChar;
+                param_area.Value = filterComboBox.SelectedItem.ToString();
+
+                SqlParameter param_address = new SqlParameter();
+                param_address.ParameterName = "@Address";
+                param_address.SqlDbType = SqlDbType.NVarChar;
+                param_address.Value = filteredComboBox.SelectedItem.ToString();
+
+                command.Parameters.Add(param_area);
+                command.Parameters.Add(param_address);
+
+                connection.Open();
+                string selectedID = command.ExecuteScalar().ToString();
+
+                dataGridView1.DataSource = bindingSource1;
+                GetData(string.Format("select buildingID, owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
+                "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = '{0}' order by apartmentID", selectedID));
+                dataGridView1.Columns["buildingID"].Visible = false;
+                resetLabelsText();
+                whileEditingControls(false);
+
+                whileNotEditingControls(true);
+            }
+        }
+
+        private void Apart_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            edit();
+            enableFilterControls(false);
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            cancel();
+            enableFilterControls(true);
+        }
+
+        private void enableFilterControls(bool enableStatus)
+        {
+            foreach(Control c in filterControlItems)
+            {
+                if (enableStatus)
+                {
+                    c.Enabled = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+        }
     }
 //}
