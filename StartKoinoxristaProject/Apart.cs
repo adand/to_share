@@ -28,7 +28,7 @@ using System.Drawing;
         private System.Windows.Forms.ComboBox filteredComboBox = new ComboBox();
         private System.Windows.Forms.Label areaLbl = new Label();
         private System.Windows.Forms.Label addressLbl = new Label();
-        private Control[] filterControlItems;
+        private ComboBox[] filterControlItems;
 
         public Apart()
         {
@@ -44,7 +44,11 @@ using System.Drawing;
             dataGridView1.DataSource = bindingSource1;
 
             ConnectionString = connectionString;
-            filterControlItems = new Control[] {filterComboBox, filteredComboBox};
+            filterControlItems = new ComboBox[] {filterComboBox, filteredComboBox};
+            foreach(ComboBox c in filterControlItems)
+            {
+                c.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         public void InitializeButtons()
