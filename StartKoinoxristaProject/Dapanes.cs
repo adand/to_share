@@ -444,5 +444,20 @@ namespace StartKoinoxristaProject
         {
             costValueTextBox.Clear();
         }
+
+        private void label4_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BuildingArea_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

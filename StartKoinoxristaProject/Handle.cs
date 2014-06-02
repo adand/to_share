@@ -25,8 +25,8 @@ using System.Drawing;
         private Label messageBoardLbl;
         private Label instantMessageBoardLbl;
         private Label issueMessageBoardLbl;
-        private ComboBox filterComboBox;
-        private ComboBox filteredComboBox;
+        private ComboBox areaComboBox;
+        private ComboBox addressComboBox;
 
         public Handle()
         {
@@ -99,16 +99,16 @@ using System.Drawing;
             set { issueMessageBoardLbl = value;}
         }
 
-        public ComboBox FilterComboBox
+        public ComboBox AreaComboBox
         {
-            get { return filterComboBox; }
-            set { filterComboBox = value; }
+            get { return areaComboBox; }
+            set { areaComboBox = value; }
         }
 
-        public ComboBox FilteredComboBox
+        public ComboBox AddressComboBox
         {
-            get { return filteredComboBox; }
-            set { filteredComboBox = value; }
+            get { return addressComboBox; }
+            set { addressComboBox = value; }
         }
 
         /*public void set_dataGridView(DataGridView dataGridView1)
@@ -204,7 +204,86 @@ using System.Drawing;
             }
         }
 
-        public void fillTheComboBox(string queryString, string columnTitle)
+        public void save(string selectedID, string duplicateID_message, string blankField_message, string max_characters_message)
+        {
+            string message = "Are you sure you want to update the database with changes?";
+            string caption = "Update confirmation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (row.RowState.ToString() != "Deleted")
+                        {
+                            if (row[0].ToString().Length == 0)
+                            {
+                                row[0] = selectedID;
+                            }
+                        }
+                    }
+                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    whileEditingControls(false);
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
+                    GetData(da.SelectCommand.CommandText);
+                    whileNotEditingControls(true);
+                }
+                catch (SqlException sqlEx)
+                {
+                    instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve rule's violation to insert the rest of the records.";
+                    string messageIntro = "Rule affected: ";
+                    switch (sqlEx.Number)
+                    {
+                        case 2627:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + duplicateID_message;
+                                break;
+                            }
+                        case 515:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + blankField_message;
+                                break;
+                            }
+                        case 8152:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + max_characters_message;
+                                break;
+                            }
+                        default:
+                            {
+                                MessageBox.Show(sqlEx.Message);
+                                break;
+                            }
+                    }
+                    instantMessageBoardLbl.ForeColor = Color.Red;
+                    instantMessageBoardLbl.Show();
+                    issueMessageBoardLbl.Show();
+                }
+            }
+            else if (result == DialogResult.No)
+            {
+                messageBoardLbl.ResetText();
+                MessageBox.Show("Not Saved!");
+                try
+                {
+                    GetData(da.SelectCommand.CommandText);
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
+                }
+                catch
+                {
+                    messageBoardLbl.Text = "Reloading from database failed";
+                }
+            }
+        }
+
+        public void fillTheComboBox(string queryString)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
@@ -217,16 +296,16 @@ using System.Drawing;
                 {
                     while (reader.Read())
                     {
-                        filterComboBox.Items.Add(reader[columnTitle]);
+                        areaComboBox.Items.Add(reader[0]);
                     }
                 }
             }
         }
 
-        public void fillTheComboBox(string queryString, string columnTitle, string filterItem)
+        public void fillTheComboBox(string queryString, string filterItem)
         {
-            filteredComboBox.ResetText();
-            filteredComboBox.Items.Clear();
+            addressComboBox.ResetText();
+            addressComboBox.Items.Clear();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand command = new SqlCommand();
@@ -248,9 +327,35 @@ using System.Drawing;
                 {
                     while (reader.Read())
                     {
-                        filteredComboBox.Items.Add(reader[columnTitle]);
+                        addressComboBox.Items.Add(reader[0]);
                     }
                 }
+            }
+        }
+
+        public string RetrieveIdBasedOnLocation()
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+
+                SqlParameter param_area = new SqlParameter();
+                param_area.ParameterName = "@Area";
+                param_area.SqlDbType = SqlDbType.NVarChar;
+                param_area.Value = areaComboBox.SelectedItem.ToString();
+
+                SqlParameter param_address = new SqlParameter();
+                param_address.ParameterName = "@Address";
+                param_address.SqlDbType = SqlDbType.NVarChar;
+                param_address.Value = addressComboBox.SelectedItem.ToString();
+
+                command.Parameters.Add(param_area);
+                command.Parameters.Add(param_address);
+
+                connection.Open();
+                return command.ExecuteScalar().ToString();
             }
         }
 

@@ -14,9 +14,10 @@ using System.Data.SqlClient;
         private string connectionString;
         private Button buildingsBtn;
         private Button button2;
-        private Button button3;
-        private Button button4;
+        private Button costCategoriesBtn;
+        private Button dapanesBtn;
         private Label label1;
+        private Label label2;
         private Button exitBtn;
 
         public mainForm()
@@ -30,14 +31,15 @@ using System.Data.SqlClient;
             this.exitBtn = new System.Windows.Forms.Button();
             this.buildingsBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.costCategoriesBtn = new System.Windows.Forms.Button();
+            this.dapanesBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(375, 228);
+            this.exitBtn.Location = new System.Drawing.Point(295, 318);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 0;
@@ -65,23 +67,25 @@ using System.Data.SqlClient;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // costCategoriesBtn
             // 
-            this.button3.Location = new System.Drawing.Point(58, 228);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.costCategoriesBtn.Location = new System.Drawing.Point(58, 216);
+            this.costCategoriesBtn.Name = "costCategoriesBtn";
+            this.costCategoriesBtn.Size = new System.Drawing.Size(141, 46);
+            this.costCategoriesBtn.TabIndex = 3;
+            this.costCategoriesBtn.Text = "Προσθήκη / επεξεργασία κατηγοριών δαπάνης";
+            this.costCategoriesBtn.UseVisualStyleBackColor = true;
+            this.costCategoriesBtn.Click += new System.EventHandler(this.costCategoriesBtn_Click);
             // 
-            // button4
+            // dapanesBtn
             // 
-            this.button4.Location = new System.Drawing.Point(270, 228);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.dapanesBtn.Location = new System.Drawing.Point(250, 216);
+            this.dapanesBtn.Name = "dapanesBtn";
+            this.dapanesBtn.Size = new System.Drawing.Size(141, 46);
+            this.dapanesBtn.TabIndex = 4;
+            this.dapanesBtn.Text = "Προσθήκη / επεξεργασία δαπάνης";
+            this.dapanesBtn.UseVisualStyleBackColor = true;
+            this.dapanesBtn.Click += new System.EventHandler(this.dapanesBtn_Click);
             // 
             // label1
             // 
@@ -92,12 +96,22 @@ using System.Data.SqlClient;
             this.label1.TabIndex = 5;
             this.label1.Text = "Εγκαταστάσεις";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(55, 190);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Δαπάνες";
+            // 
             // mainForm
             // 
-            this.ClientSize = new System.Drawing.Size(545, 333);
+            this.ClientSize = new System.Drawing.Size(589, 395);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.dapanesBtn);
+            this.Controls.Add(this.costCategoriesBtn);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buildingsBtn);
             this.Controls.Add(this.exitBtn);
@@ -131,13 +145,36 @@ using System.Data.SqlClient;
             this.Hide();
             Apart a1 = new Apart(connectionString);
             string queryString = "select distinct bArea from buildings order by bArea";
-            string columnTitle = "bArea";
-            a1.fillTheComboBox(queryString, columnTitle);
+            a1.fillTheComboBox(queryString);
 
             a1.DataGridView1.Hide();
             a1.whileEditingControls(false);
             a1.EditBtn.Hide();
             a1.Show();
+        }
+
+        private void costCategoriesBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            string queryString = "select costCategory as 'Cost Category', costDescription as 'Cost Description' from costPredefinedItems";
+            costPredefinedItems c1 = new costPredefinedItems(queryString, connectionString);
+            
+            c1.whileEditingControls(false);
+            c1.Show();
+        }
+
+        private void dapanesBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            dapanes2 d1 = new dapanes2(connectionString);
+            string queryString = "select distinct bArea from buildings order by bArea";
+            d1.fillTheComboBox(queryString);
+
+            d1.DataGridView1.Hide();
+            d1.whileEditingControls(false);
+            d1.EditBtn.Hide();
+            d1.Show();
         }
     }
 //}

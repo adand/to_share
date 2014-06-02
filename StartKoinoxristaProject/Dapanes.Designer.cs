@@ -103,6 +103,7 @@
             this.BuildingArea.Size = new System.Drawing.Size(32, 13);
             this.BuildingArea.TabIndex = 8;
             this.BuildingArea.Text = "Area:";
+            this.BuildingArea.Click += new System.EventHandler(this.BuildingArea_Click);
             // 
             // AreaComboBox
             // 
@@ -142,6 +143,7 @@
             this.label4.Size = new System.Drawing.Size(40, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "Month:";
+            this.label4.Click += new System.EventHandler(this.label4_Click_1);
             // 
             // label5
             // 
@@ -151,6 +153,7 @@
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Year:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // costCategoryComboBox
             // 
