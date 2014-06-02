@@ -205,7 +205,5 @@ using System.Drawing;
         {
             delete();
         }
-
-
     }
 //}
