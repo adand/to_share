@@ -74,6 +74,9 @@
     <Compile Include="Buildings.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Class1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="comboBoxInsideDataGridView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +102,12 @@
     <Compile Include="DataGridView.Designer.cs">
       <DependentUpon>DataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +116,9 @@
     </Compile>
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handle2.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="kinoxristaDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -147,6 +159,9 @@
     <EmbeddedResource Include="Buildings.resx">
       <DependentUpon>Buildings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Class1.resx">
+      <DependentUpon>Class1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="comboBoxInsideDataGridView.resx">
       <DependentUpon>comboBoxInsideDataGridView.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataGridView.resx">
       <DependentUpon>DataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Handle.resx">
       <DependentUpon>Handle.cs</DependentUpon>

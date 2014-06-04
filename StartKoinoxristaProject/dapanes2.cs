@@ -301,7 +301,11 @@ using System.Windows.Forms;
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            cancel();
+            string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
+                "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
+            selectedID = RetrieveIdBasedOnLocation();
+
+            cancel(selectCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
         }
 
         private void editBtn_Click(object sender, EventArgs e)
@@ -350,12 +354,14 @@ using System.Windows.Forms;
                 whileNotEditingControls(true);
                 selectedID = RetrieveIdBasedOnLocation();
 
-                MessageBox.Show(selectedID);
-
-                GetData(string.Format("select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
+                /*string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
                 "costDescription as 'Cost Description', cost from dapanes" +
-                "where buildingID = '{0}' order by theYear, theMonth",
-                selectedID));
+                "where buildingID = @selectedID and theMonth = '@theMonth' and theYear = @theYear order by theYear, theMonth";*/
+
+                string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
+                "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
+                
+                GetData(selectCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
                 dataGridView1.Columns["buildingID"].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);
@@ -371,9 +377,6 @@ using System.Windows.Forms;
         private void yearComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             monthComboBox.SelectedIndex = -1;
-            int a = 20;
-            a += (int)yearComboBox.SelectedItem;
-            MessageBox.Show(a.ToString());
         }
     }
 //}
