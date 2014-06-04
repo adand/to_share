@@ -29,6 +29,8 @@ using System.Windows.Forms;
         private ComboBox yearComboBox;
         private ComboBox[] filterControlItems;
         private string selectedID;
+        private string selectCommand;
+        private string deleteCommand;
     
         private void InitializeComponent()
         {
@@ -301,11 +303,8 @@ using System.Windows.Forms;
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
-                "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
             selectedID = RetrieveIdBasedOnLocation();
-
-            cancel(selectCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
+            cancel(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
         }
 
         private void editBtn_Click(object sender, EventArgs e)
@@ -320,7 +319,10 @@ using System.Windows.Forms;
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-
+            string duplicateID_message = "...";
+            string blankField_message = "...";
+            string max_characters_message = "...";
+            save(duplicateID_message, blankField_message, max_characters_message);
         }
 
         private void areaComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -358,10 +360,11 @@ using System.Windows.Forms;
                 "costDescription as 'Cost Description', cost from dapanes" +
                 "where buildingID = @selectedID and theMonth = '@theMonth' and theYear = @theYear order by theYear, theMonth";*/
 
-                string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
+                selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
                 "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
-                
-                GetData(selectCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
+                deleteCommand = "delete from dapanes where buildingID = @buildingID";
+
+                GetData(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
                 dataGridView1.Columns["buildingID"].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);

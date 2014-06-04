@@ -12,7 +12,6 @@ using System.Data.SqlClient;
     class Class1 : Form
     {
         string connectionString;
-        private SqlConnection connection;
         private SqlDataAdapter adapter;
         private DataTable dt = new DataTable();
         private string selectCommand;
@@ -29,8 +28,27 @@ using System.Data.SqlClient;
             InitializeComponent();
 
             connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
-            connection = new SqlConnection();
-            connection.ConnectionString = connectionString;
+
+            string selectedID = "753";
+            string selectCommand = "select * from dapanes where buildingID = @buildingID";
+            string deleteCommand = "delete from dapanes where buildingID = @buildingID";
+
+            //create the parameter
+            parameter.ParameterName = "@buildingID";
+            parameter.SqlDbType = SqlDbType.VarChar;
+            parameter.Size = 3;
+            parameter.Value = selectedID;
+            parameter.SourceVersion = DataRowVersion.Original;
+
+            adapter = new SqlDataAdapter();
+
+            //create the commands
+            adapter.SelectCommand = new SqlCommand(selectCommand);
+            adapter.DeleteCommand = new SqlCommand(deleteCommand);
+
+            //create the parameters
+            adapter.SelectCommand.Parameters.Add(parameter);
+            adapter.DeleteCommand.Parameters.Add("@buildingID", SqlDbType.VarChar, 3, "buildingID").SourceVersion = DataRowVersion.Original;
         }
 
         private void InitializeComponent()
@@ -113,50 +131,13 @@ using System.Data.SqlClient;
 
         private void button4_Click(object sender, EventArgs e)
         {
-            /*using (connection)
-            {*/
-
-                string selectedID = "753";
-                selectCommand = "select * from dapanes where buildingID = @buildingID";
-                deleteCommand = "delete from dapanes where buildingID = @buildingID";
-
-                /*
-                // create the command
-                SqlCommand command = new SqlCommand();
-                command.Connection = connection;
-                command.CommandText = selectCommand;
-                */
-
-                //create the parameter
-                parameter.ParameterName = "@buildingID";
-                parameter.SqlDbType = SqlDbType.VarChar;
-                parameter.Size = 3;
-                parameter.Value = selectedID;
-
-                /*
-                //add the parameter into the command
-                command.Parameters.Add(parameter);
-
-                 * */
-
-                adapter = new SqlDataAdapter();
-
-                //create the commands
-                adapter.SelectCommand = new SqlCommand(selectCommand);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
                 adapter.SelectCommand.Connection = connection;
-
-                adapter.DeleteCommand = new SqlCommand(deleteCommand);
                 adapter.DeleteCommand.Connection = connection;
-
-                //create the parameters
-                adapter.SelectCommand.Parameters.Add(parameter);
-                adapter.DeleteCommand.Parameters.Add("@buildingID", SqlDbType.VarChar, 3, "buildingID").SourceVersion = DataRowVersion.Original;
-
-                MessageBox.Show(connection.State.ToString());
                 adapter.Fill(dt);
-
                 dataGridView1.DataSource = dt;
-            //}
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -174,11 +155,10 @@ using System.Data.SqlClient;
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                adapter.SelectCommand = new SqlCommand(selectCommand);
-                adapter.DeleteCommand = new SqlCommand(deleteCommand);
+                adapter.SelectCommand.Connection = connection;
+                adapter.DeleteCommand.Connection = connection;
                 adapter.Update(dt);
             }
         }
