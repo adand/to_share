@@ -390,7 +390,7 @@ using System.Drawing;
             }
         }
 
-        public void cancel(string selectCommand, string selectedID, string month, string year)
+        public void cancel(string selectCommand, string deleteCommand, string selectedID, string month, string year)
         {
             string message = "Are you sure you want to Abort?";
             string caption = "Confirm Cancellation";
@@ -403,7 +403,7 @@ using System.Drawing;
             {
                 try
                 {
-                    GetData(selectCommand, selectedID, month, year);
+                    GetData(selectCommand, deleteCommand, selectedID, month, year);
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -428,12 +428,18 @@ using System.Drawing;
             bindingSource1.DataSource = dt;
         }
 
-        public void GetData(string selectCommand, string selectedID, string theMonth, string theYear)
+        public void GetData(string selectCommand, string deleteCommand, string selectedID, string theMonth, string theYear)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 //create the parameters
                 SqlParameter param_ID = new SqlParameter();
+                param_ID.ParameterName = "@buildingID";
+                param_ID.SqlDbType = SqlDbType.VarChar;
+                param_ID.Size = 3;
+                param_ID.Value = selectedID;
+
+                SqlParameter param_deleteID = new SqlParameter();
                 param_ID.ParameterName = "@buildingID";
                 param_ID.SqlDbType = SqlDbType.VarChar;
                 param_ID.Size = 3;
@@ -460,10 +466,15 @@ using System.Drawing;
                 da.SelectCommand = new SqlCommand(selectCommand);
                 da.SelectCommand.Connection = connection;
 
+                da.DeleteCommand = new SqlCommand(deleteCommand);
+                da.DeleteCommand.Connection = connection;
+
                 //create the parameters
                 da.SelectCommand.Parameters.Add(param_ID);
                 da.SelectCommand.Parameters.Add(param_month);
                 da.SelectCommand.Parameters.Add(param_year);
+
+                da.DeleteCommand.Parameters.Add(param_deleteID);
 
                 connection.Open();
                 ds = new DataSet();
