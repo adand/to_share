@@ -288,9 +288,9 @@ using System.Drawing;
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
 
-            connection.Open();
             using (connection)
             {
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -306,22 +306,21 @@ using System.Drawing;
         {
             addressComboBox.ResetText();
             addressComboBox.Items.Clear();
-            SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = queryString;
-            command.Connection = connection;
-
-            SqlParameter parameter = new SqlParameter();
-            parameter.ParameterName = "@parameter";
-            parameter.SqlDbType = SqlDbType.NVarChar;
-            parameter.Value = filterItem;
-
-            command.Parameters.Add(parameter);
-
-            connection.Open();
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                SqlCommand command = new SqlCommand();
+                command.CommandText = queryString;
+                command.Connection = connection;
+
+                SqlParameter parameter = new SqlParameter();
+                parameter.ParameterName = "@parameter";
+                parameter.SqlDbType = SqlDbType.NVarChar;
+                parameter.Value = filterItem;
+
+                command.Parameters.Add(parameter);
+
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -391,18 +390,101 @@ using System.Drawing;
             }
         }
 
+        public void cancel(string selectCommand, string selectedID, string month, string year)
+        {
+            string message = "Are you sure you want to Abort?";
+            string caption = "Confirm Cancellation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    GetData(selectCommand, selectedID, month, year);
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
         public void GetData(string selectCommand)
         {
             da = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
             ds = new DataSet();
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
             ds.Tables.Add(dt);
             da.Fill(dt);
 
             dataGridView1.DataSource = bindingSource1;
             bindingSource1.DataSource = dt;
         }
+
+        public void GetData(string selectCommand, string selectedID, string theMonth, string theYear)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //create the parameters
+                SqlParameter param_ID = new SqlParameter();
+                param_ID.ParameterName = "@buildingID";
+                param_ID.SqlDbType = SqlDbType.VarChar;
+                param_ID.Size = 3;
+                param_ID.Value = selectedID;
+
+                SqlParameter param_month = new SqlParameter();
+                param_month.ParameterName = "@month";
+                param_month.SqlDbType = SqlDbType.NVarChar;
+                param_month.Size = 15;
+                param_month.Value = theMonth;
+
+                SqlParameter param_year = new SqlParameter();
+                param_year.ParameterName = "@year";
+                param_year.SqlDbType = SqlDbType.Int;
+                param_year.Value = theYear;
+
+                /*command.Parameters.Add(param_ID);
+                command.Parameters.Add(param_Month);
+                command.Parameters.Add(param_Year);*/
+
+                da = new SqlDataAdapter();
+
+                //create the commands
+                da.SelectCommand = new SqlCommand(selectCommand);
+                da.SelectCommand.Connection = connection;
+
+                //create the parameters
+                da.SelectCommand.Parameters.Add(param_ID);
+                da.SelectCommand.Parameters.Add(param_month);
+                da.SelectCommand.Parameters.Add(param_year);
+
+                connection.Open();
+                ds = new DataSet();
+                DataTable dt = new DataTable();
+                ds.Tables.Add(dt);
+                da.Fill(dt);
+                dataGridView1.DataSource = bindingSource1;
+                bindingSource1.DataSource = dt;
+            }
+        }
+        
+        /*public SqlDataAdapter CreateSqlDataAdapter(string selectCommand, string selectedID, SqlConnection connection)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            
+            // create the commands
+            adapter.SelectCommand = new SqlCommand(selectCommand);
+
+            //create the parameters
+            adapter.SelectCommand.Parameters.Add("@buildingID", SqlDbType.VarChar, 3, "buildingID");
+        }*/
 
         public void whileEditingControls(bool displayStatus)
         {

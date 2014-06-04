@@ -65,3 +65,5 @@ C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Buildings.resourc
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Apart.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\costPredefinedItems.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\dapanes2.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Class1.resources
