@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Drawing;
 
 /*namespace StartKoinoxristaProject
 {*/
-    class dapanes2 : Handle
+    public class dapanes2 : Handle
     {
         private Label label5;
         private Label label4;
         private Label BuildingArea;
         private Label BuildingAddress;
-        private DataGridView dataGridView1;
         private BindingSource bindingSource1 = new BindingSource();
         private ComboBox areaComboBox;
         private ComboBox addressComboBox;
@@ -30,6 +32,7 @@ using System.Windows.Forms;
         private ComboBox[] filterControlItems;
         private string selectedID;
         private string selectCommand;
+        private DataGridView dataGridView1;
         private string deleteCommand;
     
         private void InitializeComponent()
@@ -44,13 +47,13 @@ using System.Windows.Forms;
             this.exitBtn = new System.Windows.Forms.Button();
             this.addressComboBox = new System.Windows.Forms.ComboBox();
             this.areaComboBox = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.BuildingArea = new System.Windows.Forms.Label();
             this.BuildingAddress = new System.Windows.Forms.Label();
             this.monthComboBox = new System.Windows.Forms.ComboBox();
             this.yearComboBox = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,14 +152,6 @@ using System.Windows.Forms;
             this.areaComboBox.TabIndex = 24;
             this.areaComboBox.SelectedIndexChanged += new System.EventHandler(this.areaComboBox_SelectedIndexChanged);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(56, 231);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(543, 188);
-            this.dataGridView1.TabIndex = 23;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -211,9 +206,17 @@ using System.Windows.Forms;
             this.yearComboBox.TabIndex = 35;
             this.yearComboBox.SelectedIndexChanged += new System.EventHandler(this.yearComboBox_SelectedIndexChanged_1);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.Location = new System.Drawing.Point(56, 238);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(543, 172);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // dapanes2
             // 
             this.ClientSize = new System.Drawing.Size(742, 503);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.yearComboBox);
             this.Controls.Add(this.monthComboBox);
             this.Controls.Add(this.issueMessageBoardLbl);
@@ -226,7 +229,6 @@ using System.Windows.Forms;
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.addressComboBox);
             this.Controls.Add(this.areaComboBox);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.BuildingArea);
@@ -243,7 +245,9 @@ using System.Windows.Forms;
         {
             InitializeComponent();
             InitializeButtons();
-            dataGridView1.DataSource = bindingSource1;
+
+            //Αντιστοίχισή του DataGridView της base class με το DataTable της base class.
+            DataGridView1.DataSource = Table;
 
             ConnectionString = connectionString;
             filterControlItems = new ComboBox[] { areaComboBox, addressComboBox, monthComboBox, yearComboBox };
@@ -279,6 +283,7 @@ using System.Windows.Forms;
             {
                 yearComboBox.Items.Add(i);
             }
+            dataGridView1.Hide();
         }
 
         private void AreaComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -322,6 +327,7 @@ using System.Windows.Forms;
             string duplicateID_message = "...";
             string blankField_message = "...";
             string max_characters_message = "...";
+
             save(duplicateID_message, blankField_message, max_characters_message);
         }
 
@@ -362,10 +368,14 @@ using System.Windows.Forms;
 
                 selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
                 "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
-                deleteCommand = "delete from dapanes where buildingID = @buildingID";
+                deleteCommand = "delete from dapanes where buildingID = @buildingID and themonth = @theMonth and theYear = @theYear and costCategory = @costCategory" + 
+                    " and costDescription = @costDescription";
 
-                GetData(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
-                dataGridView1.Columns["buildingID"].Visible = false;
+                Adapter = SetAdapterCommands(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
+
+                GetData();
+
+                //DataGridView1.Columns["buildingID"].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);
 
@@ -375,6 +385,88 @@ using System.Windows.Forms;
             {
                 dataGridView1.Hide();
             }
+        }
+
+        public SqlDataAdapter SetAdapterCommands(string selectCommand, string deleteCommand, string selectedID, string theMonth, string theYear)
+        {
+            //create the parameters for selectCommand
+            SqlParameter param_ID = new SqlParameter();
+            param_ID.ParameterName = "@buildingID";
+            param_ID.SqlDbType = SqlDbType.VarChar;
+            param_ID.Size = 3;
+            param_ID.Value = selectedID;
+
+            SqlParameter param_month = new SqlParameter();
+            param_month.ParameterName = "@month";
+            param_month.SqlDbType = SqlDbType.NVarChar;
+            param_month.Size = 15;
+            param_month.Value = theMonth;
+
+            SqlParameter param_year = new SqlParameter();
+            param_year.ParameterName = "@year";
+            param_year.SqlDbType = SqlDbType.Int;
+            param_year.Value = theYear;
+
+            //create the parameters for deleteCommand
+            SqlParameter param_deleteID = new SqlParameter();
+            param_deleteID.ParameterName = "@buildingID";
+            param_deleteID.SqlDbType = SqlDbType.VarChar;
+            param_deleteID.Size = 3;
+            param_deleteID.SourceColumn = "buildingID";
+            param_deleteID.SourceVersion = DataRowVersion.Original;
+
+            SqlParameter param_deleteMonth = new SqlParameter();
+            param_deleteMonth.ParameterName = "@theMonth";
+            param_deleteMonth.SqlDbType = SqlDbType.NVarChar;
+            param_deleteMonth.Size = 15;
+            param_deleteMonth.SourceColumn = "theMonth";
+            param_deleteMonth.SourceVersion = DataRowVersion.Original;
+
+            SqlParameter param_deleteYear = new SqlParameter();
+            param_deleteYear.ParameterName = "@theYear";
+            param_deleteYear.SqlDbType = SqlDbType.Int;
+            param_deleteYear.SourceColumn = "theYear";
+            param_deleteYear.SourceVersion = DataRowVersion.Original;
+
+            SqlParameter param_deleteCategory = new SqlParameter();
+            param_deleteCategory.ParameterName = "@costCategory";
+            param_deleteCategory.SqlDbType = SqlDbType.NVarChar;
+            param_deleteCategory.Size = 20;
+            param_deleteCategory.SourceColumn = "costCategory";
+            param_deleteCategory.SourceVersion = DataRowVersion.Original;
+
+            SqlParameter param_deleteDescription = new SqlParameter();
+            param_deleteDescription.ParameterName = "@costDescription";
+            param_deleteDescription.SqlDbType = SqlDbType.NVarChar;
+            param_deleteDescription.Size = 40;
+            param_deleteDescription.SourceColumn = "costDescription";
+            param_deleteDescription.SourceVersion = DataRowVersion.Original;
+
+            /*command.Parameters.Add(param_ID);
+            command.Parameters.Add(param_Month);
+            command.Parameters.Add(param_Year);*/
+
+            SqlDataAdapter da = new SqlDataAdapter();
+
+            //create the commands
+            da.SelectCommand = new SqlCommand(selectCommand);
+            //da.SelectCommand.Connection = connection;
+
+            da.DeleteCommand = new SqlCommand(deleteCommand);
+            //da.DeleteCommand.Connection = connection;
+
+            //create the parameters
+            da.SelectCommand.Parameters.Add(param_ID);
+            da.SelectCommand.Parameters.Add(param_month);
+            da.SelectCommand.Parameters.Add(param_year);
+
+            da.DeleteCommand.Parameters.Add(param_deleteID);
+            da.DeleteCommand.Parameters.Add(param_deleteMonth);
+            da.DeleteCommand.Parameters.Add(param_deleteYear);
+            da.DeleteCommand.Parameters.Add(param_deleteCategory);
+            da.DeleteCommand.Parameters.Add(param_deleteDescription);
+
+            return da;
         }
 
         private void yearComboBox_SelectedIndexChanged_1(object sender, EventArgs e)

@@ -12,7 +12,6 @@ using System.Drawing;
 {*/
     public class Buildings : Handle
     {
-        private DataGridView dataGridView2;
         private Button exitBtn;
         private Button editBtn;
         private Button cancelBtn;
@@ -20,8 +19,8 @@ using System.Drawing;
         private Button saveBtn;
         private Label messageBoardLbl;
         private Label instantMessageBoardLbl;
+        private DataGridView dataGridView1;
         private Label issueMessageBoardLbl;
-        private DataGridView dataGridView1 = new DataGridView();
 
         public Buildings()
         {
@@ -33,7 +32,11 @@ using System.Drawing;
             ConnectionString = connectionString;
 
             InitializeComponent();
-            DataGridView1 = dataGridView2;
+            DataGridView1 = dataGridView1;
+
+            //Αντιστοίχιση του DataGridView της base class με το DataTable της base class.
+            DataGridView1.DataSource = Table;
+            
             GetData(queryString);
 
             InitializeButtons();
@@ -55,7 +58,6 @@ using System.Drawing;
 
         private void InitializeComponent()
         {
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.exitBtn = new System.Windows.Forms.Button();
             this.editBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
@@ -64,16 +66,9 @@ using System.Drawing;
             this.messageBoardLbl = new System.Windows.Forms.Label();
             this.instantMessageBoardLbl = new System.Windows.Forms.Label();
             this.issueMessageBoardLbl = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(133, 68);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(509, 236);
-            this.dataGridView2.TabIndex = 2;
             // 
             // exitBtn
             // 
@@ -152,9 +147,18 @@ using System.Drawing;
             this.issueMessageBoardLbl.TabIndex = 10;
             this.issueMessageBoardLbl.Text = "label3";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(121, 74);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(521, 230);
+            this.dataGridView1.TabIndex = 11;
+            // 
             // Buildings
             // 
             this.ClientSize = new System.Drawing.Size(789, 451);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.issueMessageBoardLbl);
             this.Controls.Add(this.instantMessageBoardLbl);
             this.Controls.Add(this.messageBoardLbl);
@@ -163,10 +167,9 @@ using System.Drawing;
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.exitBtn);
-            this.Controls.Add(this.dataGridView2);
             this.Name = "Buildings";
             this.Load += new System.EventHandler(this.Buildings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,6 +207,11 @@ using System.Drawing;
         private void deleteBtn_Click(object sender, EventArgs e)
         {
             delete();
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 //}
