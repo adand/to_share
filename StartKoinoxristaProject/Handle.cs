@@ -15,8 +15,9 @@ using System.Drawing;
         private string connectionString;
         private DataGridView dataGridView1 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
-        private SqlDataAdapter da = new SqlDataAdapter();
-        private DataSet ds;
+        private SqlDataAdapter adapter = new SqlDataAdapter();
+        //private DataSet ds;
+        private DataTable table = new DataTable();
         private Control editBtn;
         private Control exitBtn;
         private Control saveBtn;
@@ -31,6 +32,18 @@ using System.Drawing;
         public Handle()
         {
             
+        }
+
+        public SqlDataAdapter Adapter
+        {
+            get { return adapter; }
+            set { adapter = value; }
+        }
+
+        public DataTable Table
+        {
+            get { return table; }
+            set { table = value; }
         }
 
         public string ConnectionString
@@ -148,12 +161,17 @@ using System.Drawing;
             {
                 try
                 {
-                    DataTable dt = (DataTable)bindingSource1.DataSource;
-                    int r = da.Update((DataTable)bindingSource1.DataSource);
-                    whileEditingControls(false);
-                    MessageBox.Show("Saved! " + r + " row(s) affected.");
-                    GetData(da.SelectCommand.CommandText);
-                    whileNotEditingControls(true);
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        adapter.SelectCommand.Connection = connection;
+                        adapter.DeleteCommand.Connection = connection;
+                        //DataTable dt = (DataTable)bindingSource1.DataSource;
+                        int r = adapter.Update(table);
+                        whileEditingControls(false);
+                        MessageBox.Show("Saved! " + r + " row(s) affected.");
+                        GetData();
+                        whileNotEditingControls(true);
+                    }
                 }
                 catch (SqlException sqlEx)
                 {
@@ -193,7 +211,7 @@ using System.Drawing;
                 MessageBox.Show("Not Saved!");
                 try
                 {
-                    GetData(da.SelectCommand.CommandText);
+                    GetData();
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -217,8 +235,8 @@ using System.Drawing;
             {
                 try
                 {
-                    DataTable dt = (DataTable)bindingSource1.DataSource;
-                    foreach (DataRow row in dt.Rows)
+                    //DataTable dt = (DataTable)bindingSource1.DataSource;
+                    foreach (DataRow row in table.Rows)
                     {
                         if (row.RowState.ToString() != "Deleted")
                         {
@@ -228,10 +246,10 @@ using System.Drawing;
                             }
                         }
                     }
-                    int r = da.Update((DataTable)bindingSource1.DataSource);
+                    int r = adapter.Update(table);
                     whileEditingControls(false);
                     MessageBox.Show("Saved! " + r + " row(s) affected.");
-                    GetData(da.SelectCommand.CommandText);
+                    GetData();
                     whileNotEditingControls(true);
                 }
                 catch (SqlException sqlEx)
@@ -272,7 +290,7 @@ using System.Drawing;
                 MessageBox.Show("Not Saved!");
                 try
                 {
-                    GetData(da.SelectCommand.CommandText);
+                    GetData();
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -379,7 +397,7 @@ using System.Drawing;
             {
                 try
                 {
-                    GetData(da.SelectCommand.CommandText);
+                    GetData();
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -403,9 +421,12 @@ using System.Drawing;
             {
                 try
                 {
-                    GetData(selectCommand, deleteCommand, selectedID, month, year);
-                    whileEditingControls(false);
-                    whileNotEditingControls(true);
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        GetData();
+                        whileEditingControls(false);
+                        whileNotEditingControls(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -414,75 +435,32 @@ using System.Drawing;
             }
         }
 
+        //Γίνεται ανάκτηση από τη βάση δεδομένων με τη χρήση DataAdapter Commands οι οποίες καθορίζονται αυτόματα από ένα SqlCommandBuilder αντικείμενο.
+        //Ο DataAdapter που χρησιμοποιείται έχει τοπική εμβέλεια.
+        //@selectCommand the command that SqlCommandBuilder needs in order to produce automatically the other Commands.
         public void GetData(string selectCommand)
         {
-            da = new SqlDataAdapter(selectCommand, connectionString);
+            SqlDataAdapter da = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
-            ds = new DataSet();
-            DataTable dt = new DataTable();
-            DataTable dt2 = new DataTable();
-            ds.Tables.Add(dt);
-            da.Fill(dt);
-
-            dataGridView1.DataSource = bindingSource1;
-            bindingSource1.DataSource = dt;
+            da.Fill(table);
         }
 
-        public void GetData(string selectCommand, string deleteCommand, string selectedID, string theMonth, string theYear)
+        
+
+        //Γίνεται ανάκτηση από τη βάση δεδομένων με τη χρήση DataAdapter Commands οι οποίες έχουν προκαθοριστεί από τον χρήστη.
+        //Ο DataAdapter που χρησιμοποιείται έχει καθολική εμβέλεια.
+        public void GetData()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                //create the parameters
-                SqlParameter param_ID = new SqlParameter();
-                param_ID.ParameterName = "@buildingID";
-                param_ID.SqlDbType = SqlDbType.VarChar;
-                param_ID.Size = 3;
-                param_ID.Value = selectedID;
+                //SelectCommand.Connection property initialization
+                adapter.SelectCommand.Connection = connection;
 
-                SqlParameter param_deleteID = new SqlParameter();
-                param_ID.ParameterName = "@buildingID";
-                param_ID.SqlDbType = SqlDbType.VarChar;
-                param_ID.Size = 3;
-                param_ID.Value = selectedID;
+                //DeleteCommand.Connection property initialization
+                adapter.DeleteCommand.Connection = connection;
 
-                SqlParameter param_month = new SqlParameter();
-                param_month.ParameterName = "@month";
-                param_month.SqlDbType = SqlDbType.NVarChar;
-                param_month.Size = 15;
-                param_month.Value = theMonth;
-
-                SqlParameter param_year = new SqlParameter();
-                param_year.ParameterName = "@year";
-                param_year.SqlDbType = SqlDbType.Int;
-                param_year.Value = theYear;
-
-                /*command.Parameters.Add(param_ID);
-                command.Parameters.Add(param_Month);
-                command.Parameters.Add(param_Year);*/
-
-                da = new SqlDataAdapter();
-
-                //create the commands
-                da.SelectCommand = new SqlCommand(selectCommand);
-                da.SelectCommand.Connection = connection;
-
-                da.DeleteCommand = new SqlCommand(deleteCommand);
-                da.DeleteCommand.Connection = connection;
-
-                //create the parameters
-                da.SelectCommand.Parameters.Add(param_ID);
-                da.SelectCommand.Parameters.Add(param_month);
-                da.SelectCommand.Parameters.Add(param_year);
-
-                da.DeleteCommand.Parameters.Add(param_deleteID);
-
-                connection.Open();
-                ds = new DataSet();
-                DataTable dt = new DataTable();
-                ds.Tables.Add(dt);
-                da.Fill(dt);
-                dataGridView1.DataSource = bindingSource1;
-                bindingSource1.DataSource = dt;
+                table.Clear();
+                adapter.Fill(table);
             }
         }
         
