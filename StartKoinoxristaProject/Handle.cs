@@ -13,11 +13,19 @@ using System.Drawing;
     public class Handle : Form
     {
         private string connectionString;
+
+        //Δήλωση ενός DataGridView object χωρίς όμως να δείχνει σε κάποια θέση μνήμης.
+        //Η κάθε κλάση που κληρονομεί από αυτή την κλάση δημιουργεί ένα DataGridView object και αφού το βάζει να δείχνει σε κάποια θέση μνήμης,
+        // θέτει τον "δείκτη" του object της base class να δείχνει στην θέση μνήμης που δείχνει το object της derived class.
         private DataGridView dataGridView1 = new DataGridView();
+
         private BindingSource bindingSource1 = new BindingSource();
+
         private SqlDataAdapter adapter = new SqlDataAdapter();
-        //private DataSet ds;
+
         private DataTable table = new DataTable();
+
+        //private DataSet ds;
         private Control editBtn;
         private Control exitBtn;
         private Control saveBtn;
@@ -38,12 +46,6 @@ using System.Drawing;
         {
             get { return adapter; }
             set { adapter = value; }
-        }
-
-        public DataTable Table
-        {
-            get { return table; }
-            set { table = value; }
         }
 
         public string ConnectionString
@@ -161,17 +163,12 @@ using System.Drawing;
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        adapter.SelectCommand.Connection = connection;
-                        adapter.DeleteCommand.Connection = connection;
-                        //DataTable dt = (DataTable)bindingSource1.DataSource;
-                        int r = adapter.Update(table);
-                        whileEditingControls(false);
-                        MessageBox.Show("Saved! " + r + " row(s) affected.");
-                        GetData();
-                        whileNotEditingControls(true);
-                    }
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    int r = adapter.Update(dt);
+                    whileEditingControls(false);
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
+                    GetData(adapter.SelectCommand.CommandText);
+                    whileNotEditingControls(true);
                 }
                 catch (SqlException sqlEx)
                 {
@@ -222,6 +219,7 @@ using System.Drawing;
             }
         }
 
+        //@selectedID the Building ID
         public void save(string selectedID, string duplicateID_message, string blankField_message, string max_characters_message)
         {
             string message = "Are you sure you want to update the database with changes?";
@@ -235,8 +233,8 @@ using System.Drawing;
             {
                 try
                 {
-                    //DataTable dt = (DataTable)bindingSource1.DataSource;
-                    foreach (DataRow row in table.Rows)
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    foreach (DataRow row in dt.Rows)
                     {
                         if (row.RowState.ToString() != "Deleted")
                         {
@@ -246,10 +244,12 @@ using System.Drawing;
                             }
                         }
                     }
-                    int r = adapter.Update(table);
+
+                    int r = adapter.Update(dt);
+
                     whileEditingControls(false);
                     MessageBox.Show("Saved! " + r + " row(s) affected.");
-                    GetData();
+                    GetData(adapter.SelectCommand.CommandText);
                     whileNotEditingControls(true);
                 }
                 catch (SqlException sqlEx)
@@ -290,7 +290,7 @@ using System.Drawing;
                 MessageBox.Show("Not Saved!");
                 try
                 {
-                    GetData();
+                    GetData2();
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -397,7 +397,31 @@ using System.Drawing;
             {
                 try
                 {
-                    GetData();
+                    GetData(adapter.SelectCommand.CommandText);
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public void cancel2()
+        {
+            string message = "Are you sure you want to Abort?";
+            string caption = "Confirm Cancellation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    GetData2();
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -435,14 +459,27 @@ using System.Drawing;
             }
         }
 
+
+        public void GetData(SqlCommand selectCommand)
+        {
+            adapter = new SqlDataAdapter();
+            adapter.SelectCommand = selectCommand;
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            bindingSource1.DataSource = dt;
+        }
+
         //Γίνεται ανάκτηση από τη βάση δεδομένων με τη χρήση DataAdapter Commands οι οποίες καθορίζονται αυτόματα από ένα SqlCommandBuilder αντικείμενο.
         //Ο DataAdapter που χρησιμοποιείται έχει τοπική εμβέλεια.
         //@selectCommand the command that SqlCommandBuilder needs in order to produce automatically the other Commands.
         public void GetData(string selectCommand)
         {
-            SqlDataAdapter da = new SqlDataAdapter(selectCommand, connectionString);
-            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(da);
-            da.Fill(table);
+            adapter = new SqlDataAdapter(selectCommand, connectionString);
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            bindingSource1.DataSource = dt;
         }
 
         
@@ -462,6 +499,16 @@ using System.Drawing;
                 table.Clear();
                 adapter.Fill(table);
             }
+        }
+
+        public void GetData2()
+        {
+            dataGridView1.DataSource = bindingSource1;
+
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            bindingSource1.DataSource = dt;
         }
         
         /*public SqlDataAdapter CreateSqlDataAdapter(string selectCommand, string selectedID, SqlConnection connection)
@@ -484,6 +531,17 @@ using System.Drawing;
                 {
                     whileEditingControls[i].Show();
                     dataGridView1.ReadOnly = false;
+
+                    //Έλεγξε εάν έχουμε περίπτωση όπου η πρώτη στήλη του πίνακα αποκρύπτεται από τον χρήστη.
+                    //Εάν αποκρύπτεται, θέσε σαν τρέχουσα θέση προς επεξεργασία την στήλη 1 της επιθυμητής γραμμής.
+                    if (dataGridView1.Columns[0].Visible)
+                    {
+                        dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
+                    }
+                    else
+                    {
+                        dataGridView1.CurrentCell = dataGridView1[1, dataGridView1.Rows.Count - 1];
+                    }
                 }
                 else
                 {

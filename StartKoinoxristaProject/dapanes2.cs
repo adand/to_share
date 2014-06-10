@@ -16,7 +16,6 @@ using System.Drawing;
         private Label label4;
         private Label BuildingArea;
         private Label BuildingAddress;
-        private BindingSource bindingSource1 = new BindingSource();
         private ComboBox areaComboBox;
         private ComboBox addressComboBox;
         private Button exitBtn;
@@ -31,7 +30,6 @@ using System.Drawing;
         private ComboBox yearComboBox;
         private ComboBox[] filterControlItems;
         private string selectedID;
-        private string selectCommand;
         private DataGridView dataGridView1;
         private string deleteCommand;
     
@@ -246,10 +244,10 @@ using System.Drawing;
             InitializeComponent();
             InitializeButtons();
 
-            //Αντιστοίχισή του DataGridView της base class με το DataTable της base class.
-            DataGridView1.DataSource = Table;
-
             ConnectionString = connectionString;
+
+            DataGridView1.DataSource = BindingSource1;
+
             filterControlItems = new ComboBox[] { areaComboBox, addressComboBox, monthComboBox, yearComboBox };
             foreach(ComboBox c in filterControlItems)
             {
@@ -308,13 +306,30 @@ using System.Drawing;
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            selectedID = RetrieveIdBasedOnLocation();
-            cancel(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
+            cancel2();
+            enableComboBoxes(filterControlItems);
+        }
+
+        public void enableComboBoxes(ComboBox[] comboBoxes)
+        {
+            foreach (ComboBox comboBox in comboBoxes)
+            {
+                comboBox.Enabled = true;
+            }
         }
 
         private void editBtn_Click(object sender, EventArgs e)
         {
             edit();
+            disableComboBoxes(filterControlItems);
+        }
+
+        public void disableComboBoxes(ComboBox[] comboBoxes)
+        {
+            foreach(ComboBox comboBox in comboBoxes)
+            {
+                comboBox.Enabled = false;
+            }
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
@@ -324,11 +339,12 @@ using System.Drawing;
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            string duplicateID_message = "...";
-            string blankField_message = "...";
-            string max_characters_message = "...";
+            string duplicateID_message = "duplicate";
+            string blankField_message = "blank field";
+            string max_characters_message = "max length";
 
-            save(duplicateID_message, blankField_message, max_characters_message);
+            save(selectedID, duplicateID_message, blankField_message, max_characters_message);
+            enableComboBoxes(filterControlItems);
         }
 
         private void areaComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -362,20 +378,51 @@ using System.Drawing;
                 whileNotEditingControls(true);
                 selectedID = RetrieveIdBasedOnLocation();
 
-                /*string selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
-                "costDescription as 'Cost Description', cost from dapanes" +
-                "where buildingID = @selectedID and theMonth = '@theMonth' and theYear = @theYear order by theYear, theMonth";*/
+                string selectQuery = "select buildingID as 'Building ID', theMonth as Month, theYear as Year, costCategory as 'Cost Category'" +
+                ", costDescription as 'Cost Description', cost as Cost from dapanes where buildingID = @buildingID and theMonth = @theMonth and theYear = @theYear";
 
-                selectCommand = "select buildingID, theMonth as Month, theYear as Year, costCategory as 'Cost Category'," +
-                "costDescription as 'Cost Description', cost from dapanes where buildingID = @buildingID and theMonth = @month and theYear = @year";
-                deleteCommand = "delete from dapanes where buildingID = @buildingID and themonth = @theMonth and theYear = @theYear and costCategory = @costCategory" + 
-                    " and costDescription = @costDescription";
+                SqlConnection connection = new SqlConnection(ConnectionString);
 
-                Adapter = SetAdapterCommands(selectCommand, deleteCommand, selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString());
+                SqlCommand selectCommand = new SqlCommand();
+                selectCommand.CommandText = selectQuery;
+                selectCommand.Connection = connection;
 
-                GetData();
+                SqlParameter parameter1 = new SqlParameter();
+                parameter1.ParameterName = "@buildingID";
+                parameter1.SqlDbType = SqlDbType.VarChar;
+                parameter1.SourceColumn = "buildingID";
+                parameter1.Value = selectedID;
 
-                //DataGridView1.Columns["buildingID"].Visible = false;
+                SqlParameter parameter2 = new SqlParameter();
+                parameter2.ParameterName = "@theMonth";
+                parameter2.SqlDbType = SqlDbType.NVarChar;
+                parameter2.SourceColumn = "theMonth";
+                parameter2.Value = monthComboBox.SelectedItem.ToString();
+
+                SqlParameter parameter3 = new SqlParameter();
+                parameter3.ParameterName = "@theYear";
+                parameter3.SqlDbType = SqlDbType.VarChar;
+                parameter3.SourceColumn = "theYear";
+                parameter3.Value = yearComboBox.SelectedItem.ToString();
+
+                selectCommand.Parameters.Add(parameter1);
+                selectCommand.Parameters.Add(parameter2);
+                selectCommand.Parameters.Add(parameter3);
+
+                GetData(selectCommand);
+
+                /*
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = selectCommand;
+
+                SqlCommandBuilder builder = new SqlCommandBuilder(da);
+
+                Adapter = da;
+
+                GetData2();
+                 * */
+
+                DataGridView1.Columns[0].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);
 
@@ -385,88 +432,6 @@ using System.Drawing;
             {
                 dataGridView1.Hide();
             }
-        }
-
-        public SqlDataAdapter SetAdapterCommands(string selectCommand, string deleteCommand, string selectedID, string theMonth, string theYear)
-        {
-            //create the parameters for selectCommand
-            SqlParameter param_ID = new SqlParameter();
-            param_ID.ParameterName = "@buildingID";
-            param_ID.SqlDbType = SqlDbType.VarChar;
-            param_ID.Size = 3;
-            param_ID.Value = selectedID;
-
-            SqlParameter param_month = new SqlParameter();
-            param_month.ParameterName = "@month";
-            param_month.SqlDbType = SqlDbType.NVarChar;
-            param_month.Size = 15;
-            param_month.Value = theMonth;
-
-            SqlParameter param_year = new SqlParameter();
-            param_year.ParameterName = "@year";
-            param_year.SqlDbType = SqlDbType.Int;
-            param_year.Value = theYear;
-
-            //create the parameters for deleteCommand
-            SqlParameter param_deleteID = new SqlParameter();
-            param_deleteID.ParameterName = "@buildingID";
-            param_deleteID.SqlDbType = SqlDbType.VarChar;
-            param_deleteID.Size = 3;
-            param_deleteID.SourceColumn = "buildingID";
-            param_deleteID.SourceVersion = DataRowVersion.Original;
-
-            SqlParameter param_deleteMonth = new SqlParameter();
-            param_deleteMonth.ParameterName = "@theMonth";
-            param_deleteMonth.SqlDbType = SqlDbType.NVarChar;
-            param_deleteMonth.Size = 15;
-            param_deleteMonth.SourceColumn = "theMonth";
-            param_deleteMonth.SourceVersion = DataRowVersion.Original;
-
-            SqlParameter param_deleteYear = new SqlParameter();
-            param_deleteYear.ParameterName = "@theYear";
-            param_deleteYear.SqlDbType = SqlDbType.Int;
-            param_deleteYear.SourceColumn = "theYear";
-            param_deleteYear.SourceVersion = DataRowVersion.Original;
-
-            SqlParameter param_deleteCategory = new SqlParameter();
-            param_deleteCategory.ParameterName = "@costCategory";
-            param_deleteCategory.SqlDbType = SqlDbType.NVarChar;
-            param_deleteCategory.Size = 20;
-            param_deleteCategory.SourceColumn = "costCategory";
-            param_deleteCategory.SourceVersion = DataRowVersion.Original;
-
-            SqlParameter param_deleteDescription = new SqlParameter();
-            param_deleteDescription.ParameterName = "@costDescription";
-            param_deleteDescription.SqlDbType = SqlDbType.NVarChar;
-            param_deleteDescription.Size = 40;
-            param_deleteDescription.SourceColumn = "costDescription";
-            param_deleteDescription.SourceVersion = DataRowVersion.Original;
-
-            /*command.Parameters.Add(param_ID);
-            command.Parameters.Add(param_Month);
-            command.Parameters.Add(param_Year);*/
-
-            SqlDataAdapter da = new SqlDataAdapter();
-
-            //create the commands
-            da.SelectCommand = new SqlCommand(selectCommand);
-            //da.SelectCommand.Connection = connection;
-
-            da.DeleteCommand = new SqlCommand(deleteCommand);
-            //da.DeleteCommand.Connection = connection;
-
-            //create the parameters
-            da.SelectCommand.Parameters.Add(param_ID);
-            da.SelectCommand.Parameters.Add(param_month);
-            da.SelectCommand.Parameters.Add(param_year);
-
-            da.DeleteCommand.Parameters.Add(param_deleteID);
-            da.DeleteCommand.Parameters.Add(param_deleteMonth);
-            da.DeleteCommand.Parameters.Add(param_deleteYear);
-            da.DeleteCommand.Parameters.Add(param_deleteCategory);
-            da.DeleteCommand.Parameters.Add(param_deleteDescription);
-
-            return da;
         }
 
         private void yearComboBox_SelectedIndexChanged_1(object sender, EventArgs e)

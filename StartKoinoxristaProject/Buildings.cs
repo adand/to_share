@@ -27,25 +27,22 @@ using System.Drawing;
             InitializeComponent();
         }
 
-        public Buildings(string queryString, string connectionString)
+        public Buildings(string connectionString)
         {
-            ConnectionString = connectionString;
-
             InitializeComponent();
-            DataGridView1 = dataGridView1;
-
-            //Αντιστοίχιση του DataGridView της base class με το DataTable της base class.
-            DataGridView1.DataSource = Table;
-            
-            GetData(queryString);
-
             InitializeButtons();
-            whileEditingControls(false);
+
+            ConnectionString = connectionString;
+            DataGridView1.DataSource = BindingSource1;
+
+            
+            DataGridView1 = dataGridView1;
         }
 
         public void InitializeButtons()
         {
             // initialize the object's buttons
+            DataGridView1 = dataGridView1;
             EditBtn = editBtn;
             ExitBtn = exitBtn;
             SaveBtn = saveBtn;
@@ -177,7 +174,8 @@ using System.Drawing;
 
         private void Buildings_Load(object sender, EventArgs e)
         {
-            
+            whileEditingControls(false);
+            GetData("select buildingID as 'Building ID', bAddress as Address, bArea as Area from buildings order by buildingID");
         }
 
         private void exitBtn_Click(object sender, EventArgs e)

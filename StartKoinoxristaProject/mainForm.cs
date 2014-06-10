@@ -130,8 +130,7 @@ using System.Data.SqlClient;
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            string queryString = "select buildingID as 'Building ID', bAddress as Address, bArea as Area from buildings order by buildingID";
-            Buildings c1 = new Buildings(queryString, connectionString);
+            Buildings c1 = new Buildings(connectionString);
             c1.Show();
         }
 
