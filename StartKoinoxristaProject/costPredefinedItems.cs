@@ -141,19 +141,18 @@ using System.Windows.Forms;
 
         private void costPredefinedItems_Load(object sender, EventArgs e)
         {
-
+            whileEditingControls(false);
+            GetData("select costCategory as 'Cost Category', costDescription as 'Cost Description' from costPredefinedItems");
         }
 
-        public costPredefinedItems(string queryString, string connectionString)
+        public costPredefinedItems(string connectionString)
         {
+            InitializeComponent();
+            InitializeButtons();
+
             ConnectionString = connectionString;
 
-            InitializeComponent();
-            DataGridView1 = dataGridView1;
-            GetData(queryString);
-
-            InitializeButtons();
-            whileEditingControls(false);
+            DataGridView1.DataSource = BindingSource1;
         }
 
         public void InitializeButtons()

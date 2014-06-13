@@ -208,7 +208,7 @@ using System.Drawing;
                 MessageBox.Show("Not Saved!");
                 try
                 {
-                    GetData();
+                    GetData(adapter.SelectCommand.CommandText);
                     whileEditingControls(false);
                     whileNotEditingControls(true);
                 }
@@ -249,7 +249,92 @@ using System.Drawing;
 
                     whileEditingControls(false);
                     MessageBox.Show("Saved! " + r + " row(s) affected.");
-                    GetData(adapter.SelectCommand.CommandText);
+                    GetData(adapter.SelectCommand);
+                    whileNotEditingControls(true);
+                }
+                catch (SqlException sqlEx)
+                {
+                    instantMessageBoardLbl.Text = "Insertion stopped on the red icon. Resolve rule's violation to insert the rest of the records.";
+                    string messageIntro = "Rule affected: ";
+                    switch (sqlEx.Number)
+                    {
+                        case 2627:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + duplicateID_message;
+                                break;
+                            }
+                        case 515:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + blankField_message;
+                                break;
+                            }
+                        case 8152:
+                            {
+                                issueMessageBoardLbl.Text = messageIntro + max_characters_message;
+                                break;
+                            }
+                        default:
+                            {
+                                MessageBox.Show(sqlEx.Message);
+                                break;
+                            }
+                    }
+                    instantMessageBoardLbl.ForeColor = Color.Red;
+                    instantMessageBoardLbl.Show();
+                    issueMessageBoardLbl.Show();
+                }
+            }
+            else if (result == DialogResult.No)
+            {
+                messageBoardLbl.ResetText();
+                MessageBox.Show("Not Saved!");
+                try
+                {
+                    GetData2();
+                    whileEditingControls(false);
+                    whileNotEditingControls(true);
+                }
+                catch
+                {
+                    messageBoardLbl.Text = "Reloading from database failed";
+                }
+            }
+        }
+
+        //@selectedID the Building ID
+        public void save(string[] columnAutomaticValues, string duplicateID_message, string blankField_message, string max_characters_message)
+        {
+            string message = "Are you sure you want to update the database with changes?";
+            string caption = "Update confirmation";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    DataTable dt = (DataTable)bindingSource1.DataSource;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (row.RowState.ToString() != "Deleted")
+                        {
+                            for (int i = 0; i < columnAutomaticValues.Length; i++)
+                            {
+                                if (row[i].ToString().Length == 0)
+                                {
+                                    row[i] = columnAutomaticValues[i];
+                                }
+                            }
+                        }
+                    }
+
+                    int r = adapter.Update(dt);
+
+                    whileEditingControls(false);
+                    MessageBox.Show("Saved! " + r + " row(s) affected.");
+                    GetData(adapter.SelectCommand);
                     whileNotEditingControls(true);
                 }
                 catch (SqlException sqlEx)
@@ -447,7 +532,7 @@ using System.Drawing;
                 {
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        GetData();
+                        GetData2();
                         whileEditingControls(false);
                         whileNotEditingControls(true);
                     }
@@ -482,23 +567,12 @@ using System.Drawing;
             bindingSource1.DataSource = dt;
         }
 
-        
-
-        //Γίνεται ανάκτηση από τη βάση δεδομένων με τη χρήση DataAdapter Commands οι οποίες έχουν προκαθοριστεί από τον χρήστη.
-        //Ο DataAdapter που χρησιμοποιείται έχει καθολική εμβέλεια.
-        public void GetData()
+        public void GetData(SqlDataAdapter da)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                //SelectCommand.Connection property initialization
-                adapter.SelectCommand.Connection = connection;
-
-                //DeleteCommand.Connection property initialization
-                adapter.DeleteCommand.Connection = connection;
-
-                table.Clear();
-                adapter.Fill(table);
-            }
+            adapter = da;
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            bindingSource1.DataSource = dt;
         }
 
         public void GetData2()
@@ -525,30 +599,36 @@ using System.Drawing;
         public void whileEditingControls(bool displayStatus)
         {
             Control[] whileEditingControls = { saveBtn, deleteBtn, cancelBtn, messageBoardLbl, instantMessageBoardLbl, issueMessageBoardLbl };
-            for (int i = 0; i < whileEditingControls.Length; i++)
+            if (displayStatus)
             {
-                if (displayStatus)
-                {
-                    whileEditingControls[i].Show();
-                    dataGridView1.ReadOnly = false;
+                dataGridView1.ReadOnly = false;
 
-                    //Έλεγξε εάν έχουμε περίπτωση όπου η πρώτη στήλη του πίνακα αποκρύπτεται από τον χρήστη.
-                    //Εάν αποκρύπτεται, θέσε σαν τρέχουσα θέση προς επεξεργασία την στήλη 1 της επιθυμητής γραμμής.
-                    if (dataGridView1.Columns[0].Visible)
-                    {
-                        dataGridView1.CurrentCell = dataGridView1[0, dataGridView1.Rows.Count - 1];
-                    }
-                    else
-                    {
-                        dataGridView1.CurrentCell = dataGridView1[1, dataGridView1.Rows.Count - 1];
-                    }
-                }
-                else
+                foreach(Control c in whileEditingControls)
                 {
-                    whileEditingControls[i].Hide();
-                    dataGridView1.ReadOnly = true;
-                    resetLabelsText();
+                    c.Show();
                 }
+
+                //find which column is the first visible column and set the cursor of the DataGridView to point there.
+                int firstVisibleColumnIndex = 0;
+
+                for (int columnIndex = 0; columnIndex < dataGridView1.Columns.Count; columnIndex++)
+                {
+                    if (dataGridView1.Columns[columnIndex].Visible == true)
+                    {
+                        firstVisibleColumnIndex = columnIndex;
+                        break;
+                    }
+                }
+                dataGridView1.CurrentCell = dataGridView1[firstVisibleColumnIndex, dataGridView1.Rows.Count - 1];
+            }
+            else
+            {
+                foreach (Control c in whileEditingControls)
+                {
+                    c.Hide();
+                }
+                dataGridView1.ReadOnly = true;
+                resetLabelsText();
             }
         }
 

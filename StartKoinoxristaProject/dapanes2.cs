@@ -342,8 +342,9 @@ using System.Drawing;
             string duplicateID_message = "duplicate";
             string blankField_message = "blank field";
             string max_characters_message = "max length";
+            string[] columnAutomaticValues = { selectedID, monthComboBox.SelectedItem.ToString(), yearComboBox.SelectedItem.ToString() };
 
-            save(selectedID, duplicateID_message, blankField_message, max_characters_message);
+            save(columnAutomaticValues, duplicateID_message, blankField_message, max_characters_message);
             enableComboBoxes(filterControlItems);
         }
 
@@ -423,6 +424,8 @@ using System.Drawing;
                  * */
 
                 DataGridView1.Columns[0].Visible = false;
+                DataGridView1.Columns[1].Visible = false;
+                DataGridView1.Columns[2].Visible = false;
                 resetLabelsText();
                 whileEditingControls(false);
 

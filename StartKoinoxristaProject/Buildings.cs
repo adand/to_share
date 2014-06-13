@@ -33,10 +33,8 @@ using System.Drawing;
             InitializeButtons();
 
             ConnectionString = connectionString;
-            DataGridView1.DataSource = BindingSource1;
 
-            
-            DataGridView1 = dataGridView1;
+            DataGridView1.DataSource = BindingSource1;
         }
 
         public void InitializeButtons()
