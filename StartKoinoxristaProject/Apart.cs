@@ -42,9 +42,11 @@ using System.Drawing;
         {
             InitializeComponent();
             InitializeButtons();
-            dataGridView1.DataSource = bindingSource1;
 
             ConnectionString = connectionString;
+
+            DataGridView1.DataSource = BindingSource1;
+
             filterControlItems = new ComboBox[] {areaComboBox, addressComboBox};
             foreach(ComboBox c in filterControlItems)
             {
@@ -274,9 +276,29 @@ using System.Drawing;
             whileNotEditingControls(true);
             selectedID = RetrieveIdBasedOnLocation();
 
-            GetData(string.Format("select buildingID, owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
-            "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = '{0}' order by apartmentID", selectedID));
-            dataGridView1.Columns["buildingID"].Visible = false;
+            string selectQuery = "select buildingID as 'Building ID', owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
+            "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = @buildingID order by apartmentID";
+
+            SqlConnection connection = new SqlConnection(ConnectionString);
+
+            SqlCommand selectCommand = new SqlCommand();
+            selectCommand.CommandText = selectQuery;
+            selectCommand.Connection = connection;
+
+            SqlParameter parameter1 = new SqlParameter();
+            parameter1.ParameterName = "@buildingID";
+            parameter1.SqlDbType = SqlDbType.VarChar;
+            parameter1.SourceColumn = "buildingID";
+            parameter1.Value = selectedID;
+
+            selectCommand.Parameters.Add(parameter1);
+
+            GetData(selectCommand);
+
+            /*GetData(string.Format("select buildingID as 'Building ID', owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
+            "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = @buildingID order by apartmentID");*/
+
+            dataGridView1.Columns[0].Visible = false;
             resetLabelsText();
             whileEditingControls(false);
 
@@ -288,14 +310,32 @@ using System.Drawing;
 
         }
 
+        public void enableComboBoxes(ComboBox[] comboBoxes)
+        {
+            foreach (ComboBox comboBox in comboBoxes)
+            {
+                comboBox.Enabled = true;
+            }
+        }
+
+        public void disableComboBoxes(ComboBox[] comboBoxes)
+        {
+            foreach (ComboBox comboBox in comboBoxes)
+            {
+                comboBox.Enabled = false;
+            }
+        }
+
         private void editBtn_Click(object sender, EventArgs e)
         {
             edit();
+            disableComboBoxes(filterControlItems);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            cancel();
+            cancel2();
+            enableComboBoxes(filterControlItems);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -303,7 +343,9 @@ using System.Drawing;
             string duplicateID_message = "Apartment ID must be unique.";
             string blankField_message = "None of the fields allowed to be blank!";
             string max_characters_message = "The maximum number of characters for Building ID is 3. Address, Area can contain at most 20 characters each.";
+
             save(selectedID, duplicateID_message, blankField_message, max_characters_message);
+            enableComboBoxes(filterControlItems);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)

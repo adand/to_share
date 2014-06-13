@@ -77,6 +77,9 @@
     <Compile Include="Class1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Class2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="comboBoxInsideDataGridView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +144,9 @@
     <Compile Include="queryWithStringFormat.Designer.cs">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="sigkentrotiki.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="testing_with_DataGridViewComboBoxColumn .cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Class1.resx">
       <DependentUpon>Class1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Class2.resx">
+      <DependentUpon>Class2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="comboBoxInsideDataGridView.resx">
       <DependentUpon>comboBoxInsideDataGridView.cs</DependentUpon>
@@ -200,6 +209,9 @@
     </Compile>
     <EmbeddedResource Include="queryWithStringFormat.resx">
       <DependentUpon>queryWithStringFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sigkentrotiki.resx">
+      <DependentUpon>sigkentrotiki.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="testing_with_DataGridViewComboBoxColumn .resx">
       <DependentUpon>testing_with_DataGridViewComboBoxColumn .cs</DependentUpon>

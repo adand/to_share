@@ -18,6 +18,7 @@ using System.Data.SqlClient;
         private Button dapanesBtn;
         private Label label1;
         private Label label2;
+        private Button button1;
         private Button exitBtn;
 
         public mainForm()
@@ -35,6 +36,7 @@ using System.Data.SqlClient;
             this.dapanesBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // exitBtn
@@ -105,9 +107,20 @@ using System.Data.SqlClient;
             this.label2.TabIndex = 6;
             this.label2.Text = "Δαπάνες";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(433, 146);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 77);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Συγκεντρωτική κατάσταση δαπανών";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // mainForm
             // 
             this.ClientSize = new System.Drawing.Size(589, 395);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dapanesBtn);
@@ -130,8 +143,7 @@ using System.Data.SqlClient;
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            string queryString = "select buildingID as 'Building ID', bAddress as Address, bArea as Area from buildings order by buildingID";
-            Buildings c1 = new Buildings(queryString, connectionString);
+            Buildings c1 = new Buildings(connectionString);
             c1.Show();
         }
 
@@ -156,12 +168,16 @@ using System.Data.SqlClient;
         private void costCategoriesBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
+            costPredefinedItems c1 = new costPredefinedItems(connectionString);
+            c1.Show();
+
+            /*this.Hide();
 
             string queryString = "select costCategory as 'Cost Category', costDescription as 'Cost Description' from costPredefinedItems";
             costPredefinedItems c1 = new costPredefinedItems(queryString, connectionString);
             
             c1.whileEditingControls(false);
-            c1.Show();
+            c1.Show();*/
         }
 
         private void dapanesBtn_Click(object sender, EventArgs e)
@@ -175,6 +191,17 @@ using System.Data.SqlClient;
             d1.whileEditingControls(false);
             d1.EditBtn.Hide();
             d1.Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            sigkentrotiki s1 = new sigkentrotiki(connectionString);
+            string queryString = "select distinct bArea from buildings order by bArea";
+            s1.fillTheComboBox(queryString);
+
+            s1.DataGridView1.Hide();
+            s1.Show();
         }
     }
 //}

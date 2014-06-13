@@ -67,3 +67,5 @@ C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\costPredefinedIte
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\dapanes2.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\StartKoinoxristaProject.Form1.resources
 C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Class1.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\Class2.resources
+C:\Users\adand\Projects\ABM2\StartKoinoxristaProject\obj\Debug\sigkentrotiki.resources
